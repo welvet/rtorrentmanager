@@ -1,0 +1,11 @@
+#conatainer {
+    width: 60%;
+}
+
+#torrentTable {
+    clear: both;
+}
+
+.hidden {
+    visibility:hidden;
+}
