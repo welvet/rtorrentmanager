@@ -1,11 +1,42 @@
-#conatainer {
-    width: 60%;
+#main {
+    width: 700px;
+    height: 100%;
+}
+
+#dialogBody {
+    font-size:14px;
+}
+
+#tableConatainer {
+    width: 700px;
 }
 
 #torrentTable {
-    clear: both;
+    width: 600px;
+    font-size:13px;
 }
 
-.hidden {
-    visibility:hidden;
+#firstTd {
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 400px;
+    min-width: 400px;
+}
+
+#torrentTable .ui-icon {
+    visibility: hidden;
+    height: 0;
+}
+
+.dataTables_processing {
+    height: 0;
+}
+
+.dataTables_filter {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.ui-button-text {
+    font-size: 10px;
 }
