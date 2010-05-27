@@ -7,6 +7,7 @@
     <script type="text/javascript" language="javascript" src="js/jquery-ui-1.8.1.custom.min.js"></script>
     <script type="text/javascript" language="javascript" src="js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="js/jquery.contextMenu.js"></script>
+    <script type="text/javascript" language="javascript" src="js/jquery.timers-1.2.js"></script>
     <script type="text/javascript" language="javascript" src="js/core.js"></script>
     <style type="text/css">
         @import "css/jquery.contextMenu.css";
@@ -36,12 +37,21 @@
 </div>
 <!--блок контекстного меню-->
 <ul id="contextMenu">
-    <li><a href="#Start">Старт</a></li>
-    <li><a href="#Stop">Стоп</a></li>
+    <li><a href="#start">Запустить</a></li>
+    <li><a href="#stop">Остановить</a></li>
+    <li><a href="#remove">Удалить</a></li>
+    <li><a href="#properties">Свойства</a></li>
 </ul>
-<!--блок с настройками-->
-<div id="dialog" title="Настройки">
-    <div id="dialogBody">
+<!--блок диалога с настройками торрента-->
+<div id="torrentDialog" title="Настройки торрнта">
+    <!--todo необходимо разработать логику вебсервера перед реализацией данного диалога-->
+</div>
+<!--блок диалога с настройками-->
+<!--дебаг-->
+<button onclick="openSettingsDialog();">Remove me</button>
+<!--/дебаг-->
+<div id="settingsDialog" class="dialog" title="Настройки">
+    <div id="settingsDialogBody">
         <ul>
             <li><a href="#tabs-1">Общие настройки</a></li>
             <li><a href="#tabs-2">Настройки трекеров</a></li>
@@ -79,6 +89,10 @@
                 porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas
                 commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
         </div>
+    </div>
+    <div id="buttons">
+        <button class="button" type="submit">ok</button>
+        <button class="button closeButton">отмена</button>
     </div>
 </div>
 </body>
