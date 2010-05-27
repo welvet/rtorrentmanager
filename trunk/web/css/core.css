@@ -8,11 +8,18 @@
 }
 /*блок диалогов*/
 
-#dialog {
-    visibility: hidden;
+.dialog {
+    display: none;
 }
-#dialogBody {
-    font-size:14px;
+#settingsDialogBody {
+    width: 100%;
+    height: auto;
+    font-size: 14px;
+}
+
+#buttons {
+    width: 100%;
+    text-align: right;
 }
 /*блок таблицы*/
 
@@ -33,7 +40,7 @@
 }
 
 #torrentTable .ui-icon {
-    visibility: hidden;
+    display: none;
     height: 0;
 }
 
