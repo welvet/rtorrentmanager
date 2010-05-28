@@ -6,6 +6,7 @@
 package rtorrent.torrent.set;
 
 import rtorrent.service.RtorrentService;
+import rtorrent.utils.LoggerSingleton;
 
 import java.io.File;
 
@@ -14,6 +15,7 @@ public class TorrentSetSingleton {
 
     public static void initialze(RtorrentService rtorrentService, File file) {
         ourInstance = new TorrentSetImpl(rtorrentService, file);
+        LoggerSingleton.getLogger().debug("TorrentSet инициализирован");
     }
 
     public static TorrentSet getInstance() throws TorrentSetException {

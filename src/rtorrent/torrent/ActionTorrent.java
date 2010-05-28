@@ -1,6 +1,7 @@
 package rtorrent.torrent;
 
 import org.eclipse.ecf.protocol.bittorrent.TorrentFile;
+import rtorrent.tracker.Tracker;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +28,17 @@ public class ActionTorrent extends ActionTorrentBase {
         setHash(getTorrentFileHash());
         setName(torrentFile.getName());
         setNeedAdd(true);
+    }
+
+    /**
+     * Создаем новый торрент на основе урл, и трекера
+     *
+     * @param url
+     * @param tracker
+     */
+    public ActionTorrent(String url, Tracker tracker) {
+        setUrl(url);
+        setTracker(tracker);
     }
 
     /**
@@ -83,6 +95,9 @@ public class ActionTorrent extends ActionTorrentBase {
         file = torrent.file;
     }
 
+    /**
+     * Пустой конструктор, должен использоваться только в RtorrentService
+     */
     public ActionTorrent() {
     }
 
