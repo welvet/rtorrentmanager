@@ -7,6 +7,7 @@ import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * User: welvet
@@ -65,6 +66,7 @@ public class TorrentSetTest extends TestCase {
 
         torrent.setFile(torrent2File);
         torrent.setNeedUpdate(true);
+        torrent.setLastUpdated(new Date(System.currentTimeMillis()));
         torrentSet.addOrUpdate(torrent);
         torrentSet.updateRtorrent();
         torrentSet.updateSet();

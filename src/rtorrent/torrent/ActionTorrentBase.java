@@ -16,7 +16,6 @@ public abstract class ActionTorrentBase extends Torrent {
     private Boolean needUpdate = false;
     private Boolean needDelete = false;
     private Boolean watching = false; //ќпредел€ем, будем ли следить за обновлени€ми на трекере TODO необходимо добавить валидацию на url чтобы избежать лишних ошибок. (необходимо это делать на сервисном слое, а не на вью)
-    private String url;
     private Date lastUpdated = new Date(0L); //ƒата последнего обновлени€ торрента
     private Tracker tracker;
 
@@ -27,39 +26,28 @@ public abstract class ActionTorrentBase extends Torrent {
         needUpdate = torrent.needUpdate;
         needDelete = torrent.needDelete;
         watching = torrent.watching;
-        url = torrent.url;
         lastUpdated = (Date) torrent.lastUpdated.clone();
         tracker = torrent.tracker;
     }
 
     public Boolean isNeedStart() {
-        if (isNeedDelete())
-            return false;
-        return needStart;
+        return !isNeedDelete() && needStart;
     }
 
     public Boolean isNeedStop() {
-        if (isNeedDelete())
-            return false;
-        return needStop;
+        return !isNeedDelete() && needStop;
     }
 
     public Boolean isNeedAdd() {
-        if (isNeedDelete())
-            return false;
-        return needAdd;
+        return !isNeedDelete() && needAdd;
     }
 
     public Boolean isNeedUpdate() {
-        if (isNeedDelete())
-            return false;
-        return needUpdate;
+        return !isNeedDelete() && needUpdate;
     }
 
     public Boolean isWatching() {
-        if (isNeedDelete())
-            return false;
-        return watching;
+        return !isNeedDelete() && watching;
     }
 
     public void setNeedStart(Boolean needStart) {
@@ -88,14 +76,6 @@ public abstract class ActionTorrentBase extends Torrent {
 
     public void setWatching(Boolean watching) {
         this.watching = watching;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public Date getLastUpdated() {
