@@ -39,7 +39,17 @@ function initializeButtons() {
     $(".closeButton").each(function() {
         $(this).click(function() {
             $(this).parents(".dialog").dialog("close");
-        })
+        });
+    });
+    //создаем кнопку для диалога отправки настроек
+    $(".submit").click(function() {
+//        todo type: POST работет только в пределах одного домена, после отладки сменить на type: POST
+        var form = $(this).parents(".settingsForm");
+        //отправляем форму
+        $.ajax({url: form.attr("action")+"index.php?", type: "GET", data: form.serialize()});
+        //закрываем диалог
+        $(this).parents(".dialog").dialog("close");
+        return false;
     })
 }
 
@@ -105,12 +115,13 @@ function reloadTable() {
 
 //эта функция будет вызываться как из контекстного меню, так и через "кнопки управления"
 function doAction(action, hash) {
-    //        $.getJSON("/"+action+"/"+hash+"/", {}, function(json) { //запрашиваем сервер http://localhost/action/hash/
+    //todo исправить путь
     $.getJSON("mockJSON.html", {}, function(json) {
-        if (json.needUserNotice == "true") { //сервер отдает все параметры в ""
+        if (json.needUserNotice == "true") {
             //открываем диалог
             var dialog = openTorrentSettingsDialog();
             //выставляем параметры
+            alert("realise me");
         }
     }); //
 }
