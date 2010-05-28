@@ -5,7 +5,6 @@ import ntorrent.io.xmlrpc.XmlRpcConnection;
 import org.eclipse.ecf.protocol.bittorrent.TorrentFile;
 import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceException;
-import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.utils.UtilException;
 
@@ -28,8 +27,7 @@ public class RtorrentServiceTest extends TestCase {
     protected void setUp() throws Exception {
         file = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "test.torrent");
         connection = new XmlRpcConnection("serv", 5000);
-        rtorrentService = new RtorrentServiceImpl(connection);
-//        rtorrentService = new MockRtorrentService();
+        rtorrentService = new MockRtorrentService();
         if (!(rtorrentService.isAlive()))
             throw new Exception("Rtorrent not run");
     }

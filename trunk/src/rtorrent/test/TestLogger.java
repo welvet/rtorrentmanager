@@ -1,7 +1,7 @@
 package rtorrent.test;
 
 import junit.framework.TestCase;
-import rtorrent.service.RtorrentServiceException;
+import rtorrent.utils.LoggableException;
 import rtorrent.utils.LoggerSingleton;
 
 /**
@@ -23,7 +23,7 @@ public class TestLogger extends TestCase {
 
     public void testLogException() throws Exception {
         try {
-            throw new RtorrentServiceException("Test exception");
+            throw new LoggableException("Test exception");
         }
         catch (Exception e) {
         }

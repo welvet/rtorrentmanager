@@ -21,7 +21,12 @@ public class MockRtorrentService implements RtorrentService {
 
     public void add(ActionTorrent torrent) throws RtorrentServiceException {
         ActionTorrent newTorrent = new ActionTorrent();
-        newTorrent.updateAll(torrent);
+        newTorrent.updateInfo(torrent);
+        try {
+            newTorrent.setFile(torrent.getFile().getFile());
+        } catch (TorrentValidateException e) {
+            e.printStackTrace();  // TODO change me
+        }
         try {
             if (newTorrent.getTorrentFileHash() != null) {
                 newTorrent.updateHashFromFile();
@@ -30,18 +35,19 @@ public class MockRtorrentService implements RtorrentService {
             throw new RtorrentServiceException(e);
         }
         torrentHashMap.put(torrent.getHash(), newTorrent);
-        torrent.setNeedStart(true);
         log.info(torrent + " добавлен");
     }
 
     public void start(Torrent torrent) throws RtorrentServiceException {
-        torrent.setStart(1L);
-        log.info(torrent + " запущен");
+        ActionTorrent mockTorrent = torrentHashMap.get(torrent.getHash());
+        mockTorrent.setStart(1L);
+        log.info(mockTorrent + " запущен");
     }
 
     public void stop(Torrent torrent) throws RtorrentServiceException {
-        torrent.setStart(0L);
-        log.info(torrent + " остановлен");
+        ActionTorrent mockTorrent = torrentHashMap.get(torrent.getHash());
+        mockTorrent.setStart(0L);
+        log.info(mockTorrent + " остановлен");
     }
 
     public void remove(Torrent torrent) throws RtorrentServiceException {
