@@ -1,7 +1,6 @@
 package rtorrent.torrent;
 
 import org.eclipse.ecf.protocol.bittorrent.TorrentFile;
-import rtorrent.tracker.Tracker;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,17 +27,6 @@ public class ActionTorrent extends ActionTorrentBase {
         setHash(getTorrentFileHash());
         setName(torrentFile.getName());
         setNeedAdd(true);
-    }
-
-    /**
-     * Создаем новый торрент на основе урл, и трекера
-     *
-     * @param url
-     * @param tracker
-     */
-    public ActionTorrent(String url, Tracker tracker) {
-        setUrl(url);
-        setTracker(tracker);
     }
 
     /**
@@ -81,6 +69,15 @@ public class ActionTorrent extends ActionTorrentBase {
         this.file = file;
     }
 
+    /**
+     * Обновляем торрент файл, дату обновления и устанавливаем needUpdate true
+     *
+     * @param torrent
+     */
+    public void updateFile(ActionTorrent torrent) {
+        file = torrent.file;
+    }
+
     public void updateAll(ActionTorrent torrent) {
         updateInfo(torrent);
         updateAction(torrent);
@@ -89,10 +86,6 @@ public class ActionTorrent extends ActionTorrentBase {
 
     public void updateHashFromFile() throws TorrentValidateException {
         setHash(getTorrentFileHash());
-    }
-
-    public void updateFile(ActionTorrent torrent) {
-        file = torrent.file;
     }
 
     /**
