@@ -1,9 +1,9 @@
 <%@ page language="java" %>
+<%@ page contentType="text/html;UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Rtorrent manager</title>
     <script type="text/javascript" language="javascript" src="js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" language="javascript" src="js/jquery-ui-1.8.1.custom.min.js"></script>

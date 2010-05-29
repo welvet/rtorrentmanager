@@ -21,7 +21,6 @@ public class WebServerTest extends TestCase {
         WebServerBuilder builder = new WebServerBuilder();
         builder.setPort("8081");
         builder.setWar(WAR_PATH);
-        builder.setNeedUnJar(false);
         builder.build();
 
         while (true) {
