@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="WebServ">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-el-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jasper-compiler-5.5.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jasper-runtime-5.5.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jasper-compiler-jdt-5.5.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jsp-api-2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/winstone-0.9.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
