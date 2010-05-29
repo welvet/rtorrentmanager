@@ -69,11 +69,6 @@ public class ActionTorrent extends ActionTorrentBase {
         this.file = file;
     }
 
-    /**
-     * Обновляем торрент файл, дату обновления и устанавливаем needUpdate true
-     *
-     * @param torrent
-     */
     public void updateFile(ActionTorrent torrent) {
         file = torrent.file;
     }

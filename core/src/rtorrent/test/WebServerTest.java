@@ -1,10 +1,8 @@
 package rtorrent.test;
 
 import junit.framework.TestCase;
-import winstone.Launcher;
-
-import java.util.HashMap;
-import java.util.Map;
+import rtorrent.utils.UtilException;
+import rtorrent.web.WebServerBuilder;
 
 /**
  * User: welvet
@@ -12,16 +10,20 @@ import java.util.Map;
  * Time: 20:51:07
  */
 public class WebServerTest extends TestCase {
-    public void testStart() throws Exception {
-//        todo REAZIE ME
-        Map<String, String> properties = new HashMap<String, String>();
-        properties.put("accessLoggerClassName", "rtorrent.utils.WebServLogger");
-        properties.put("ajp13Port", "-1");
-        properties.put("httpPort", "8080");
-        properties.put("httpsListenAddress     ", "127.0.0.1");
-        properties.put("webroot", "C:/");
-        Launcher.initLogger(properties);
-        Launcher winstone = new Launcher(properties);
+    private static final String WAR_PATH = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
+
+    public void testStart() throws Exception, UtilException {
+        if (true)
+            throw new RuntimeException("Ётот метод в тесте нужен только дл€ разработки" +
+                    " Ќеобходимо будет удалить его");
+
+
+        WebServerBuilder builder = new WebServerBuilder();
+        builder.setPort("8081");
+        builder.setWar(WAR_PATH);
+        builder.setNeedUnJar(false);
+        builder.build();
+
         while (true) {
             Thread.sleep(1000);
         }

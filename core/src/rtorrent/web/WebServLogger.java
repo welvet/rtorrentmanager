@@ -1,6 +1,7 @@
-package rtorrent.utils;
+package rtorrent.web;
 
 import org.apache.log4j.Logger;
+import rtorrent.utils.LoggerSingleton;
 import winstone.AccessLogger;
 import winstone.WinstoneRequest;
 import winstone.WinstoneResponse;
@@ -17,7 +18,7 @@ public class WebServLogger implements AccessLogger {
     }
 
     public void log(String s, WinstoneRequest winstoneRequest, WinstoneResponse winstoneResponse) {
-        log.info(s + "request: " + winstoneRequest.getRequestURI());
+        log.debug(s + "request: " + winstoneRequest.getRequestURI());
     }
 
     public void destroy() {

@@ -56,24 +56,20 @@ public abstract class Torrent implements Serializable {
     }
 
     public void setActive(Long active) {
-        if (active == 1) this.active = true;
-        else this.active = false;
+        this.active = active == 1;
 
     }
 
     public void setOpen(Long open) {
-        if (open == 1) this.open = true;
-        else this.open = false;
+        this.open = open == 1;
     }
 
     public void setHashChecking(Long hashChecking) {
-        if (hashChecking == 1) this.hashChecking = true;
-        else this.hashChecking = false;
+        this.hashChecking = hashChecking == 1;
     }
 
     public void setHashChecked(Long hashChecked) {
-        if (hashChecked == 1) this.hashChecked = true;
-        else this.hashChecked = false;
+        this.hashChecked = hashChecked == 1;
     }
 
     public void setStart(Long start) {
