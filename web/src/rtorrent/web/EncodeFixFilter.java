@@ -17,7 +17,7 @@ public class EncodeFixFilter implements Filter {
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        ((WinstoneResponse) ((HttpServletResponse) servletResponse)).setCharacterEncoding("UTF8");
+        ((WinstoneResponse) ((HttpServletResponse) servletResponse)).setCharacterEncoding("UTF-8");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

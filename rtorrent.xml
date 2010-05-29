@@ -13,7 +13,7 @@
     </target>
     <target name="init" depends="clean">
         <echo>Creating the build directory</echo>
-        <mkdir dir="${build.dir}/"/>
+        <mkdir dir="${build.dir}/${core.dir}"/>
         <mkdir dir="${build.dir}/${web.dir}"/>
         <mkdir dir="${build.dir}/${web.dir}/WEB-INF"/>
         <mkdir dir="${build.dir}/${web.dir}/WEB-INF/classes"/>
@@ -41,14 +41,24 @@
 
     <target name="compile-core" depends="init, copy-lib">
         <echo>Compile core source</echo>
-        <javac srcdir="${core.dir}" destdir="${build.dir}">
+        <javac srcdir="${core.dir}" destdir="${build.dir}/${core.dir}">
             <classpath refid="classpath"/>
             <exclude name="**/${test.dir}/**"/>
         </javac>
         <antcall target="copy-resources">
             <param name="resource.in" value="${core.dir}/src"/>
-            <param name="resource.out" value="${build.dir}"/>
+            <param name="resource.out" value="${build.dir}/${core.dir}"/>
         </antcall>
+        <manifestclasspath jarfile="rtorrentmanager.jar" property="manifest.class.path">
+            <classpath refid="classpath"/>
+        </manifestclasspath>
+        <jar destfile="${build.dir}/core.jar" basedir="${build.dir}/${core.dir}" compress="true">
+            <manifest>
+                <attribute name="Main-Class" value="rtorrent.init.Initialize"/>
+                <attribute name="Class-Path" value="${manifest.class.path}"/>
+            </manifest>
+        </jar>
+        <delete dir="${build.dir}/${core.dir}"/>
     </target>
 
     <target name="compile-web" depends="init">
@@ -62,19 +72,10 @@
                 <exclude name="*.iml"/>
             </fileset>
         </copy>
-        <war destfile="${build.dir}/${web.dir}.war" basedir="${build.dir}/${web.dir}"/>
+        <war destfile="${build.dir}/${web.dir}.war" basedir="${build.dir}/${web.dir}" compress="true"/>
         <delete dir="${build.dir}/${web.dir}"/>
     </target>
 
-    <target name="build" depends="init, compile-core, compile-web">
-        <unjar dest="${build.dir}">
-            <fileset dir="${build.dir}/${lib.dir}"/>
-        </unjar>
-        <jar destfile="${build.dir}/rtorrentmanager.jar" basedir="${build.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="rtorrent.init.Initialize"/>
-            </manifest>
-        </jar>
-    </target>
+    <target name="build" depends="init, compile-core, compile-web"/>
 
 </project>

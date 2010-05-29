@@ -4,11 +4,10 @@ import rtorrent.init.Initialize;
 import rtorrent.utils.UtilException;
 import winstone.Launcher;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
 
 /**
  * User: welvet
@@ -17,20 +16,14 @@ import java.util.zip.ZipEntry;
  */
 public class WebServerBuilder {
     Map<String, String> properties = new HashMap<String, String>();
-    private String path;
-    private String entryName;
-    private String tempPathName;
-    private Boolean needUnJar;
 
     public WebServerBuilder() {
         properties.put("accessLoggerClassName", "rtorrent.web.WebServLogger");
         properties.put("ajp13Port", "-1");
         properties.put("httpPort", "8080");
         properties.put("httpsListenAddress", "0.0.0.0");
-        path = Initialize.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        entryName = "web.war";
-        tempPathName = System.getProperty("java.io.tmpdir") + "/rtorrentmanager.war";
-        needUnJar = true;
+        String war = new File(Initialize.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/../web.war").getAbsolutePath();
+        properties.put("warfile", war);
     }
 
     /**
@@ -52,63 +45,16 @@ public class WebServerBuilder {
     }
 
     /**
-     * Путь к jar файлу
-     *
-     * @param jar
-     */
-    public void setJar(String jar) {
-        path = jar;
-    }
-
-    /**
-     * Относительный путь к war файлу, если он находится в архиве jar
-     * Либо абсолютный, если он распакован
+     * Абсолютный путь к war
      *
      * @param war
      */
     public void setWar(String war) {
-        entryName = war;
-    }
-
-    /**
-     * Нужно ли извлекать war из jar архива
-     *
-     * @param b
-     */
-    public void setNeedUnJar(Boolean b) {
-        needUnJar = b;
-    }
-
-    private void unJarWar() throws IOException {
-        File tempWar = new File(tempPathName);
-        File file = new File(path);
-
-        JarFile jarFile = new JarFile(file);
-
-        ZipEntry entry = jarFile.getEntry(entryName);
-        InputStream in =
-                new BufferedInputStream(jarFile.getInputStream(entry));
-        OutputStream out =
-                new BufferedOutputStream(new FileOutputStream(tempWar));
-        byte[] buffer = new byte[2048];
-        for (; ;) {
-            int nBytes = in.read(buffer);
-            if (nBytes <= 0) break;
-            out.write(buffer, 0, nBytes);
-        }
-        out.flush();
-        out.close();
-        in.close();
-
-        properties.put("warfile", tempWar.getAbsolutePath());
+        properties.put("warfile", war);
     }
 
     public Launcher build() throws UtilException {
         try {
-            if (needUnJar)
-                unJarWar();
-            else
-                properties.put("warfile", entryName);
             Launcher.initLogger(properties);
             return new Launcher(properties);
         } catch (IOException e) {
