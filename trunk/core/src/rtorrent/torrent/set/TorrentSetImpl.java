@@ -32,6 +32,7 @@ public class TorrentSetImpl implements TorrentSet {
         torrentSetSaver = new TorrentSetSaver(this, file);
         torrentSetSaver.load();
         torrentSetHelper = new TorrentSetHelper(this);
+        log.info("TorrentSet загружен");
     }
 
     public void updateSet() {
@@ -60,7 +61,7 @@ public class TorrentSetImpl implements TorrentSet {
 
                 if (!markRemoveTorrent.isWatching()) {
                     torrents.remove(hash);
-                    log.debug(torrent + " удален из базы");
+                    log.info(torrent + " удален из базы");
                 }
             }
         }
@@ -80,7 +81,7 @@ public class TorrentSetImpl implements TorrentSet {
     public void updateRtorrent() {
         torrentSetHelper.work();
         torrentSetSaver.save();
-        log.debug("Rtorrent обновлен");
+        log.info("Rtorrent обновлен");
     }
 
     public Set<ActionTorrent> getSet() {

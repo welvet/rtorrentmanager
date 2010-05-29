@@ -1,17 +1,17 @@
-//инициализация статических объектов
+//РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃС‚Р°С‚РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ
 var torrents = [];
 var selectedTorrent;
 var oTable;
 
-//инициализация таблицы рторрента
-//todo потом эта страница будет загружаться аяксом
+//РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С‚Р°Р±Р»РёС†С‹ СЂС‚РѕСЂСЂРµРЅС‚Р°
+//todo РїРѕС‚РѕРј СЌС‚Р° СЃС‚СЂР°РЅРёС†Р° Р±СѓРґРµС‚ Р·Р°РіСЂСѓР¶Р°С‚СЊСЃСЏ Р°СЏРєСЃРѕРј
 function initializeTable() {
     oTable = $('#torrentTable').dataTable({
         bPaginate:false,
         bInfo:false,
         bJQueryUI: true,
         aoColumns: [
-            //устанавливаем поля
+            //СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїРѕР»СЏ
             {bVisible: false},
             null,
             null,
@@ -23,55 +23,56 @@ function initializeTable() {
             null
         ],
         bLengthChange: false,
-        fnRowCallback: rowCallback, //задаем каллбек для контекстного меню
+        fnRowCallback: rowCallback, //Р·Р°РґР°РµРј РєР°Р»Р»Р±РµРє РґР»СЏ РєРѕРЅС‚РµРєСЃС‚РЅРѕРіРѕ РјРµРЅСЋ
         "bProcessing": true,
         "sAjaxSource": "mockSource.html"
     });
 }
 
 function initializeButtons() {
-    //создаем кнопки
-    //создаем кнопку сабмит для всех диалогов
+    //СЃРѕР·РґР°РµРј РєРЅРѕРїРєРё
+    //СЃРѕР·РґР°РµРј РєРЅРѕРїРєСѓ СЃР°Р±РјРёС‚ РґР»СЏ РІСЃРµС… РґРёР°Р»РѕРіРѕРІ
     $(".button").each(function() {
         $(this).button();
-    })
-    //создаем кнопку отмены для всех диалогов
+    });
+    //СЃРѕР·РґР°РµРј РєРЅРѕРїРєСѓ РѕС‚РјРµРЅС‹ РґР»СЏ РІСЃРµС… РґРёР°Р»РѕРіРѕРІ
     $(".closeButton").each(function() {
         $(this).click(function() {
             $(this).parents(".dialog").dialog("close");
+            return false;
         });
     });
-    //создаем кнопку для диалога отправки настроек
+    //СЃРѕР·РґР°РµРј РєРЅРѕРїРєСѓ РґР»СЏ РґРёР°Р»РѕРіР° РѕС‚РїСЂР°РІРєРё РЅР°СЃС‚СЂРѕРµРє
     $(".submit").click(function() {
-//        todo type: POST работет только в пределах одного домена, после отладки сменить на type: POST
+//        todo type: POST СЂР°Р±РѕС‚РµС‚ С‚РѕР»СЊРєРѕ РІ РїСЂРµРґРµР»Р°С… РѕРґРЅРѕРіРѕ РґРѕРјРµРЅР°, РїРѕСЃР»Рµ РѕС‚Р»Р°РґРєРё СЃРјРµРЅРёС‚СЊ РЅР° type: POST
         var form = $(this).parents(".settingsForm");
-        //отправляем форму
+        //РѕС‚РїСЂР°РІР»СЏРµРј С„РѕСЂРјСѓ
         $.ajax({url: form.attr("action")+"index.php?", type: "GET", data: form.serialize()});
-        //закрываем диалог
+        //Р·Р°РєСЂС‹РІР°РµРј РґРёР°Р»РѕРі
         $(this).parents(".dialog").dialog("close");
         return false;
-    })
+    });
 }
 
-//каллбек для обработки полей
+//РєР°Р»Р»Р±РµРє РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РїРѕР»РµР№
 function rowCallback(nRow, aData, iDisplayIndex) {
-    //добавляем элемент в массив
+    //РґРѕР±Р°РІР»СЏРµРј СЌР»РµРјРµРЅС‚ РІ РјР°СЃСЃРёРІ
     torrents.push(nRow);
     $(nRow).contextMenu({
         menu: 'contextMenu'
     },
             function(action, el, pos) {
-                //тут вероятно будет кейс на функции. функция будет вида doStart(hash);
+                //С‚СѓС‚ РІРµСЂРѕСЏС‚РЅРѕ Р±СѓРґРµС‚ РєРµР№СЃ РЅР° С„СѓРЅРєС†РёРё. С„СѓРЅРєС†РёСЏ Р±СѓРґРµС‚ РІРёРґР° doStart(hash);
                 if (selectedTorrent != undefined) {
                     doAction(action, selectedTorrent);
                 }
                 else {
-                    alert("Выберите торрент");
+                    alert("Р’С‹Р±РµСЂРёС‚Рµ С‚РѕСЂСЂРµРЅС‚");
                 }
             });
-    //устанавливаем аттрибут со значением хеша
+    //СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р°С‚С‚СЂРёР±СѓС‚ СЃРѕ Р·РЅР°С‡РµРЅРёРµРј С…РµС€Р°
     $(nRow).attr("hash", aData[0]);
-    //устанавливаем выделение
+    //СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІС‹РґРµР»РµРЅРёРµ
     $(nRow).mousedown(function() {
         for (var i = 0; i <= torrents.length; i++) {
             var sel = torrents[i];
@@ -81,53 +82,53 @@ function rowCallback(nRow, aData, iDisplayIndex) {
         selectedTorrent = $(this).attr("hash");
     });
     var img = $(nRow).children().get(1);
-    //устанавливаем изображение для статуса торрента
+    //СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РґР»СЏ СЃС‚Р°С‚СѓСЃР° С‚РѕСЂСЂРµРЅС‚Р°
     $(img).html("<img src=\"images/" + aData[2] + ".jpg\"/>");
-    //восстанавливаем выделеный торрент после обновления todo в будущем работаем только с selectedTorrent
+    //РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІС‹РґРµР»РµРЅС‹Р№ С‚РѕСЂСЂРµРЅС‚ РїРѕСЃР»Рµ РѕР±РЅРѕРІР»РµРЅРёСЏ todo РІ Р±СѓРґСѓС‰РµРј СЂР°Р±РѕС‚Р°РµРј С‚РѕР»СЊРєРѕ СЃ selectedTorrent
     if ((aData[0] == selectedTorrent) && (selectedTorrent != undefined))
         $(nRow).addClass("rowSelected");
     return nRow;
 }
 
-//открыть диалог с настройками
+//РѕС‚РєСЂС‹С‚СЊ РґРёР°Р»РѕРі СЃ РЅР°СЃС‚СЂРѕР№РєР°РјРё
 function openSettingsDialog() {
     $("#settingsDialogBody").tabs();
     $("#settingsDialog").dialog({ modal: false, resizable: false,
         draggable: true, width: 800, height: 500 });
 }
 
-//открыть диалог с настройками торрента
+//РѕС‚РєСЂС‹С‚СЊ РґРёР°Р»РѕРі СЃ РЅР°СЃС‚СЂРѕР№РєР°РјРё С‚РѕСЂСЂРµРЅС‚Р°
 function openTorrentSettingsDialog() {
     $("#torrentDialog").dialog({ modal: false, resizable: false,
         draggable: true, width: 500, height: 400 });
 }
 
-//открыть диалог с логами ошибок todo вероятно он будет модальным и требовать поддтверждения от пользователя
+//РѕС‚РєСЂС‹С‚СЊ РґРёР°Р»РѕРі СЃ Р»РѕРіР°РјРё РѕС€РёР±РѕРє todo РІРµСЂРѕСЏС‚РЅРѕ РѕРЅ Р±СѓРґРµС‚ РјРѕРґР°Р»СЊРЅС‹Рј Рё С‚СЂРµР±РѕРІР°С‚СЊ РїРѕРґРґС‚РІРµСЂР¶РґРµРЅРёСЏ РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
 function reloadTable() {
-    //todo обновляем таблицу с торрентом каждые 10000 мсекунд, вероятно стоит сделать это значение настраиваемым
-    oTable.everyTime(10000, "table", function() {
-        //обнуляем массив с торрентами и обновляем его с сервера
+    //todo РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ СЃ С‚РѕСЂСЂРµРЅС‚РѕРј РєР°Р¶РґС‹Рµ 10000 РјСЃРµРєСѓРЅРґ, РІРµСЂРѕСЏС‚РЅРѕ СЃС‚РѕРёС‚ СЃРґРµР»Р°С‚СЊ СЌС‚Рѕ Р·РЅР°С‡РµРЅРёРµ РЅР°СЃС‚СЂР°РёРІР°РµРјС‹Рј
+    $(oTable).everyTime(10000, "table", function() {
+        //РѕР±РЅСѓР»СЏРµРј РјР°СЃСЃРёРІ СЃ С‚РѕСЂСЂРµРЅС‚Р°РјРё Рё РѕР±РЅРѕРІР»СЏРµРј РµРіРѕ СЃ СЃРµСЂРІРµСЂР°
         torrents = [];
         oTable.fnReloadAjax(oTable.fnSettings());
     });
 }
 
-//эта функция будет вызываться как из контекстного меню, так и через "кнопки управления"
+//СЌС‚Р° С„СѓРЅРєС†РёСЏ Р±СѓРґРµС‚ РІС‹Р·С‹РІР°С‚СЊСЃСЏ РєР°Рє РёР· РєРѕРЅС‚РµРєСЃС‚РЅРѕРіРѕ РјРµРЅСЋ, С‚Р°Рє Рё С‡РµСЂРµР· "РєРЅРѕРїРєРё СѓРїСЂР°РІР»РµРЅРёСЏ"
 function doAction(action, hash) {
-    //todo исправить путь
+    //todo РёСЃРїСЂР°РІРёС‚СЊ РїСѓС‚СЊ
     $.getJSON("mockJSON.html", {}, function(json) {
         if (json.needUserNotice == "true") {
-            //открываем диалог
+            //РѕС‚РєСЂС‹РІР°РµРј РґРёР°Р»РѕРі
             var dialog = openTorrentSettingsDialog();
-            //выставляем параметры
+            //РІС‹СЃС‚Р°РІР»СЏРµРј РїР°СЂР°РјРµС‚СЂС‹
             alert("realise me");
         }
     }); //
 }
 
 //public static void main(null)
-$(document).ready(function() {
+$().ready(function() {
     initializeTable();
     initializeButtons();
     reloadTable();

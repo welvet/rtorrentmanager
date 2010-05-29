@@ -37,7 +37,7 @@ class TorrentSetHelper {
                 try {
                     rtorrentService.start(torrent);
                     torrent.setNeedStart(false);
-                    log.debug(torrent + " запущен");
+                    log.info(torrent + " запущен");
                 } catch (RtorrentServiceException e) {
                     return;    //все кетчи перехватывают исключения, возникшие из-за неправильной связи с сервером.
                     // Логгирование ошибки происходит в конструкторе исключения
@@ -52,7 +52,7 @@ class TorrentSetHelper {
                 try {
                     rtorrentService.stop(torrent);
                     torrent.setNeedStop(false);
-                    log.debug(torrent + " остановлен");
+                    log.info(torrent + " остановлен");
                 } catch (RtorrentServiceException e) {
                     return;
                 }
@@ -67,7 +67,7 @@ class TorrentSetHelper {
                     rtorrentService.add(torrent);
                     if (!rtorrentService.verify(torrent.getHash()))
                         throw new TorrentSetException("Не удалось добавить " + torrent);
-                    log.debug(torrent + " добавлен");
+                    log.info(torrent + " добавлен");
                     //Меняем состояние
                     torrent.setNeedAdd(false);
                     torrent.setNeedStart(true);
@@ -101,7 +101,7 @@ class TorrentSetHelper {
                     if (!rtorrentService.verify(torrent.getTorrentFileHash()))
                         throw new TorrentSetException("Не удалось добавить " + torrent);
                     torrent.setLastUpdated(new Date());
-                    log.debug(torrent + " обновлен");
+                    log.info(torrent + " обновлен");
                 } catch (LoggableException e) {
                     torrent.setNeedUpdate(true); //востанавливаем статус в случае ошибки
                     return;
@@ -118,7 +118,7 @@ class TorrentSetHelper {
                     if (rtorrentService.verify(torrent.getHash()))
                         throw new TorrentSetException("Не удалось удалить " + torrent);
                     torrents.remove(torrent.getHash());
-                    log.debug(torrent + " удален");
+                    log.info(torrent + " удален");
                 } catch (LoggableException e) {
                     return;
                 }

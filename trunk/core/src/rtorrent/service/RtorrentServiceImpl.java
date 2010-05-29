@@ -69,7 +69,7 @@ public class RtorrentServiceImpl implements RtorrentService {
         peerConnection = xmlRpcConnection.getPeerConnectionClient();
         system = xmlRpcConnection.getSystemClient();
         tracker = xmlRpcConnection.getTrackerClient();
-        log.debug("RtorrentService инициализирован");
+        log.info("RtorrentService инициализирован");
     }
 
     /**
