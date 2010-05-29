@@ -1,0 +1,81 @@
+<project name="RtorrentManager" basedir=".">
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    <property file="rtorrent.properties"/>
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+            <exclude name="junit*.jar"/>
+        </fileset>
+    </path>
+    <target name="clean">
+        <echo>Cleaning the ${build.dir}</echo>
+        <delete dir="${build.dir}"/>
+    </target>
+    <target name="init" depends="clean">
+        <echo>Creating the build directory</echo>
+        <mkdir dir="${build.dir}/"/>
+        <mkdir dir="${build.dir}/${web.dir}"/>
+        <mkdir dir="${build.dir}/${web.dir}/WEB-INF"/>
+        <mkdir dir="${build.dir}/${web.dir}/WEB-INF/classes"/>
+    </target>
+
+    <target name="copy-resources">
+        <echo>Copy resources</echo>
+        <copy todir="${resource.out}">
+            <fileset dir="${resource.in}">
+                <exclude name="**/${test.dir}/**"/>
+                <include name="**/*.xml"/>
+                <include name="**/*.xsl"/>
+                <include name="**/*.properties"/>
+                <include name="**/resource/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="copy-lib">
+        <echo>Copy libs</echo>
+        <copy todir="${build.dir}/lib">
+            <path refid="classpath"/>
+        </copy>
+    </target>
+
+    <target name="compile-core" depends="init, copy-lib">
+        <echo>Compile core source</echo>
+        <javac srcdir="${core.dir}" destdir="${build.dir}">
+            <classpath refid="classpath"/>
+            <exclude name="**/${test.dir}/**"/>
+        </javac>
+        <antcall target="copy-resources">
+            <param name="resource.in" value="${core.dir}/src"/>
+            <param name="resource.out" value="${build.dir}"/>
+        </antcall>
+    </target>
+
+    <target name="compile-web" depends="init">
+        <echo>Compile web source</echo>
+        <javac srcdir="${web.dir}" destdir="${build.dir}/${web.dir}/WEB-INF/classes">
+            <classpath refid="classpath"/>
+            <exclude name="**/${test.dir}/**"/>
+        </javac>
+        <copy todir="${build.dir}/${web.dir}">
+            <fileset dir="${web.dir}/web">
+                <exclude name="*.iml"/>
+            </fileset>
+        </copy>
+        <war destfile="${build.dir}/${web.dir}.war" basedir="${build.dir}/${web.dir}"/>
+        <delete dir="${build.dir}/${web.dir}"/>
+    </target>
+
+    <target name="build" depends="init, compile-core, compile-web">
+        <manifestclasspath jarfile="rtorrentmanager.jar" property="manifest.class.path">
+            <classpath refid="classpath"/>
+        </manifestclasspath>
+        <jar destfile="${build.dir}/rtorrentmanager.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="rtorrent.init.Initialize"/>
+                <attribute name="Class-Path" value="${manifest.class.path}"/>
+            </manifest>
+        </jar>
+    </target>
+
+</project>
