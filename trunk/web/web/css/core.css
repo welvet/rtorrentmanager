@@ -1,0 +1,56 @@
+/*основной блок*/
+#main {
+    width: 700px;
+    height: 100%;
+}
+.ui-button-text {
+    font-size: 10px;
+}
+/*блок диалогов*/
+
+.dialog {
+    display: none;
+}
+#settingsDialogBody {
+    width: 100%;
+    height: auto;
+    font-size: 14px;
+}
+
+#buttons {
+    width: 100%;
+    text-align: right;
+}
+/*блок таблицы*/
+
+#tableConatainer {
+    width: 700px;
+}
+
+#torrentTable {
+    width: 600px;
+    font-size:13px;
+}
+/*задаем максимальную ширину для имени торрента*/
+#titleTd {
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 400px;
+    min-width: 400px;
+}
+
+#torrentTable .ui-icon {
+    display: none;
+    height: 0;
+}
+
+.dataTables_filter {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.rowSelected {
+    background-color: #3399FF;
+}
+
+/*блок контекстного меню*/
