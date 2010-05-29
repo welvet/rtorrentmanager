@@ -67,13 +67,12 @@
     </target>
 
     <target name="build" depends="init, compile-core, compile-web">
-        <manifestclasspath jarfile="rtorrentmanager.jar" property="manifest.class.path">
-            <classpath refid="classpath"/>
-        </manifestclasspath>
+        <unjar dest="${build.dir}">
+            <fileset dir="${build.dir}/${lib.dir}"/>
+        </unjar>
         <jar destfile="${build.dir}/rtorrentmanager.jar" basedir="${build.dir}">
             <manifest>
                 <attribute name="Main-Class" value="rtorrent.init.Initialize"/>
-                <attribute name="Class-Path" value="${manifest.class.path}"/>
             </manifest>
         </jar>
     </target>
