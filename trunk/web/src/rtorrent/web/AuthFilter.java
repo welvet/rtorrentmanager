@@ -1,6 +1,6 @@
 package rtorrent.web;
 
-import sun.misc.BASE64Encoder;
+import redstone.xmlrpc.util.Base64;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -25,17 +25,17 @@ public class AuthFilter implements Filter {
 
         //проверяем авторизацию
         //todo в дальнейшем логин и пасс будут считываться с конфига
-        if (request.getSession().getAttribute("auth") != null) {
-            String secret = new BASE64Encoder().encodeBuffer("root:pass".getBytes());
-            secret = "Basic " + secret.replaceAll("\r\n", "");
+        if (request.getSession().getAttribute("auth") == null) {
+            String secret = String.valueOf(Base64.encode("root:pass".getBytes()));
+            secret = "Basic " + secret;
             if (!secret.equals(request.getHeader("Authorization"))) {
                 response.setHeader("WWW-Authenticate", "Basic realm=\"Secure Area\"");
                 response.sendError(401);
-                request.getSession().setAttribute("auth", true);
+                return;
             }
-        } else {
-            filterChain.doFilter(servletRequest, servletResponse);
+            request.getSession().setAttribute("auth", true);
         }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     public void init(FilterConfig filterConfig) throws ServletException {

@@ -1,7 +1,4 @@
-
 package redstone.xmlrpc.util;
-
-import redstone.xmlrpc.XmlRpcMessages;
 
 /**
  *  Provides encoding of raw bytes to base64-encoded characters, and
@@ -139,7 +136,7 @@ public class Base64
 
         if ( index != out.length )
         {
-            throw new RuntimeException( XmlRpcMessages.getString( "Base64.InvalidDataLength" ) );
+            throw new RuntimeException( "Base64.InvalidDataLength" );
         }
 
         return out;

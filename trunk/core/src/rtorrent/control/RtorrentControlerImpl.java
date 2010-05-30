@@ -5,6 +5,7 @@ import rtorrent.torrent.TorrentValidateException;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetException;
 import rtorrent.torrent.set.TorrentSetSingleton;
+import rtorrent.utils.LoggerSingleton;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -43,8 +44,13 @@ public class RtorrentControlerImpl implements RtorrentControler {
         return torrentSet.getSet();
     }
 
-    public void addTorrent(File torrentFile) throws TorrentValidateException {
-        ActionTorrent torrent = new ActionTorrent(torrentFile);
+    public void addTorrent(File torrentFile) {
+        ActionTorrent torrent = null;
+        try {
+            torrent = new ActionTorrent(torrentFile);
+        } catch (TorrentValidateException e) {
+            LoggerSingleton.getLogger().error(e);
+        }
         torrent.setNeedAdd(true);
         torrentSet.addOrUpdate(torrent);
     }

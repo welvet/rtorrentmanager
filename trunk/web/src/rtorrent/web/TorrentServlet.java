@@ -21,7 +21,7 @@ public class TorrentServlet extends HttpServlet {
         try {
             InitialContext context = new InitialContext();
             RtorrentControler controler = (RtorrentControler) context.lookup("rcontroler");
-            controler.getList();       
+            controler.getList();        
         } catch (NamingException e) {
             e.printStackTrace();  // TODO change me
         }

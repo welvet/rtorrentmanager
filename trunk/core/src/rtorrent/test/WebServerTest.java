@@ -17,7 +17,7 @@ public class WebServerTest extends TestCase {
     private static final String WAR_PATH = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
 
     public void testStart() throws Exception, UtilException {
-        if (true)
+        if (false)
             throw new RuntimeException("Ётот метод в тесте нужен только дл€ разработки" +
                     " Ќеобходимо будет удалить его");
 
