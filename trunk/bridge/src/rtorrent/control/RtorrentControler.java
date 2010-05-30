@@ -1,8 +1,5 @@
 package rtorrent.control;
 
-import rtorrent.torrent.ActionTorrent;
-import rtorrent.torrent.TorrentValidateException;
-
 import java.io.File;
 import java.util.Set;
 
@@ -17,15 +14,14 @@ public interface RtorrentControler {
      *
      * @return
      */
-    public Set<ActionTorrent> getList();
+    public Set getList();
 
     /**
      * Добавить торрент
      *
      * @param torrentFile
-     * @throws TorrentValidateException
      */
-    public void addTorrent(File torrentFile) throws TorrentValidateException;
+    public void addTorrent(File torrentFile);
 
     /**
      * Запустить торрент
