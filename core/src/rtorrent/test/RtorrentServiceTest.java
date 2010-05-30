@@ -2,7 +2,7 @@ package rtorrent.test;
 
 import junit.framework.TestCase;
 import ntorrent.io.xmlrpc.XmlRpcConnection;
-import org.eclipse.ecf.protocol.bittorrent.TorrentFile;
+import bittorrent.TorrentFile;
 import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceException;
 import rtorrent.torrent.ActionTorrent;

@@ -13,10 +13,13 @@
     </target>
     <target name="init" depends="clean">
         <echo>Creating the build directory</echo>
+        <mkdir dir="${build.dir}/lib"/>
+        <mkdir dir="${build.dir}/${bridge.dir}"/>
         <mkdir dir="${build.dir}/${core.dir}"/>
         <mkdir dir="${build.dir}/${web.dir}"/>
         <mkdir dir="${build.dir}/${web.dir}/WEB-INF"/>
         <mkdir dir="${build.dir}/${web.dir}/WEB-INF/classes"/>
+        <mkdir dir="${build.dir}/${web.dir}/WEB-INF/lib"/>
     </target>
 
     <target name="copy-resources">
@@ -37,9 +40,21 @@
         <copy todir="${build.dir}/lib">
             <path refid="classpath"/>
         </copy>
+        <path id="classpath">
+            <fileset dir="${build.dir}/lib"/>
+        </path>
     </target>
 
-    <target name="compile-core" depends="init, copy-lib">
+    <target name="compile-bridge" depends="init">
+        <javac srcdir="${bridge.dir}" destdir="${build.dir}/${bridge.dir}">
+            <exclude name="**/${test.dir}/**"/>
+        </javac>
+        <jar destfile="${build.dir}/lib/bridge.jar" basedir="${build.dir}/${bridge.dir}" compress="true"/>
+        <delete dir="${build.dir}/${bridge.dir}"/>
+        <copy file="${build.dir}/lib/bridge.jar" todir="${build.dir}/${web.dir}/WEB-INF/lib"/>
+    </target>
+
+    <target name="compile-core" depends="init, copy-lib, compile-bridge">
         <echo>Compile core source</echo>
         <javac srcdir="${core.dir}" destdir="${build.dir}/${core.dir}">
             <classpath refid="classpath"/>
@@ -61,9 +76,10 @@
         <delete dir="${build.dir}/${core.dir}"/>
     </target>
 
-    <target name="compile-web" depends="init">
+    <target name="compile-web" depends="init, copy-lib, compile-bridge">
         <echo>Compile web source</echo>
         <javac srcdir="${web.dir}" destdir="${build.dir}/${web.dir}/WEB-INF/classes">
+            <!--собираем со всеми либами, но используем только свои-->
             <classpath refid="classpath"/>
             <exclude name="**/${test.dir}/**"/>
         </javac>
@@ -72,11 +88,15 @@
                 <exclude name="*.iml"/>
             </fileset>
         </copy>
+        <copy todir="${build.dir}/${web.dir}/WEB-INF/lib">
+            <fileset dir="${web.dir}/lib">
+            </fileset>
+        </copy>
         <war destfile="${build.dir}/${web.dir}.war" basedir="${build.dir}/${web.dir}" compress="true"/>
         <delete dir="${build.dir}/${web.dir}"/>
     </target>
 
-    <target name="build" depends="init, compile-core, compile-web"/>
+    <target name="build" depends="init, compile-bridge, compile-core, compile-web"/>
 
     <target name="prepare-test">
         <copy todir="${out.production}/${core.dir}">

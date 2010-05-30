@@ -1,13 +1,13 @@
 package rtorrent.torrent;
 
-import rtorrent.utils.LoggableException;
+import java.io.IOException;
 
 /**
  * User: welvet
  * Date: 19.05.2010
  * Time: 17:52:20
  */
-public class TorrentValidateException extends LoggableException {
+public class TorrentValidateException extends IOException {
     public TorrentValidateException() {
     }
 

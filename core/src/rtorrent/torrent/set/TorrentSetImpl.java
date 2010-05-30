@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceException;
 import rtorrent.torrent.ActionTorrent;
-import rtorrent.torrent.TorrentHashtable;
 import rtorrent.utils.LoggerSingleton;
 
 import java.io.File;

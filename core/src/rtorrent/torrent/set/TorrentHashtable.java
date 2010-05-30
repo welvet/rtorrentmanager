@@ -1,4 +1,7 @@
-package rtorrent.torrent;
+package rtorrent.torrent.set;
+
+import rtorrent.torrent.ActionTorrent;
+import rtorrent.torrent.TorrentValidateException;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,7 +14,7 @@ public class TorrentHashtable extends ConcurrentHashMap<String, ActionTorrent> {
     /**
      * Обновляем торрент в базе по новому хешу из файла
      * @param torrent
-     * @throws TorrentValidateException
+     * @throws rtorrent.torrent.TorrentValidateException
      */
     public void update(ActionTorrent torrent) throws TorrentValidateException {
         this.remove(torrent.getHash());

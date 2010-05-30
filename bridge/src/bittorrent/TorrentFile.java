@@ -8,10 +8,10 @@
  * Contributors:
  *    Remy Suen <remy.suen@gmail.com> - initial API and implementation
  ******************************************************************************/
-package org.eclipse.ecf.protocol.bittorrent;
+package bittorrent;
 
-import org.eclipse.ecf.protocol.bittorrent.internal.encode.BEncodedDictionary;
-import org.eclipse.ecf.protocol.bittorrent.internal.encode.Decode;
+import bittorrent.internal.encode.BEncodedDictionary;
+import bittorrent.internal.encode.Decode;
 
 import java.io.*;
 import java.nio.ByteBuffer;

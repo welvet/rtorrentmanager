@@ -1,6 +1,6 @@
 package rtorrent.torrent;
 
-import org.eclipse.ecf.protocol.bittorrent.TorrentFile;
+import bittorrent.TorrentFile;
 
 import java.io.File;
 import java.io.IOException;
