@@ -60,8 +60,8 @@ public class RtorrentServiceImpl implements RtorrentService {
     private static List list = Arrays.asList(download_variable);
 
 
-    public RtorrentServiceImpl(XmlRpcConnection xmlRpcConnection) {
-        this.xmlRpcConnection = xmlRpcConnection;
+    public RtorrentServiceImpl(String host, Integer port) {
+        this.xmlRpcConnection = new XmlRpcConnection(host, port);
         client = xmlRpcConnection.getClient();
         download = xmlRpcConnection.getDownloadClient();
         file = xmlRpcConnection.getFileClient();
