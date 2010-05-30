@@ -8,7 +8,7 @@
  * Contributors:
  *    Remy Suen <remy.suen@gmail.com> - initial API and implementation
  ******************************************************************************/
-package org.eclipse.ecf.protocol.bittorrent.internal.encode;
+package bittorrent.internal.encode;
 
 import java.io.BufferedReader;
 import java.io.IOException;

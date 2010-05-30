@@ -9,7 +9,7 @@
  *    Remy Suen <remy.suen@gmail.com> - initial API and implementation
  *    Matthew Jucius <matthew@jucius.com> - Bug 265174
  ******************************************************************************/
-package org.eclipse.ecf.protocol.bittorrent.internal.encode;
+package bittorrent.internal.encode;
 
 public final class Encode {
 

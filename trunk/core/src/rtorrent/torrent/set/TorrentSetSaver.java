@@ -1,7 +1,6 @@
 package rtorrent.torrent.set;
 
 import org.apache.log4j.Logger;
-import rtorrent.torrent.TorrentHashtable;
 
 import java.io.*;
 

@@ -1,9 +1,6 @@
 package rtorrent.web;
 
-import winstone.WinstoneResponse;
-
 import javax.servlet.*;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -17,7 +14,7 @@ public class EncodeFixFilter implements Filter {
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        ((WinstoneResponse) ((HttpServletResponse) servletResponse)).setCharacterEncoding("UTF-8");
+        servletResponse.setCharacterEncoding("UTF-8");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

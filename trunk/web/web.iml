@@ -20,6 +20,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="WebServ" level="project" />
+    <orderEntry type="module" module-name="bridge" />
+    <orderEntry type="library" name="Json" level="project" />
   </component>
 </module>
 
