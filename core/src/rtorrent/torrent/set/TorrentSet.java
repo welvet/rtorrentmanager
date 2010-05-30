@@ -61,11 +61,4 @@ public interface TorrentSet {
      * @param torrent Торрент файл, для обновления
      */
     public void addOrUpdate(ActionTorrent torrent);
-
-    /**
-     * Удалить файл из списка, и рторрента
-     *
-     * @param torrent
-     */
-    public void remove(ActionTorrent torrent);
 }

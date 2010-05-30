@@ -132,14 +132,6 @@ public class TorrentSetImpl implements TorrentSet {
         torrentSetSaver.save();
     }
 
-    public void remove(ActionTorrent torrent) {
-        ActionTorrent localTorrent = torrents.get(torrent.getHash());
-        localTorrent.setNeedDelete(true);
-        log.debug(torrent + " помечен на удаление");
-        torrentSetSaver.save();
-    }
-
-
     TorrentHashtable getTorrents() {
         return torrents;
     }

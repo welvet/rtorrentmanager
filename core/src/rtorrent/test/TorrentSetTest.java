@@ -2,7 +2,6 @@ package rtorrent.test;
 
 import junit.framework.TestCase;
 import rtorrent.service.RtorrentService;
-import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
@@ -53,7 +52,8 @@ public class TorrentSetTest extends TestCase {
 
             assertNotNull(torrentSet.getByHash(torrent.getHash()));
         } finally {
-            torrentSet.remove(torrent);
+            torrent.setNeedDelete(true);
+            torrentSet.addOrUpdate(torrent);
             torrentSet.updateRtorrent();
         }
     }
@@ -71,7 +71,7 @@ public class TorrentSetTest extends TestCase {
             torrentSet.updateRtorrent();
             torrentSet.updateSet();
 
-            Thread.sleep(WAIT_TIME/2);
+            Thread.sleep(WAIT_TIME / 2);
 
             torrent = torrentSet.getByHash(torrent.getHash());
 
@@ -82,11 +82,12 @@ public class TorrentSetTest extends TestCase {
             torrentSet.updateRtorrent();
             torrentSet.updateSet();
 
-            Thread.sleep(WAIT_TIME/2);
+            Thread.sleep(WAIT_TIME / 2);
 
             torrent = torrentSet.getByHash(torrent.getTorrentFileHash());
         } finally {
-            torrentSet.remove(torrent);
+            torrent.setNeedDelete(true);
+            torrentSet.addOrUpdate(torrent);
             torrentSet.updateRtorrent();
             torrentSet.updateSet();
         }
@@ -127,11 +128,12 @@ public class TorrentSetTest extends TestCase {
             Thread.sleep(WAIT_TIME);
             torrentSet.updateSet();
 
-            Thread.sleep(WAIT_TIME/2);
+            Thread.sleep(WAIT_TIME / 2);
             torrent = torrentSet.getByHash(hash);
             assertTrue(torrent.isStart());
         } finally {
-            torrentSet.remove(torrent);
+            torrent.setNeedDelete(true);
+            torrentSet.addOrUpdate(torrent);
             torrentSet.updateRtorrent();
         }
     }

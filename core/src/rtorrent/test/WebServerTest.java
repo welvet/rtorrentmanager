@@ -1,8 +1,12 @@
 package rtorrent.test;
 
 import junit.framework.TestCase;
+import rtorrent.control.RtorrentControlerImpl;
+import rtorrent.torrent.set.TorrentSetSingleton;
 import rtorrent.utils.UtilException;
 import rtorrent.web.WebServerBuilder;
+
+import java.io.File;
 
 /**
  * User: welvet
@@ -17,6 +21,9 @@ public class WebServerTest extends TestCase {
             throw new RuntimeException("Ётот метод в тесте нужен только дл€ разработки" +
                     " Ќеобходимо будет удалить его");
 
+        File datFile = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "torrents.dat");
+        TorrentSetSingleton.initialze(new MockRtorrentService(), datFile);
+        new RtorrentControlerImpl().bindContext();
 
         WebServerBuilder builder = new WebServerBuilder();
         builder.setPort("8081");
