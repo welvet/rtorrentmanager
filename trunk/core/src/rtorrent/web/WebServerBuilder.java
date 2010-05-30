@@ -15,11 +15,12 @@ import java.util.Map;
  * Time: 0:41:03
  */
 public class WebServerBuilder {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, Object> properties = new HashMap<String, Object>();
 
     public WebServerBuilder() {
         properties.put("accessLoggerClassName", "rtorrent.web.WebServLogger");
         properties.put("ajp13Port", "-1");
+        properties.put("useJNDI", "true");
         properties.put("httpPort", "8080");
         properties.put("httpsListenAddress", "0.0.0.0");
         String war = new File(Initialize.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/../web.war").getAbsolutePath();
