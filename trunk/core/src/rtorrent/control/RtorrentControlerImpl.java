@@ -1,6 +1,7 @@
 package rtorrent.control;
 
 import rtorrent.torrent.ActionTorrent;
+import rtorrent.torrent.TorrentInfo;
 import rtorrent.torrent.TorrentValidateException;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetException;
@@ -10,6 +11,8 @@ import rtorrent.utils.LoggerSingleton;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,19 +43,26 @@ public class RtorrentControlerImpl implements RtorrentControler {
         }
     }
 
-    public Set<ActionTorrent> getList() {
-        return torrentSet.getSet();
+    public List<TorrentInfo> getList() {
+        List<TorrentInfo> torrents = new ArrayList<TorrentInfo>();
+        Set<ActionTorrent> set = torrentSet.getSet();
+        for (ActionTorrent torrent : set) {
+            TorrentInfoImpl torrentInfo = new TorrentInfoImpl();
+            torrentInfo.copyInfo(torrent);
+            torrents.add(torrentInfo);
+        }
+        return torrents;
     }
 
     public void addTorrent(File torrentFile) {
         ActionTorrent torrent = null;
         try {
             torrent = new ActionTorrent(torrentFile);
+            torrent.setNeedAdd(true);
+            torrentSet.addOrUpdate(torrent);
         } catch (TorrentValidateException e) {
             LoggerSingleton.getLogger().error(e);
         }
-        torrent.setNeedAdd(true);
-        torrentSet.addOrUpdate(torrent);
     }
 
     public void startTorrent(String hash) {
