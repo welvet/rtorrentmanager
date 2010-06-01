@@ -38,6 +38,13 @@
     max-width: 400px;
     min-width: 400px;
 }
+/*максимальная ширина для размеров*/
+#titleSize {
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 50px;
+    min-width: 50px;
+}
 
 #torrentTable .ui-icon {
     display: none;

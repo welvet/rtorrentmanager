@@ -78,18 +78,21 @@
 
     <target name="compile-web" depends="init, copy-lib, compile-bridge">
         <echo>Compile web source</echo>
+        <copy todir="${build.dir}/${web.dir}/WEB-INF/lib">
+            <fileset dir="${web.dir}/lib">
+            </fileset>
+        </copy>
         <javac srcdir="${web.dir}" destdir="${build.dir}/${web.dir}/WEB-INF/classes">
             <!--собираем со всеми либами, но используем только свои-->
             <classpath refid="classpath"/>
+            <classpath>
+                <fileset dir="${build.dir}/${web.dir}/WEB-INF/lib"/>
+            </classpath>
             <exclude name="**/${test.dir}/**"/>
         </javac>
         <copy todir="${build.dir}/${web.dir}">
             <fileset dir="${web.dir}/web">
                 <exclude name="*.iml"/>
-            </fileset>
-        </copy>
-        <copy todir="${build.dir}/${web.dir}/WEB-INF/lib">
-            <fileset dir="${web.dir}/lib">
             </fileset>
         </copy>
         <war destfile="${build.dir}/${web.dir}.war" basedir="${build.dir}/${web.dir}" compress="true"/>

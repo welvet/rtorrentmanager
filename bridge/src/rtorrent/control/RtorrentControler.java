@@ -1,7 +1,9 @@
 package rtorrent.control;
 
+import rtorrent.torrent.TorrentInfo;
+
 import java.io.File;
-import java.util.Set;
+import java.util.List;
 
 /**
  * User: welvet
@@ -14,7 +16,7 @@ public interface RtorrentControler {
      *
      * @return
      */
-    public Set getList();
+    public List<TorrentInfo> getList();
 
     /**
      * Добавить торрент
