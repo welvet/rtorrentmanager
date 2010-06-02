@@ -25,11 +25,11 @@
         <thead>
         <tr>
             <th>hash</th>
-            <th id="titleTd">Имя</th>
+            <th class="titleTd">Имя</th>
             <th>Статус</th>
             <th>&nbsp;</th>
-            <th>Скачано</th>
-            <th>Размер</th>
+            <th class="titleSize" >Скачано</th>
+            <th class="titleSize" >Размер</th>
             <th>Ратио</th>
             <th>Пиры</th>
             <th>Сиды</th>
@@ -45,7 +45,7 @@
     <li><a href="#properties">Свойства</a></li>
 </ul>
 <!--блок диалога с настройками торрента-->
-<div id="torrentDialog" title="Настройки торрнта">
+<div id="torrentDialog">
     <!--todo необходимо разработать логику вебсервера перед реализацией данного диалога-->
 </div>
 <!--блок диалога с настройками-->

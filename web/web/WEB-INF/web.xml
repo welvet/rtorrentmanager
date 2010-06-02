@@ -6,9 +6,18 @@
          version="2.5">
 
     <servlet>
+        <servlet-name>TorrentsServlet</servlet-name>
+        <servlet-class>rtorrent.web.TorrentsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TorrentsServlet</servlet-name>
+        <url-pattern>/torrent/list/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>TorrentServlet</servlet-name>
         <servlet-class>rtorrent.web.TorrentServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>

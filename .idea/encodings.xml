@@ -9,7 +9,7 @@
     <file url="file://$PROJECT_DIR$/web/web/js/jquery.contextMenu.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/web/js/jquery.dataTables.min.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/web/js/jquery.timers-1.2.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/web/web/mockJSON.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/web/json.jsp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/web/mockSource.html" charset="UTF-8" />
   </component>
 </project>

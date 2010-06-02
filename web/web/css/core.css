@@ -1,16 +1,19 @@
 /*основной блок*/
 #main {
-    width: 700px;
+    width: 720px;
     height: 100%;
 }
+
 .ui-button-text {
     font-size: 10px;
 }
+
 /*блок диалогов*/
 
 .dialog {
     display: none;
 }
+
 #settingsDialogBody {
     width: 100%;
     height: auto;
@@ -21,25 +24,30 @@
     width: 100%;
     text-align: right;
 }
+
 /*блок таблицы*/
 
 #tableConatainer {
-    width: 700px;
+    width: 720px;
 }
 
 #torrentTable {
+    text-align: center;
     width: 600px;
-    font-size:13px;
+    font-size: 13px;
 }
+
 /*задаем максимальную ширину для имени торрента*/
-#titleTd {
+.titleTd {
+    text-align: left;
     overflow: hidden;
     white-space: nowrap;
     max-width: 400px;
     min-width: 400px;
 }
+
 /*максимальная ширина для размеров*/
-#titleSize {
+.titleSize {
     overflow: hidden;
     white-space: nowrap;
     max-width: 50px;

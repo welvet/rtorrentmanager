@@ -2,52 +2,66 @@ package rtorrent.web;
 
 import com.google.gson.Gson;
 import rtorrent.control.RtorrentControler;
-import rtorrent.torrent.TorrentInfo;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: welvet
- * Date: 29.05.2010
- * Time: 17:39:43
+ * Date: 02.06.2010
+ * Time: 22:34:38
  */
 public class TorrentServlet extends HttpServlet {
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        throw new UnsupportedOperationException();
-    }
+    private static final String START = "start";
+    private static final String STOP = "stop";
+    private static final String REMOVE = "remove";
+    private static final String PROPERTIES = "properties";
 
-    private class JsonList {
-        private List aaData;
+    private class nullAnsw {
+        private static final String FALSE = "false";
+        private String needUserNotice = FALSE;
 
-        private JsonList(List aaData) {
-            this.aaData = aaData;
-        }
-
-        public List getAaData() {
-            return aaData;
+        public String getNeedUserNotice() {
+            return needUserNotice;
         }
     }
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        InitialContext context = null;
         try {
-            InitialContext context = new InitialContext();
+            context = new InitialContext();
             RtorrentControler controler = (RtorrentControler) context.lookup("rcontroler");
-            List<TorrentInfo> list = controler.getList();
-            final Gson gson = new Gson();
 
-            final List objects = new ArrayList();
-            for (TorrentInfo aList : list) {
-                objects.add(aList.toArray());
+            //определяемся с действием, создаем диалог
+            String action = request.getParameter("action");
+            String hash = request.getParameter("hash");
+            if (action.equals(START))
+                controler.startTorrent(hash);
+            if (action.equals(STOP))
+                controler.stopTorrent(hash);
+            if (action.equals(REMOVE))
+                controler.removeTorrent(hash);
+            if (!action.equals(PROPERTIES)) {
+                Gson gson = new Gson();
+                String s = gson.toJson(new nullAnsw());
+                response.getWriter().print(s);
+                return;
             }
-            JsonList jsonList = new JsonList(objects);
-            String rsp = gson.toJson(jsonList, JsonList.class);
-            response.getWriter().print(rsp);
+
+            //редиректим на jsp с диалогом
+//            todo инфо торрента нужно передавать тут же
+            request.setAttribute("dialog", "properties.jsp");
+            getServletConfig().getServletContext()
+                    .getRequestDispatcher("/json.jsp").forward(request, response);
         } catch (NamingException e) {
             e.printStackTrace();  // TODO change me
         }
