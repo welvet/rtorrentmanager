@@ -25,7 +25,7 @@ function initializeTable() {
         bLengthChange: false,
         fnRowCallback: rowCallback, //задаем каллбек для контекстного меню
         "bProcessing": true,
-        "sAjaxSource": "mockSource.html"
+        "sAjaxSource": "/torrent/list/"
     });
 }
 
@@ -44,10 +44,9 @@ function initializeButtons() {
     });
     //создаем кнопку для диалога отправки настроек
     $(".submit").click(function() {
-//        todo type: POST работет только в пределах одного домена, после отладки сменить на type: POST
         var form = $(this).parents(".settingsForm");
         //отправляем форму
-        $.ajax({url: form.attr("action")+"index.php?", type: "GET", data: form.serialize()});
+        $.ajax({url: form.attr("action"), type: "POST", data: form.serialize()});
         //закрываем диалог
         $(this).parents(".dialog").dialog("close");
         return false;
@@ -81,8 +80,11 @@ function rowCallback(nRow, aData, iDisplayIndex) {
         $(this).addClass("rowSelected");
         selectedTorrent = $(this).attr("hash");
     });
-    var img = $(nRow).children().get(1);
+    //устанавливаем css класс для колонки с именем
+    var name = $(nRow).children().get(0);
+    $(name).addClass("titleTd");
     //устанавливаем изображение для статуса торрента
+    var img = $(nRow).children().get(1);
     $(img).html("<img src=\"images/" + aData[2] + ".jpg\"/>");
     //восстанавливаем выделеный торрент после обновления todo в будущем работаем только с selectedTorrent
     if ((aData[0] == selectedTorrent) && (selectedTorrent != undefined))
@@ -95,12 +97,6 @@ function openSettingsDialog() {
     $("#settingsDialogBody").tabs();
     $("#settingsDialog").dialog({ modal: false, resizable: false,
         draggable: true, width: 800, height: 500 });
-}
-
-//открыть диалог с настройками торрента
-function openTorrentSettingsDialog() {
-    $("#torrentDialog").dialog({ modal: false, resizable: false,
-        draggable: true, width: 500, height: 400 });
 }
 
 //открыть диалог с логами ошибок todo вероятно он будет модальным и требовать поддтверждения от пользователя
@@ -116,13 +112,15 @@ function reloadTable() {
 
 //эта функция будет вызываться как из контекстного меню, так и через "кнопки управления"
 function doAction(action, hash) {
-    //todo исправить путь
-    $.getJSON("mockJSON.html", {}, function(json) {
-        if (json.needUserNotice == "true") {
+    $.get("/torrent/?action=" + action + "&hash=" + hash, {}, function(data) {
+        $("#torrentDialog").html(data);
+        //проверяем, нужно ли создавать диалог
+        if ($("#torrentDialog > #needUserNotice").val() == "true") {
+            //устанавливаем заголовок
+            $("#torrentDialog").attr("title", $("#torrentDialog > #needUserNotice").val());
             //открываем диалог
-            var dialog = openTorrentSettingsDialog();
-            //выставляем параметры
-            alert("realise me");
+            $("#torrentDialog").dialog({ modal: false, resizable: false,
+                draggable: true, width: 500, height: 400 });
         }
     }); //
 }

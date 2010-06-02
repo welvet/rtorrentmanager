@@ -3,6 +3,7 @@ package rtorrent.control;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.State;
 import rtorrent.torrent.TorrentInfo;
+import rtorrent.utils.SizeFormater;
 
 /**
  * User: welvet
@@ -58,8 +59,8 @@ public class TorrentInfoImpl implements TorrentInfo {
         objects[1] = name;
         objects[2] = state;
         objects[3] = percentage+"%";
-        objects[4] = compliteSize;
-        objects[5] = fullSize;
+        objects[4] = SizeFormater.formatSize(compliteSize, 2);
+        objects[5] = SizeFormater.formatSize(fullSize, 2);
         objects[6] = ratio;
         objects[7] = peersConnected;
         objects[8] = sids;
