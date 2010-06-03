@@ -29,21 +29,24 @@ function initializeTable() {
     });
 }
 
-function initializeButtons() {
+function initializeButtons(parent) {
+    if (parent != null)
+        parent = parent + " ";
+    else
+        parent = "";
     //создаем кнопки
-    //создаем кнопку сабмит для всех диалогов
-    $(".button").each(function() {
+    $(parent + ".button").each(function() {
         $(this).button();
     });
     //создаем кнопку отмены для всех диалогов
-    $(".closeButton").each(function() {
+    $(parent + ".closeButton").each(function() {
         $(this).click(function() {
             $(this).parents(".dialog").dialog("close");
             return false;
         });
     });
     //создаем кнопку для диалога отправки настроек
-    $(".submit").click(function() {
+    $(parent + ".submit").click(function() {
         var form = $(this).parents(".settingsForm");
         //отправляем форму
         $.ajax({url: form.attr("action"), type: "POST", data: form.serialize()});
@@ -115,9 +118,15 @@ function doAction(action, hash) {
     $.get("/torrent/?action=" + action + "&hash=" + hash, {}, function(data) {
         $("#torrentDialog").html(data);
         //проверяем, нужно ли создавать диалог
-        if ($("#torrentDialog > #needUserNotice").val() == "true") {
+        if ($("#torrentDialog #needUserNotice").val() == "true") {
             //устанавливаем заголовок
-            $("#torrentDialog").attr("title", $("#torrentDialog > #needUserNotice").val());
+            $("#torrentDialog").attr("title", $("#torrentDialog #title").val());
+            //устанавливаем action
+            $("#torrentDialog #dialogForm").attr("action", $("#torrentDialog #path").val());
+            //инициализируем кнопки
+            initializeButtons("#torrentDialog");
+            //показываем диалог
+            $("#torrentDialog .dialog").show();
             //открываем диалог
             $("#torrentDialog").dialog({ modal: false, resizable: false,
                 draggable: true, width: 500, height: 400 });
@@ -128,6 +137,6 @@ function doAction(action, hash) {
 //public static void main(null)
 $().ready(function() {
     initializeTable();
-    initializeButtons();
+    initializeButtons(null);
     reloadTable();
 });
