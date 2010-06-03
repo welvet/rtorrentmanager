@@ -59,7 +59,9 @@ public class TorrentServlet extends HttpServlet {
 
             //редиректим на jsp с диалогом
 //            todo инфо торрента нужно передавать тут же
-            request.setAttribute("dialog", "properties.jsp");
+            //я тоже хочу как попов, у меня будет свой mvc ^_^
+            //создаем диалог
+            DialogHelper.createDialog(request);
             getServletConfig().getServletContext()
                     .getRequestDispatcher("/json.jsp").forward(request, response);
         } catch (NamingException e) {
