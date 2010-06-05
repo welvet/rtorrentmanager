@@ -1,5 +1,5 @@
-<%@ page import="lib.dialog.Dialog" %>
-<%@ page import="lib.dialog.Input" %>
+<%@ page import="dialog.Dialog" %>
+<%@ page import="dialog.Input" %>
 <%@ page language="java" %>
 <%@ page contentType="text/html;UTF-8" pageEncoding="UTF-8" %>
 <%

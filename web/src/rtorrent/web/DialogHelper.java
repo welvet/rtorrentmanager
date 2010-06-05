@@ -1,7 +1,7 @@
 package rtorrent.web;
 
-import lib.dialog.Dialog;
-import lib.dialog.TextInput;
+import dialog.Dialog;
+import dialog.TextInput;
 
 import javax.servlet.http.HttpServletRequest;
 

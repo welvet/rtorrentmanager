@@ -1,4 +1,4 @@
-package lib.dialog;
+package dialog;
 
 import java.util.ArrayList;
 import java.util.List;
