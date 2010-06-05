@@ -90,17 +90,6 @@
             </classpath>
             <exclude name="**/${test.dir}/**"/>
         </javac>
-
-        <!--todo создаем либу для jsp. Ужасно криво, переделать-->
-        <move todir="${build.dir}/${web.dir}/WEB-INF/classes/lib/lib">
-            <fileset dir="${build.dir}/${web.dir}/WEB-INF/classes/lib"/>
-        </move>
-        <jar destfile="${build.dir}/${web.dir}/WEB-INF/lib/weblib.jar"
-             basedir="${build.dir}/${web.dir}/WEB-INF/classes/lib"
-             compress="true">
-        </jar>
-        <delete dir="${build.dir}/${web.dir}/WEB-INF/classes/lib"/>
-
         <copy todir="${build.dir}/${web.dir}">
             <fileset dir="${web.dir}/web">
                 <exclude name="*.iml"/>

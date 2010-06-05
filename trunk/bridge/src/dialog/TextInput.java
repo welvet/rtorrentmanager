@@ -1,4 +1,4 @@
-package lib.dialog;
+package dialog;
 
 /**
  * User: welvet
@@ -44,6 +44,6 @@ public class TextInput implements Input {
     }
 
     public String getHtml() {
-        return "<input id=\"" + fieldName + "\" type=\"text\"/>";
+        return "A<input id=\"" + fieldName + "\" type=\"text\"/>";
     }
 }

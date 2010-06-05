@@ -1,4 +1,4 @@
-package lib.dialog;
+package dialog;
 
 /**
  * User: welvet
