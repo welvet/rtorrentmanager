@@ -1,5 +1,10 @@
 package rtorrent.config;
 
+import org.apache.log4j.Logger;
+import rtorrent.utils.LoggerSingleton;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,13 +21,24 @@ public class ConfigManagerImpl implements ConfigManager {
     private File file;
     private static final String EXT = ".cnf";
     private static final String DIR = "configs";
+    private Logger log = LoggerSingleton.getLogger();
 
     public ConfigManagerImpl(File dir) {
         //создаем директорию с конфигами
-        dir = new File (dir.getAbsolutePath()+ "\\" + DIR);
+        dir = new File(dir.getAbsolutePath() + "\\" + DIR);
         dir.mkdir();
 
         this.file = dir;
+    }
+
+    public void bindContext() {
+        try {
+            InitialContext context = new InitialContext();
+            context.bind("rconfig", this);
+            log.info("ConfigManager загружен");
+        } catch (NamingException e) {
+            log.error(e);
+        }
     }
 
     private void save(Config config) throws IOException {
@@ -32,6 +48,7 @@ public class ConfigManagerImpl implements ConfigManager {
         String path = file.getAbsolutePath() + "\\" + config.getName() + EXT;
         FileOutputStream stream = new FileOutputStream(path);
         properties.store(stream, null);
+        log.debug("Конфиг " + config.getName() + " сохранен");
     }
 
     private Config load(String name) throws IOException {
@@ -50,6 +67,7 @@ public class ConfigManagerImpl implements ConfigManager {
         config.setFields(map);
         //добавляем конфиг
         configs.add(config);
+        log.debug("Конфиг " + config.getName() + " загружен");
         return config;
     }
 
@@ -62,9 +80,9 @@ public class ConfigManagerImpl implements ConfigManager {
         try {
             return load(name);
         } catch (IOException e) {
-            //todo переделать на свое исключение
-            throw new RuntimeException();
+            log.error(e);
         }
+        return null;
     }
 
     public void saveConfig(Config config) {
@@ -72,8 +90,7 @@ public class ConfigManagerImpl implements ConfigManager {
         try {
             save(config);
         } catch (IOException e) {
-            //todo переделать на свое исклчение
-            throw new RuntimeException();
+            log.error(e);
         }
     }
 }

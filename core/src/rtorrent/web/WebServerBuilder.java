@@ -1,7 +1,8 @@
 package rtorrent.web;
 
+import org.apache.log4j.Logger;
 import rtorrent.init.Initialize;
-import rtorrent.utils.UtilException;
+import rtorrent.utils.LoggerSingleton;
 import winstone.Launcher;
 
 import java.io.File;
@@ -15,7 +16,8 @@ import java.util.Map;
  * Time: 0:41:03
  */
 public class WebServerBuilder {
-    Map<String, Object> properties = new HashMap<String, Object>();
+    private Map<String, Object> properties = new HashMap<String, Object>();
+    private Logger log = LoggerSingleton.getLogger();
 
     public WebServerBuilder() {
         properties.put("accessLoggerClassName", "rtorrent.web.WebServLogger");
@@ -54,12 +56,15 @@ public class WebServerBuilder {
         properties.put("warfile", war);
     }
 
-    public Launcher build() throws UtilException {
+    public Launcher build() {
         try {
             Launcher.initLogger(properties);
-            return new Launcher(properties);
+            Launcher launcher = new Launcher(properties);
+            log.info("Web сервер (" + properties.get("httpsListenAddress") + ":" + properties.get("httpPort")+") загружен");
+            return launcher;
         } catch (IOException e) {
-            throw new UtilException(e);
+            log.error("Ќе удалось загрузить web server", e);
         }
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package rtorrent.control;
 
+import org.apache.log4j.Logger;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.TorrentInfo;
 import rtorrent.torrent.TorrentValidateException;
@@ -24,6 +25,7 @@ import java.util.Set;
  */
 public class RtorrentControlerImpl implements RtorrentControler {
     private TorrentSet torrentSet;
+    private Logger log = LoggerSingleton.getLogger();;
 
     public RtorrentControlerImpl() throws TorrentSetException {
         torrentSet = TorrentSetSingleton.getInstance();
@@ -38,6 +40,7 @@ public class RtorrentControlerImpl implements RtorrentControler {
         try {
             InitialContext context = new InitialContext();
             context.bind("rcontroler", this);
+            log.debug("RtorrentControler загружен");
         } catch (NamingException e) {
             throw new TorrentSetException(e);
         }
@@ -61,7 +64,7 @@ public class RtorrentControlerImpl implements RtorrentControler {
             torrent.setNeedAdd(true);
             torrentSet.addOrUpdate(torrent);
         } catch (TorrentValidateException e) {
-            LoggerSingleton.getLogger().error(e);
+            log.error(e);
         }
     }
 

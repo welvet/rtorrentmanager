@@ -1,12 +1,7 @@
 package rtorrent.test;
 
-import junit.framework.TestCase;
-import rtorrent.service.RtorrentService;
 import rtorrent.torrent.ActionTorrent;
-import rtorrent.torrent.set.TorrentSet;
-import rtorrent.torrent.set.TorrentSetSingleton;
 
-import java.io.File;
 import java.util.Date;
 
 /**
@@ -14,25 +9,9 @@ import java.util.Date;
  * Date: 19.05.2010
  * Time: 21:54:34
  */
-public class TorrentSetTest extends TestCase {
-    File datFile;
-    File torrentFile;
-    File torrent2File;
-    RtorrentService rtorrentService;
-    TorrentSet torrentSet;
+public class TorrentSetTest extends RtorrentTestCase {
     private String hash;
     private static final int WAIT_TIME = 3000;
-
-    @Override
-    protected void setUp() throws Exception {
-        //для корректной работы необходимо выполнить таргет prepre-test
-        datFile = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "torrents.dat");
-        torrentFile = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "test.torrent");
-        torrent2File = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "test2.torrent");
-        rtorrentService = new MockRtorrentService();
-        TorrentSetSingleton.initialze(rtorrentService, datFile);
-        torrentSet = TorrentSetSingleton.getInstance();
-    }
 
     /**
      * Проверям основные операции

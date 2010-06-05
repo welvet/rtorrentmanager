@@ -1,6 +1,5 @@
 package rtorrent.test;
 
-import junit.framework.TestCase;
 import rtorrent.utils.LoggableException;
 import rtorrent.utils.LoggerSingleton;
 
@@ -9,7 +8,7 @@ import rtorrent.utils.LoggerSingleton;
  * Date: 19.05.2010
  * Time: 14:56:32
  */
-public class TestLogger extends TestCase {
+public class TestLogger extends RtorrentTestCase {
     private org.apache.log4j.Logger logger;
 
     public void testLogger() throws Exception {
