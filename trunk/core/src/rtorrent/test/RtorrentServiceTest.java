@@ -1,14 +1,9 @@
 package rtorrent.test;
 
-import junit.framework.TestCase;
-import ntorrent.io.xmlrpc.XmlRpcConnection;
 import bittorrent.TorrentFile;
-import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceException;
 import rtorrent.torrent.ActionTorrent;
-import rtorrent.utils.UtilException;
 
-import java.io.File;
 import java.util.Set;
 
 /**
@@ -16,22 +11,9 @@ import java.util.Set;
  * Date: 18.05.2010
  * Time: 20:51:22
  */
-public class RtorrentServiceTest extends TestCase {
-    File file;
-    XmlRpcConnection connection;
-    RtorrentService rtorrentService;
+public class RtorrentServiceTest extends RtorrentTestCase {
     private Boolean aBoolean;
     private String rawData;
-
-    @Override
-    protected void setUp() throws Exception {
-        //для корректной работы необходимо выполнить таргет prepre-test
-        file = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "test.torrent");
-        connection = new XmlRpcConnection("serv", 5000);
-        rtorrentService = new MockRtorrentService();
-        if (!(rtorrentService.isAlive()))
-            throw new Exception("Rtorrent not run");
-    }
 
     /**
      * Логично было бы реализовать метод getTorrentByHash() но он будет противоречить логике приложения
@@ -39,9 +21,9 @@ public class RtorrentServiceTest extends TestCase {
      *
      * @throws Exception
      */
-    public void testService() throws Exception, UtilException {
-        ActionTorrent torrent = new ActionTorrent(file);
-        TorrentFile torrentFile = new TorrentFile(file);
+    public void testService() throws Exception {
+        ActionTorrent torrent = new ActionTorrent(torrentFile);
+        TorrentFile torrentFile = new TorrentFile(this.torrentFile);
         //пробуем добавить торрент
         rtorrentService.add(torrent);
         torrent = getOnceTorrent();

@@ -13,9 +13,18 @@ import java.io.File;
 public class TorrentSetSingleton {
     private static TorrentSet ourInstance;
 
+    private TorrentSetSingleton() {
+    }
+
+    @Deprecated
     public static void initialze(RtorrentService rtorrentService, File file) {
         ourInstance = new TorrentSetImpl(rtorrentService, file);
         LoggerSingleton.getLogger().debug("TorrentSet инициализирован");
+    }
+
+    private static void initializeFromConfigs() {
+        //todo тут должна быть инициализация из конфига
+        throw new RuntimeException("realize me");
     }
 
     public static TorrentSet getInstance() throws TorrentSetException {
