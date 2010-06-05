@@ -1,0 +1,6 @@
+﻿Инициализация:
+1) RtorrentService - создаем сервис для связи с рторрентом (зависимости хост, порт);
+2) TorrentSetSingleton.initialze - инициализируем Торрент сет (зависимость RtorrentService)
+3) RtorrentConctroler.bindContext() - сохраняем ссылку на Конторлер в контекст
+4) ConfigManager.bindContext() - сохраняем ссылку на менеджер конфигов в контекст (зависимости путь к дирректории с конфигами)
+5) WebServerBuilder - создаем веб сервер

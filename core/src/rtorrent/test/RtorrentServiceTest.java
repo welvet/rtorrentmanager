@@ -25,6 +25,7 @@ public class RtorrentServiceTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
+        //для корректной работы необходимо выполнить таргет prepre-test
         file = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "test.torrent");
         connection = new XmlRpcConnection("serv", 5000);
         rtorrentService = new MockRtorrentService();
