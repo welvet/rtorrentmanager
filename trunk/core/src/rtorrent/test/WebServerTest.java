@@ -14,6 +14,7 @@ import java.io.File;
  * Time: 20:51:07
  */
 public class WebServerTest extends TestCase {
+    //todo переделать на темп дир
     private static final String WAR_PATH = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
 
     public void testStart() throws Exception, UtilException {

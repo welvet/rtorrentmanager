@@ -25,6 +25,7 @@ public class TorrentSetTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
+        //для корректной работы необходимо выполнить таргет prepre-test
         datFile = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "torrents.dat");
         torrentFile = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "test.torrent");
         torrent2File = new File(RtorrentServiceTest.class.getResource("resource/").getPath() + "test2.torrent");
