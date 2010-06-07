@@ -2,12 +2,11 @@ package rtorrent.torrent.set;
 
 import org.apache.log4j.Logger;
 import rtorrent.service.RtorrentService;
-import rtorrent.service.RtorrentServiceException;
+import rtorrent.thread.ThreadQueueSingleton;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.utils.LoggerSingleton;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,45 +34,10 @@ public class TorrentSetImpl implements TorrentSet {
     }
 
     public void updateSet() {
-        new Thread() {
-            @Override
-            public void run() {
-                Set<ActionTorrent> rtorrentSet;
-                Set<String> safeTorrenSet = new HashSet<String>();
-                try {
-                    rtorrentSet = rtorrentService.getSet();
-                } catch (RtorrentServiceException e) {
-                    return;
-                }
-
-                //Обновляем торренты, заодно сохраняем список активных хешей
-                for (ActionTorrent remoteTorrent : rtorrentSet) {
-                    ActionTorrent localTorrent = getTorrentFromMap(remoteTorrent);
-                    localTorrent.updateInfo(remoteTorrent);
-                    safeTorrenSet.add(localTorrent.getHash());
-                }
-
-                //удаляем ненужные торренты
-                Collection<ActionTorrent> torrentCollection = torrents.values();
-
-                for (ActionTorrent torrent : torrentCollection) {
-                    String hash = torrent.getHash();
-                    if (!safeTorrenSet.contains(hash)) {
-                        ActionTorrent markRemoveTorrent = torrents.get(hash);
-
-                        if ((!markRemoveTorrent.isWatching() && !markRemoveTorrent.isNeedAdd() && !markRemoveTorrent.isNeedUpdate()) || markRemoveTorrent.isNeedDelete()  ) {
-                            torrents.remove(hash);
-                            log.info(torrent + " удален из базы");
-                        }
-                    }
-                }
-                log.debug("TorrentSet обновлен");
-                torrentSetSaver.save();
-            }
-        }.start();
+       update();
     }
 
-    private ActionTorrent getTorrentFromMap(ActionTorrent remoteTorrent) {
+    protected ActionTorrent getTorrentFromMap(ActionTorrent remoteTorrent) {
         ActionTorrent localTorrent = torrents.get(remoteTorrent.getHash());
         if (localTorrent == null) {
             localTorrent = new ActionTorrent();
@@ -83,14 +47,11 @@ public class TorrentSetImpl implements TorrentSet {
     }
 
     public void updateRtorrent() {
-        new Thread() {
-            @Override
-            public void run() {
-                torrentSetHelper.work();
-                torrentSetSaver.save();
-                log.info("Rtorrent обновлен");
-            }
-        }.start();
+       update();
+    }
+
+    public void update() {
+        ThreadQueueSingleton.add(torrentSetHelper);
     }
 
     public Set<ActionTorrent> getSet() {

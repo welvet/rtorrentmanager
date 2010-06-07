@@ -7,6 +7,7 @@ package rtorrent.test;
  */
 public class RtorrentControlerTest extends RtorrentTestCase {
     public void testControler() throws Exception {
+        //todo realize me
         assertTrue(true);
     }
 
