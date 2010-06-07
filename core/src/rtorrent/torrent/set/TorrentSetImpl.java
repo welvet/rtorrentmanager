@@ -17,7 +17,7 @@ import java.util.Set;
  * Date: 19.05.2010
  * Time: 19:33:14
  */
-public class TorrentSetImpl implements TorrentSet {
+public class TorrentSetImpl implements TorrentSet, Runnable {
     private TorrentHashtable torrents;
     private RtorrentService rtorrentService;
     private Logger log = LoggerSingleton.getLogger();
@@ -34,7 +34,7 @@ public class TorrentSetImpl implements TorrentSet {
     }
 
     public void updateSet() {
-       update();
+        update();
     }
 
     protected ActionTorrent getTorrentFromMap(ActionTorrent remoteTorrent) {
@@ -47,11 +47,16 @@ public class TorrentSetImpl implements TorrentSet {
     }
 
     public void updateRtorrent() {
-       update();
+        update();
     }
 
     public void update() {
-        ThreadQueueSingleton.add(torrentSetHelper);
+        ThreadQueueSingleton.add(this);
+    }
+
+    public void run() {
+        torrentSetHelper.run();
+        torrentSetSaver.save();
     }
 
     public Set<ActionTorrent> getSet() {

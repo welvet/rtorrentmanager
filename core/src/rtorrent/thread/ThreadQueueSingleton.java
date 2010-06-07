@@ -17,8 +17,8 @@ public class ThreadQueueSingleton {
 
     public static void add(Runnable runnable) {
         for (Runnable r : queue) {
-            //не даем одному классу выполниться несколько раз
-            if (r.getClass().equals(runnable.getClass()))
+            //не даем одному объекту выполниться несколько раз
+            if (r.equals(runnable))
                     return;
         }
         threadPool.execute(runnable);
