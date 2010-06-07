@@ -26,12 +26,19 @@ public interface TorrentSet {
     /**
      * Запросить обновление у рторрента, и обновить все локальные торренты
      */
+    @Deprecated
     public void updateSet();
 
     /**
      * Обновить (добавить, остановить, удалить) все торренты на рторренте
      */
+    @Deprecated
     public void updateRtorrent();
+
+    /**
+     * Обновить
+     */
+    public void update();
 
     /**
      * Получить список всех торрентов
