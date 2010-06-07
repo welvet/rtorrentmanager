@@ -1,7 +1,10 @@
 package rtorrent.web;
 
 import org.apache.log4j.Logger;
+import rtorrent.config.Config;
+import rtorrent.config.ConfigManager;
 import rtorrent.init.Initialize;
+import rtorrent.utils.ContextUtils;
 import rtorrent.utils.LoggerSingleton;
 import winstone.Launcher;
 
@@ -23,8 +26,15 @@ public class WebServerBuilder {
         properties.put("accessLoggerClassName", "rtorrent.web.WebServLogger");
         properties.put("ajp13Port", "-1");
         properties.put("useJNDI", "true");
-        properties.put("httpPort", "8080");
-        properties.put("httpsListenAddress", "0.0.0.0");
+        try {
+            ConfigManager configManager = (ConfigManager) ContextUtils.lookup("rconfig");
+            Config config = configManager.getConfig("WebServer");
+            properties.put("httpsListenAddress", config.getFieldValue("host"));
+            properties.put("httpPort", config.getFieldValue("port"));
+        } catch (Exception e) {
+            properties.put("httpsListenAddress", "0.0.0.0");
+            properties.put("httpPort", "8080");
+        }
         String war = new File(Initialize.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/../web.war").getAbsolutePath();
         properties.put("warfile", war);
     }
@@ -60,7 +70,7 @@ public class WebServerBuilder {
         try {
             Launcher.initLogger(properties);
             Launcher launcher = new Launcher(properties);
-            log.info("Web сервер (" + properties.get("httpsListenAddress") + ":" + properties.get("httpPort")+") загружен");
+            log.info("Web сервер (" + properties.get("httpsListenAddress") + ":" + properties.get("httpPort") + ") загружен");
             return launcher;
         } catch (IOException e) {
             log.error("Не удалось загрузить web server", e);

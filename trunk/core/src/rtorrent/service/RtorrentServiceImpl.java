@@ -6,10 +6,14 @@ import ntorrent.io.xmlrpc.XmlRpcConnection;
 import org.apache.log4j.Logger;
 import redstone.xmlrpc.XmlRpcArray;
 import redstone.xmlrpc.XmlRpcClient;
+import rtorrent.config.Config;
+import rtorrent.config.ConfigManager;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.Torrent;
+import rtorrent.utils.ContextUtils;
 import rtorrent.utils.LoggerSingleton;
 
+import javax.naming.NamingException;
 import java.io.FileInputStream;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Arrays;
@@ -59,9 +63,22 @@ public class RtorrentServiceImpl implements RtorrentService {
     };
     private static List list = Arrays.asList(download_variable);
 
-
+    @Deprecated
     public RtorrentServiceImpl(String host, Integer port) {
         this.xmlRpcConnection = new XmlRpcConnection(host, port);
+        initialize();
+    }
+
+    public RtorrentServiceImpl() throws NamingException {
+        ConfigManager configManager = (ConfigManager) ContextUtils.lookup("rconfig");
+        Config config = configManager.getConfig("RtorrentService");
+        String host = config.getFieldValue("host");
+        String port = config.getFieldValue("port");
+        this.xmlRpcConnection = new XmlRpcConnection(host, new Integer(port));
+        initialize();
+    }
+
+    private void initialize() {
         client = xmlRpcConnection.getClient();
         download = xmlRpcConnection.getDownloadClient();
         file = xmlRpcConnection.getFileClient();

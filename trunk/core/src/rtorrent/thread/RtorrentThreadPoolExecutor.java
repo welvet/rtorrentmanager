@@ -17,6 +17,7 @@ public class RtorrentThreadPoolExecutor extends ThreadPoolExecutor {
 
     public RtorrentThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
+        log.debug("RtorrentThreadPoolExecutor инициализирован");
     }
 
     @Override
