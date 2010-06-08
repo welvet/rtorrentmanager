@@ -1,18 +1,18 @@
 package rtorrent.torrent.set;
 
 import org.apache.log4j.Logger;
+import rtorrent.utils.LoggerSingleton;
 
 import java.io.*;
 
 public class TorrentSetSaver {
     private File file;
     private final TorrentSetImpl torrentSetImpl;
-    private Logger log;
+    private Logger log = LoggerSingleton.getLogger();
 
     public TorrentSetSaver(TorrentSetImpl torrentSetImpl, File file) {
         this.file = file;
         this.torrentSetImpl = torrentSetImpl;
-        log = torrentSetImpl.getLog();
     }
 
     void load() {

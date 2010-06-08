@@ -38,6 +38,7 @@ public class RtorrentControlerImpl implements RtorrentControler {
      */
     public void bindContext() throws TorrentSetException {
         try {
+            //todo заменить на утилс
             InitialContext context = new InitialContext();
             context.bind("rcontroler", this);
             log.debug("RtorrentControler загружен");
@@ -60,8 +61,8 @@ public class RtorrentControlerImpl implements RtorrentControler {
     public void addTorrent(File torrentFile) {
         ActionTorrent torrent = null;
         try {
+            //атрибут needAdd выставляется в конструкторе
             torrent = new ActionTorrent(torrentFile);
-            torrent.setNeedAdd(true);
             torrentSet.addOrUpdate(torrent);
         } catch (TorrentValidateException e) {
             log.error(e);
