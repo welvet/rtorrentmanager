@@ -12,7 +12,6 @@ import java.util.Set;
 
 /**
  * НЕ ОТДАЕМ РЕАЛЬНУЮ ССЫЛКУ НА ТОРЕНТ, ТОЛЬКО КОПИЮ ТОРЕНТА
- * TODO Возможно стоит перейти с кучи ифоф, на отдельную GetTorrentStrategy
  * User: welvet
  * Date: 19.05.2010
  * Time: 19:33:14
@@ -33,11 +32,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
         log.info("TorrentSet загружен");
     }
 
-    public void updateSet() {
-        update();
-    }
-
-    protected ActionTorrent getTorrentFromMap(ActionTorrent remoteTorrent) {
+    public ActionTorrent getTorrentFromMap(ActionTorrent remoteTorrent) {
         ActionTorrent localTorrent = torrents.get(remoteTorrent.getHash());
         if (localTorrent == null) {
             localTorrent = new ActionTorrent();
@@ -46,6 +41,12 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
         return localTorrent;
     }
 
+    @Deprecated
+    public void updateSet() {
+        update();
+    }
+
+    @Deprecated
     public void updateRtorrent() {
         update();
     }
@@ -72,6 +73,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     public Set<ActionTorrent> getWatchedSet() {
         Set<ActionTorrent> watchedSet = new HashSet<ActionTorrent>();
         for (ActionTorrent torrent : torrents.values()) {
+            //отдаем торрент только если он наблюдаемый и если он не остановлен
             if (torrent.isWatching() && (torrent.isStart() || torrent.isNeedStart()) && !torrent.isNeedStop()) {
                 ActionTorrent watchedTorrent = new ActionTorrent();
                 watchedTorrent.updateAll(torrent);
@@ -82,6 +84,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     }
 
     public ActionTorrent getByHash(String hash) {
+        //возвращаем копию торрента
         ActionTorrent foundedTorrent = torrents.get(hash);
         if (foundedTorrent != null) {
             ActionTorrent torrent = new ActionTorrent();
