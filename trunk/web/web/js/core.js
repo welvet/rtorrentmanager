@@ -95,13 +95,6 @@ function rowCallback(nRow, aData, iDisplayIndex) {
     return nRow;
 }
 
-//открыть диалог с настройками
-function openSettingsDialog() {
-    $("#settingsDialogBody").tabs();
-    $("#settingsDialog").dialog({ modal: false, resizable: false,
-        draggable: true, width: 800, height: 500 });
-}
-
 //открыть диалог с логами ошибок todo вероятно он будет модальным и требовать поддтверждения от пользователя
 
 function reloadTable() {
@@ -137,6 +130,5 @@ function doAction(action, hash) {
 //public static void main(null)
 $().ready(function() {
     initializeTable();
-    initializeButtons(null);
     reloadTable();
 });

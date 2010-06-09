@@ -46,30 +46,10 @@
 </ul>
 <!--блок диалога с настройками торрента-->
 <div id="torrentDialog" class="dialog">
-    <!--todo необходимо разработать логику вебсервера перед реализацией данного диалога-->
 </div>
 <!--блок диалога с настройками-->
 <!--дебаг-->
-<button onclick="openSettingsDialog();">Remove me</button>
+<button onclick="doAction('settings', null);">Remove me</button>
 <!--/дебаг-->
-<div id="settingsDialog" class="dialog" title="Настройки">
-    <form class="settingsForm" action="http://serv:8080/">
-        <div id="settingsDialogBody">
-            <!--блок с заголовками-->
-            <ul>
-                <li><a href="#tabs-1">Общие настройки</a></li>
-            </ul>
-            <!--блок с настройками-->
-            <div id="tabs-1">
-                <label>Адрес: <input type="text" name="ip"/></label><br/>
-                <label>Порт: <input type="text" name="port"/></label>
-            </div>
-            <div id="buttons">
-                <button class="button submit">ok</button>
-                <button class="button closeButton">отмена</button>
-            </div>
-        </div>
-    </form>
-</div>
 </body>
 </html>

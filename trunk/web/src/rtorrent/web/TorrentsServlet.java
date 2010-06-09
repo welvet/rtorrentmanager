@@ -3,9 +3,8 @@ package rtorrent.web;
 import com.google.gson.Gson;
 import rtorrent.control.RtorrentControler;
 import rtorrent.torrent.TorrentInfo;
+import rtorrent.utils.ContextUtils;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServlet;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,8 +17,9 @@ import java.util.List;
  */
 public class TorrentsServlet extends HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        throw new UnsupportedOperationException();
+        doGet(request, response);
     }
+    //обертка для корректной работы json парсера
 
     private class JsonList {
         private List aaData;
@@ -33,23 +33,18 @@ public class TorrentsServlet extends HttpServlet {
         }
     }
 
-
+    //парсим лист в json
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        try {
-            InitialContext context = new InitialContext();
-            RtorrentControler controler = (RtorrentControler) context.lookup("rcontroler");
-            List<TorrentInfo> list = controler.getList();
-            final Gson gson = new Gson();
+        RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");
+        List<TorrentInfo> list = controler.getList();
+        final Gson gson = new Gson();
 
-            final List objects = new ArrayList();
-            for (TorrentInfo aList : list) {
-                objects.add(aList.toArray());
-            }
-            JsonList jsonList = new JsonList(objects);
-            String rsp = gson.toJson(jsonList, JsonList.class);
-            response.getWriter().print(rsp);
-        } catch (NamingException e) {
-            e.printStackTrace();  // TODO change me
+        final List objects = new ArrayList();
+        for (TorrentInfo aList : list) {
+            objects.add(aList.toArray());
         }
+        JsonList jsonList = new JsonList(objects);
+        String rsp = gson.toJson(jsonList, JsonList.class);
+        response.getWriter().print(rsp);
     }
 }

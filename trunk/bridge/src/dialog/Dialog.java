@@ -37,7 +37,7 @@ public class Dialog {
         this.inputs = inputs;
     }
 
-    public void addField(TextInput input) {
+    public void addField(Input input) {
         inputs.add(input);        
     }
 }

@@ -10,16 +10,13 @@
 
 /*блок диалогов*/
 
+#torrentDialog {
+    font-size: 12px;
+}
+
 .dialog {
     display: none;
 }
-
-#settingsDialogBody {
-    width: 100%;
-    height: auto;
-    font-size: 14px;
-}
-
 #buttons {
     width: 100%;
     text-align: right;
@@ -69,3 +66,6 @@
 }
 
 /*блок контекстного меню*/
+#contextMenu {
+    display: none;
+}
