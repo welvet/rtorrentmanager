@@ -7,10 +7,15 @@
     request.setAttribute("dialogTitle", dialog.getName());
     request.setAttribute("dialogPath", dialog.getPath());
 %>
-<% for (Input input : dialog.getInputs()) {
-
-%>
-<%=input.getFieldText()%> <%=input.getHtml()%> <br/>
-<%
-    }
-%>
+<table id="torrentDialogTable">
+    <%for (Input input : dialog.getInputs()) {%>
+    <tr <%=input.getFieldDescription() != null && !input.getFieldDescription().isEmpty() ? " title=\"" + input.getFieldDescription() + "\"" : ""%>>
+        <td>
+            <%=input.getFieldText()%>:
+        </td>
+        <td>
+            <%=input.getHtml()%>
+        </td>
+    </tr>
+    <%}%>
+</table>

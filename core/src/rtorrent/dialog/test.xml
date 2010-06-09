@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "C:\rtorrentmanager\core\src\rtorrent\dialog\config.dtd">
+
+<config name="globalsettings" title="Глобальные настройки">
+    <value name="login" text="Логин"/>
+    <value name="password" text="Пароль"/>
+    <checkbox name="auth" text="Авторизация" description="Использовать авторизацию"/>
+    <select name="select" text="Тестовый селект">
+        <option>Раз</option>
+        <option>Два</option>
+    </select>
+</config>

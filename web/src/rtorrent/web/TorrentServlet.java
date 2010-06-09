@@ -2,9 +2,8 @@ package rtorrent.web;
 
 import com.google.gson.Gson;
 import rtorrent.control.RtorrentControler;
+import rtorrent.utils.ContextUtils;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +22,7 @@ public class TorrentServlet extends HttpServlet {
     private static final String PROPERTIES = "properties";
 
     private class nullAnsw {
-        private static final String FALSE = "false";
-        private String needUserNotice = FALSE;
+        private String needUserNotice = "false";
 
         public String getNeedUserNotice() {
             return needUserNotice;
@@ -32,40 +30,27 @@ public class TorrentServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        InitialContext context = null;
-        try {
-            context = new InitialContext();
-            RtorrentControler controler = (RtorrentControler) context.lookup("rcontroler");
+        RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");
 
-            //определяемся с действием, создаем диалог
-            String action = request.getParameter("action");
-            String hash = request.getParameter("hash");
-            if (action.equals(START))
-                controler.startTorrent(hash);
-            if (action.equals(STOP))
-                controler.stopTorrent(hash);
-            if (action.equals(REMOVE))
-                controler.removeTorrent(hash);
-            if (!action.equals(PROPERTIES)) {
-                Gson gson = new Gson();
-                String s = gson.toJson(new nullAnsw());
-                response.getWriter().print(s);
-                return;
-            }
-
-            //редиректим на jsp с диалогом
-//            todo инфо торрента нужно передавать тут же
-            //я тоже хочу как попов, у меня будет свой mvc ^_^
-            //создаем диалог
-            DialogHelper.createDialog(request);
-            getServletConfig().getServletContext()
-                    .getRequestDispatcher("/json.jsp").forward(request, response);
-        } catch (NamingException e) {
-            e.printStackTrace();  // TODO change me
+        //определяемся с действием, создаем диалог
+        String action = request.getParameter("action");
+        String hash = request.getParameter("hash");
+        if (action.equals(START))
+            controler.startTorrent(hash);
+        if (action.equals(STOP))
+            controler.stopTorrent(hash);
+        if (action.equals(REMOVE))
+            controler.removeTorrent(hash);
+        if (!action.equals(PROPERTIES)) {
+            Gson gson = new Gson();
+            String s = gson.toJson(new nullAnsw());
+            response.getWriter().print(s);
+            return;
         }
+        request.getRequestDispatcher("/settings/").forward(request, response);
     }
 }

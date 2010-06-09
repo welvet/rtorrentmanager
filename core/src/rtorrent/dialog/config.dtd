@@ -1,0 +1,17 @@
+<!ELEMENT config (value|checkbox|select)+>
+<!ELEMENT value (#PCDATA)>
+<!ELEMENT checkbox (#PCDATA)>
+<!ELEMENT select (option)+>
+<!ELEMENT option (#PCDATA)>
+
+<!ATTLIST config name CDATA #REQUIRED>
+<!ATTLIST config title CDATA #REQUIRED>
+<!ATTLIST value name CDATA #REQUIRED>
+<!ATTLIST value text CDATA #REQUIRED>
+<!ATTLIST value description CDATA "">
+<!ATTLIST checkbox name CDATA #REQUIRED>
+<!ATTLIST checkbox text CDATA #REQUIRED>
+<!ATTLIST checkbox description CDATA "">
+<!ATTLIST select name CDATA #REQUIRED>
+<!ATTLIST select text CDATA #REQUIRED>
+<!ATTLIST select description CDATA "">

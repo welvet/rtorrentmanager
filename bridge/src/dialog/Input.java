@@ -5,29 +5,44 @@ package dialog;
  * Date: 03.06.2010
  * Time: 22:47:47
  */
-public interface Input {
-    /**
-     * @return ид поля
-     */
-    public String getFieldName();
+public abstract class Input {
+    protected String fieldName;
+    protected String fieldText;
+    protected String fieldDescription;
+    protected Object fieldValue;
 
-    /**
-     * @return текст с описанием поля
-     */
-    public String getFieldText();
 
-    /**
-     * @return текст подсказки
-     */
-    public String getFieldDescription();
+    public String getFieldName() {
+        return fieldName;
+    }
 
-    /**
-     * @return html pattern
-     */
-    public String getHtml();
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
-    /**
-     * @return значение поля
-     */
-    public String getFieldValue();
+    public String getFieldText() {
+        return fieldText;
+    }
+
+    public void setFieldText(String fieldText) {
+        this.fieldText = fieldText;
+    }
+
+    public String getFieldDescription() {
+        return fieldDescription;
+    }
+
+    public void setFieldDescription(String fieldDescription) {
+        this.fieldDescription = fieldDescription;
+    }
+
+    public Object getFieldValue() {
+        return fieldValue;
+    }
+
+    public void setFieldValue(Object fieldValue) {
+        this.fieldValue = fieldValue;
+    }
+
+    public abstract String getHtml();
 }
