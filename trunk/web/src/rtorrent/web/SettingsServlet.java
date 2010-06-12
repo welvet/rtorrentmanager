@@ -17,7 +17,12 @@ public class SettingsServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DialogHelper.createDialog(request);
+        if (request.getParameter("path") != null) {
+            DialogHelper.updateDialog(request.getParameterMap());
+            return;
+        }
+
+        DialogHelper.createDialog(request);              
         request.getRequestDispatcher("/json.jsp").forward(request, response);
     }
 }

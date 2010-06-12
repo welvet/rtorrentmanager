@@ -72,8 +72,8 @@ public class RtorrentServiceImpl implements RtorrentService {
     public RtorrentServiceImpl() throws NamingException {
         ConfigManager configManager = (ConfigManager) ContextUtils.lookup("rconfig");
         Config config = configManager.getConfig("RtorrentService");
-        String host = config.getFieldValue("host");
-        String port = config.getFieldValue("port");
+        String host = (String) config.getFieldValue("host");
+        String port = (String) config.getFieldValue("port");
         this.xmlRpcConnection = new XmlRpcConnection(host, new Integer(port));
         initialize();
     }

@@ -1,13 +1,11 @@
 package rtorrent.web;
 
-import dialog.CheckField;
 import dialog.Dialog;
-import dialog.SelectField;
-import dialog.TextField;
+import dialog.DialogManager;
+import dialog.Input;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * User: welvet
@@ -17,41 +15,21 @@ import java.util.List;
 public class DialogHelper {
 
     public static void createDialog(HttpServletRequest request) {
-//        todo test
-        Dialog dialog = new Dialog();
-        dialog.setName("Name");
-        dialog.setPath("/path");
-        TextField text = new TextField();
-
-        text.setFieldName("text");
-        text.setFieldDescription("Simple text field");
-        text.setFieldText("Text field");
-        text.setFieldValue("value");
-
-        CheckField check = new CheckField();
-
-        check.setFieldName("check");
-//        check.setFieldDescription("Simple checkbox");
-        check.setFieldText("Check field");
-        check.setFieldValue(true);
-
-        SelectField select = new SelectField();
-
-        select.setFieldName("select");
-        select.setFieldDescription("Simple select");
-        select.setFieldText("Select field");
-        List<String> values = new ArrayList<String>();
-        values.add("value 1");
-        values.add("value 2");
-        values.add("value 3");
-        select.setFieldValues(values);
-        select.setFieldValue("value 3");
-
-        dialog.addField(text);
-        dialog.addField(check);
-        dialog.addField(select);
+        Dialog dialog = DialogManager.createDialog("test");
 
         request.setAttribute("dialog", "properties.jsp");
         request.setAttribute("currentDialog", dialog);
+    }
+
+    public static void updateDialog(Map parameterMap) {
+        Dialog dialog = DialogManager.createDialog((String) parameterMap.get("path"));
+        parameterMap.remove("path");
+
+        for (Input input :dialog.getInputs()) {
+            //todo проверка на boolean * if input instance of...
+            input.setFieldValue(parameterMap.get(input.getFieldName()));
+        }
+
+//        DialogManager.updateDialog();
     }
 }

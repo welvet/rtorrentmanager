@@ -3,6 +3,7 @@ package rtorrent.test;
 import junit.framework.TestCase;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControlerImpl;
+import rtorrent.dialog.DialogParserImpl;
 import rtorrent.service.RtorrentService;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
@@ -56,6 +57,9 @@ public abstract class RtorrentTestCase extends TestCase {
         //создаем конфиги
         configManager = new ConfigManagerImpl(dir);
         configManager.bindContext();
+        //загружаем парсер
+        DialogParserImpl dialogParser = new DialogParserImpl();
+        dialogParser.bindContext();
         //создаем веб сервер
         builder = new WebServerBuilder();
         builder.setPort(port);
