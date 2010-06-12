@@ -12,6 +12,9 @@ public class WebServerTest extends RtorrentTestCase {
     public void testStart() throws IOException, InterruptedException {
         try {//загружаем сервер
         builder.build();
+            while (true) {
+                Thread.sleep(1000);
+            }
         } catch (Exception e) {
             fail();
         }

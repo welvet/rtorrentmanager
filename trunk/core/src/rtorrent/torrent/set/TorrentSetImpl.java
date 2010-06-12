@@ -101,6 +101,11 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
         torrentSetSaver.save();
     }
 
+    public void setService(RtorrentService service) {
+        rtorrentService = service;
+        torrentSetHelper = new TorrentSetHelper(this);
+    }
+
     TorrentHashtable getTorrents() {
         return torrents;
     }

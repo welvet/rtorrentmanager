@@ -30,7 +30,8 @@ public class WebServerBuilder {
         Config config = configManager.getConfig("server");
         properties.put("httpsListenAddress", config.getFieldValue("host"));
         properties.put("httpPort", config.getFieldValue("port"));
-        String war = new File(Initialize.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/../web.war").getAbsolutePath();
+        ClassLoader loader = WebServerBuilder.class.getClassLoader();
+        String war = new File(Initialize.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("core.jar", "") + "/web.war").getAbsolutePath();
         properties.put("warfile", war);
     }
 

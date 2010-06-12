@@ -11,7 +11,7 @@ public class TorrentSetSaver {
     private Logger log = LoggerSingleton.getLogger();
 
     public TorrentSetSaver(TorrentSetImpl torrentSetImpl, File file) {
-        this.file = file;
+        this.file = new File(file + "/" + "torrents.dat");
         this.torrentSetImpl = torrentSetImpl;
     }
 

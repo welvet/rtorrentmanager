@@ -16,15 +16,13 @@ public class TorrentSetSingleton {
     private TorrentSetSingleton() {
     }
 
-    @Deprecated
     public static void initialze(RtorrentService rtorrentService, File file) {
         ourInstance = new TorrentSetImpl(rtorrentService, file);
         LoggerSingleton.getLogger().debug("TorrentSet инициализирован");
     }
 
-    private static void initializeFromConfigs() {
-        //todo тут должна быть инициализация из конфига
-        throw new RuntimeException("realize me");
+    public static void changeService(RtorrentService service) {
+        ourInstance.setService(service);
     }
 
     public static TorrentSet getInstance() {

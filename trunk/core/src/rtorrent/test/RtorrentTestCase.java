@@ -7,6 +7,7 @@ import rtorrent.dialog.DialogParserImpl;
 import rtorrent.notice.NoticeObserverSingleton;
 import rtorrent.notice.NoticeService;
 import rtorrent.service.RtorrentService;
+import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
 import rtorrent.web.WebServerBuilder;
@@ -36,7 +37,7 @@ public abstract class RtorrentTestCase extends TestCase {
     @Override
     protected void setUp() throws Exception {
         //для корректной работы необходимо выполнить таргет prepre-test
-        datFile = new File(RtorrentTestCase.class.getResource("resource/").getPath() + "torrents.dat");
+        datFile = new File(RtorrentTestCase.class.getResource("resource/").getPath());
         torrentFile = new File(RtorrentTestCase.class.getResource("resource/").getPath() + "test.torrent");
         torrent2File = new File(RtorrentTestCase.class.getResource("resource/").getPath() + "test2.torrent");
         //ссылка на темп директорию
@@ -45,8 +46,9 @@ public abstract class RtorrentTestCase extends TestCase {
         //todo переделать на темп дир
         warPath = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
         //создаем рторрент сервис
-        rtorrentService = new MockRtorrentService();
+//        rtorrentService = new MockRtorrentService();
         //создаем синглтон
+        rtorrentService = new RtorrentServiceImpl("serv", 500);
         TorrentSetSingleton.initialze(rtorrentService, datFile);
         torrentSet = TorrentSetSingleton.getInstance();
         //создаем контролер
