@@ -1,7 +1,9 @@
 package rtorrent.notice;
 
+import org.apache.log4j.Logger;
 import rtorrent.thread.ThreadQueueSingleton;
 import rtorrent.torrent.ActionTorrent;
+import rtorrent.utils.LoggerSingleton;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,6 +17,7 @@ import java.util.Set;
 public class NoticeObserverSingleton {
     public static Set<NoticeService> services = new HashSet<NoticeService>();
     public static HashMap<NoticeService, NoticeJob> jobs = new HashMap<NoticeService, NoticeJob>();
+    public static Logger log = LoggerSingleton.getLogger();
 
     /**
      * @param service регистрируемый сервис
@@ -39,6 +42,7 @@ public class NoticeObserverSingleton {
             currentNotice.setNotice(notice);
             currentNotice.setTorrent(torrent);
             //добавляем новое уведомление
+            log.debug(currentNotice+" добавлено");
             job.addNotice(currentNotice);
         }
     }

@@ -1,9 +1,11 @@
 package rtorrent.tracker;
 
+import org.apache.log4j.Logger;
 import rtorrent.thread.ThreadQueueSingleton;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
+import rtorrent.utils.LoggerSingleton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +18,7 @@ import java.util.Map;
 public class TorrentWorkersObserver implements Runnable {
     public static Map<Trackers, TrackerWorker> workers = new HashMap<Trackers, TrackerWorker>();
     private TorrentSet torrentSet = TorrentSetSingleton.getInstance();
+    public static Logger log = LoggerSingleton.getLogger();
 
     protected TorrentWorkersObserver() {
     }
@@ -49,6 +52,7 @@ public class TorrentWorkersObserver implements Runnable {
                 }
                 //добавлем торрент для этой задачи
                 job.addTorrent(torrent);
+                log.debug(torrent + " запланирован для синхрозации");
             }
         }
 
