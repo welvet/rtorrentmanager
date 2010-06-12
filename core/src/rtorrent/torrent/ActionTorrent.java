@@ -10,7 +10,7 @@ import java.io.IOException;
  * Date: 18.05.2010
  * Time: 18:53:01
  */
-public class ActionTorrent extends ActionTorrentBase {
+public class ActionTorrent extends ActionTorrentBase implements TorrentFacade{
     private File file;
     private transient TorrentFile torrentFile;
 

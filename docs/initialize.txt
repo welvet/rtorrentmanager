@@ -3,4 +3,6 @@
 2) TorrentSetSingleton.initialze - инициализируем Торрент сет (зависимость RtorrentService)
 3) RtorrentConctroler.bindContext() - сохраняем ссылку на Конторлер в контекст
 4) ConfigManager.bindContext() - сохраняем ссылку на менеджер конфигов в контекст (зависимости путь к дирректории с конфигами)
+4a) TorrentWorkersObserverSingleton - устанавливаем торрент воркеры
+4b) NoticeObserverSingleton - устанавливаем нотисы
 5) WebServerBuilder - создаем веб сервер

@@ -27,7 +27,7 @@ public abstract class ActionTorrentBase extends Torrent {
         needDelete = torrent.needDelete;
         watching = torrent.watching;
         lastUpdated = (Date) torrent.lastUpdated.clone();
-        tracker = tracker != null ? torrent.tracker.copy() : null;
+        tracker = torrent.tracker != null ? torrent.tracker.copy() : null;
     }
 
     public Boolean isNeedStart() {
