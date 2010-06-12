@@ -114,8 +114,6 @@ function doAction(action, hash) {
         if ($("#torrentDialog #needUserNotice").val() == "true") {
             //устанавливаем заголовок
             $("#torrentDialog").attr("title", $("#torrentDialog #title").val());
-            //устанавливаем action
-            $("#torrentDialog #dialogForm").attr("action", $("#torrentDialog #path").val());
             //инициализируем кнопки
             initializeButtons("#torrentDialog");
             //показываем диалог

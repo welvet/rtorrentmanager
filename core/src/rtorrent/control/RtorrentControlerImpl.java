@@ -7,10 +7,10 @@ import rtorrent.torrent.TorrentValidateException;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetException;
 import rtorrent.torrent.set.TorrentSetSingleton;
+import rtorrent.utils.BindContext;
+import rtorrent.utils.InContext;
 import rtorrent.utils.LoggerSingleton;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +23,10 @@ import java.util.Set;
  * Date: 30.05.2010
  * Time: 22:55:31
  */
-public class RtorrentControlerImpl implements RtorrentControler {
+public class RtorrentControlerImpl implements RtorrentControler, InContext {
     private TorrentSet torrentSet;
-    private Logger log = LoggerSingleton.getLogger();;
+    private Logger log = LoggerSingleton.getLogger();
+    ;
 
     public RtorrentControlerImpl() throws TorrentSetException {
         torrentSet = TorrentSetSingleton.getInstance();
@@ -36,15 +37,8 @@ public class RtorrentControlerImpl implements RtorrentControler {
      *
      * @throws TorrentSetException
      */
-    public void bindContext() throws TorrentSetException {
-        try {
-            //todo заменить на утилс
-            InitialContext context = new InitialContext();
-            context.bind("rcontroler", this);
-            log.debug("RtorrentControler загружен");
-        } catch (NamingException e) {
-            throw new TorrentSetException(e);
-        }
+    public void bindContext() {
+        BindContext.bind("rcontroler", this);
     }
 
     public List<TorrentInfo> getList() {

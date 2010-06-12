@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Config {
     private String name;
-    private Map<String, String> fields = new HashMap<String, String>();
+    private Map<String, Object> fields = new HashMap<String, Object>();
 
     public String getName() {
         return name;
@@ -20,19 +20,19 @@ public class Config {
         this.name = name;
     }
 
-    public String getFieldValue(String name) {
+    public Object getFieldValue(String name) {
         return fields.get(name);
     }
 
-    public void setFieldValue(String name, String value) {
+    public void setFieldValue(String name, Object value) {
         fields.put(name, value);
     }
 
-    public Map<String, String> getFields() {
+    public Map<String, Object> getFields() {
         return fields;
     }
 
-    public void setFields(Map<String, String> fields) {
+    public void setFields(Map<String, Object> fields) {
         this.fields = fields;
     }
 
@@ -43,9 +43,8 @@ public class Config {
 
         Config config = (Config) o;
 
-        if (name != null ? !name.equals(config.name) : config.name != null) return false;
+        return !(name != null ? !name.equals(config.name) : config.name != null);
 
-        return true;
     }
 
     @Override

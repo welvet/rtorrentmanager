@@ -1,10 +1,10 @@
 package rtorrent.config;
 
 import org.apache.log4j.Logger;
+import rtorrent.utils.BindContext;
+import rtorrent.utils.InContext;
 import rtorrent.utils.LoggerSingleton;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,10 +16,10 @@ import java.util.*;
  * Date: 05.06.2010
  * Time: 12:10:19
  */
-public class ConfigManagerImpl implements ConfigManager {
+public class ConfigManagerImpl implements ConfigManager, InContext {
     private Set<Config> configs = new HashSet<Config>();
     private File file;
-    private static final String EXT = ".cnf";
+    private static final String EXT = ".cfg";
     private static final String DIR = "configs";
     private Logger log = LoggerSingleton.getLogger();
 
@@ -32,13 +32,7 @@ public class ConfigManagerImpl implements ConfigManager {
     }
 
     public void bindContext() {
-        try {
-            InitialContext context = new InitialContext();
-            context.bind("rconfig", this);
-            log.info("ConfigManager загружен");
-        } catch (NamingException e) {
-            log.error(e);
-        }
+        BindContext.bind("rconfig", this);
     }
 
     private void save(Config config) throws IOException {

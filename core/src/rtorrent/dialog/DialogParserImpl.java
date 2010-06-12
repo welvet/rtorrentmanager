@@ -1,14 +1,13 @@
 package rtorrent.dialog;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
-import dialog.CheckField;
-import dialog.Dialog;
-import dialog.SelectField;
-import dialog.TextField;
+import dialog.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import rtorrent.utils.BindContext;
+import rtorrent.utils.InContext;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -23,11 +22,11 @@ import java.util.List;
  * Date: 09.06.2010
  * Time: 22:00:02
  */
-public class DialogParser {
+public class DialogParserImpl implements DialogParser, InContext {
 
     public Dialog parse(String name) {
         try {
-        InputStream stream = DialogParser.class.getResourceAsStream(name + ".xml");
+        InputStream stream = DialogParserImpl.class.getResourceAsStream(name + ".xml");
         DOMParser parser = new DOMParser();
 
         InputSource inputSource = new InputSource(stream);
@@ -42,7 +41,6 @@ public class DialogParser {
 
         //выставляем глобальные свойства
         dialog.setName(xPath.evaluate("/config/@name", document));
-        dialog.setPath(xPath.evaluate("/config/@path", document));
 
         Document tempDocument = DocumentBuilderFactory.newInstance()
                 .newDocumentBuilder().newDocument();
@@ -56,6 +54,7 @@ public class DialogParser {
             TextField field = new TextField();
             field.setFieldName(xPath.evaluate("/value/@name", tempDocument));
             field.setFieldText(xPath.evaluate("/value/@text", tempDocument));
+            field.setFieldValue(xPath.evaluate("/value/@default", tempDocument));
             field.setFieldDescription(xPath.evaluate("/value/@description", tempDocument));
             dialog.addField(field);
             tempDocument.removeChild(tempRoot);
@@ -69,6 +68,9 @@ public class DialogParser {
             CheckField field = new CheckField();
             field.setFieldName(xPath.evaluate("/checkbox/@name", tempDocument));
             field.setFieldText(xPath.evaluate("/checkbox/@text", tempDocument));
+            String value = xPath.evaluate("/checkbox/@default", tempDocument);
+            Boolean boleanValue = value.equals("true");
+            field.setFieldValue(boleanValue);
             field.setFieldDescription(xPath.evaluate("/checkbox/@description", tempDocument));
             dialog.addField(field);
             tempDocument.removeChild(tempRoot);
@@ -82,6 +84,7 @@ public class DialogParser {
             SelectField field = new SelectField();
             field.setFieldName(xPath.evaluate("/select/@name", tempDocument));
             field.setFieldText(xPath.evaluate("/select/@text", tempDocument));
+            field.setFieldValue(xPath.evaluate("/select/@default", tempDocument));
             field.setFieldDescription(xPath.evaluate("/select/@description", tempDocument));
             //устанавливаем значения дочерних элементов
             NodeList childNodes = (NodeList) xPath.evaluate("/select/option", tempDocument, XPathConstants.NODESET);
@@ -100,5 +103,9 @@ public class DialogParser {
             throw new RuntimeException();
             //todo realize me
         }
+    }
+
+    public void bindContext() {
+        BindContext.bind("rdialog", this);
     }
 }

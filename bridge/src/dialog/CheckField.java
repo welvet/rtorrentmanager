@@ -13,7 +13,7 @@ public class CheckField extends Input {
     }
 
     public void setFieldValue(Object fieldValue) {
-        this.fieldValue = (Boolean) fieldValue;
+        this.fieldValue = (Boolean) (fieldValue == null ? false : fieldValue);
     }
 
     @Override

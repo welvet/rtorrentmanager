@@ -1,6 +1,6 @@
 package rtorrent.test;
 
-import rtorrent.dialog.DialogParser;
+import rtorrent.dialog.DialogParserImpl;
 
 /**
  * User: welvet
@@ -9,7 +9,7 @@ import rtorrent.dialog.DialogParser;
  */
 public class DialogParserTest extends RtorrentTestCase{
     public void testParse() throws Exception {
-        DialogParser parser = new DialogParser();
+        DialogParserImpl parser = new DialogParserImpl();
         parser.parse("test");
     }
 }
