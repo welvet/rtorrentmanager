@@ -1,7 +1,6 @@
 package rtorrent.test;
 
 import java.io.IOException;
-import java.net.Socket;
 
 /**
  * User: welvet
@@ -13,8 +12,8 @@ public class WebServerTest extends RtorrentTestCase {
     public void testStart() throws IOException, InterruptedException {
         //загружаем сервер
         builder.build();
-        Socket socket = new Socket(host, Integer.parseInt(port));
-        assertTrue(socket.isConnected());
+//        Socket socket = new Socket(host, Integer.parseInt(port));
+//        assertTrue(socket.isConnected());
         while (true)
             Thread.sleep(1000L);
     }

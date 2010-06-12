@@ -1,7 +1,5 @@
 package rtorrent.config;
 
-import java.io.IOException;
-
 /**
  * User: welvet
  * Date: 05.06.2010
@@ -18,5 +16,5 @@ public interface ConfigManager {
      * Обновить существующий конфиг
       * @param config
      */
-    public void saveConfig(Config config) throws IOException;
+    public void saveConfig(Config config);
 }

@@ -19,12 +19,11 @@ public class DialogManager {
 
         dialog.setPath(name);
 
-        if (config != null)
-            for (Input input : dialog.getInputs()) {
-                Object value = config.getFieldValue(input.getFieldName());
-                if (value != null)
-                    input.setFieldValue(value);
-            }
+        for (Input input : dialog.getInputs()) {
+            Object value = config.getFieldValue(input.getFieldName());
+            if (value != null)
+                input.setFieldValue(value);
+        }
         return dialog;
     }
 
@@ -35,5 +34,6 @@ public class DialogManager {
         for (Input input : dialog.getInputs()) {
             config.setFieldValue(input.getFieldName(), input.getFieldValue());
         }
+        manager.saveConfig(config);
     }
 }

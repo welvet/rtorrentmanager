@@ -27,9 +27,7 @@ public abstract class RtorrentTestCase extends TestCase {
     TorrentSet torrentSet;
     RtorrentControlerImpl controler;
     ConfigManagerImpl configManager;
-    WebServerBuilder builder;
-    String port = "8081";
-    String host;
+    WebServerBuilder builder;;
     private Boolean loaded = false;
 
     @Override
@@ -43,9 +41,6 @@ public abstract class RtorrentTestCase extends TestCase {
         //сслка на собраный варник
         //todo переделать на темп дир
         warPath = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
-        //настройки сервера
-        port = "8081";
-        host = "127.0.0.1";
         //создаем рторрент сервис
         rtorrentService = new MockRtorrentService();
         //создаем синглтон
@@ -62,8 +57,6 @@ public abstract class RtorrentTestCase extends TestCase {
         dialogParser.bindContext();
         //создаем веб сервер
         builder = new WebServerBuilder();
-        builder.setPort(port);
-        builder.setHost(host);
         builder.setWar(warPath);
     }
 

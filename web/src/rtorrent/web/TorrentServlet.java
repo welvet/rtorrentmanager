@@ -51,6 +51,8 @@ public class TorrentServlet extends HttpServlet {
             response.getWriter().print(s);
             return;
         }
+        request.setAttribute("dialog", "torrent");
+        request.setAttribute("torrentHash", "hash");
         request.getRequestDispatcher("/settings/").forward(request, response);
     }
 }

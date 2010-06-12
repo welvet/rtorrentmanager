@@ -1,7 +1,11 @@
 package rtorrent.config;
 
+import dialog.Dialog;
+import dialog.DialogParser;
+import dialog.Input;
 import org.apache.log4j.Logger;
 import rtorrent.utils.BindContext;
+import rtorrent.utils.ContextUtils;
 import rtorrent.utils.InContext;
 import rtorrent.utils.LoggerSingleton;
 
@@ -22,6 +26,7 @@ public class ConfigManagerImpl implements ConfigManager, InContext {
     private static final String EXT = ".cfg";
     private static final String DIR = "configs";
     private Logger log = LoggerSingleton.getLogger();
+    private static final String BOOLEAN = "boolean_";
 
     public ConfigManagerImpl(File dir) {
         //создаем директорию с конфигами
@@ -54,6 +59,15 @@ public class ConfigManagerImpl implements ConfigManager, InContext {
         //заполняем поля, настройками
         Map map = new HashMap();
         for (Object s : properties.keySet()) {
+            String property = (String) properties.get(s);
+            if (property.equals(BOOLEAN + "true")) {
+                map.put(s, true);
+                continue;
+            }
+            if (property.equals(BOOLEAN + "false")) {
+                map.put(s, false);
+                continue;
+            }
             map.put(s, properties.get(s));
         }
         Config config = new Config();
@@ -76,15 +90,50 @@ public class ConfigManagerImpl implements ConfigManager, InContext {
         } catch (IOException e) {
             log.error(e);
         }
-        return null;
+        //если и это не удалось - создаем его из диалога
+        DialogParser parser = (DialogParser) ContextUtils.lookup("rdialog");
+
+        Config config = new Config();
+        Dialog dialog = parser.parse(name);
+
+        config.setName(name);
+
+        for (Input input : dialog.getInputs()) {
+            config.setFieldValue(input.getFieldName(), input.getFieldValue());
+        }
+
+        saveConfig(config);
+
+        log.info(config + "загружен с настройками по умолчанию");
+
+        return getConfig(name);
     }
 
     public void saveConfig(Config config) {
         configs.add(config);
         try {
-            save(config);
+            Config configToSave = prepareToFileConfig(config);
+            save(configToSave);
         } catch (IOException e) {
             log.error(e);
         }
+    }
+
+    private Config prepareToFileConfig(Config config) {
+        Config newConfig = new Config();
+        //копируем св-ва
+        newConfig.setName(config.getName());
+        Map<String, Object> map = config.getFields();
+        Map<String, Object> newMap = new HashMap<String, Object>();
+        for (String key : map.keySet()) {
+            Object val = map.get(key);
+            if (val instanceof Boolean) {
+                newMap.put(key, ((Boolean) val ? BOOLEAN + "true" : BOOLEAN + "false"));
+            } else {
+                newMap.put(key, val);
+            }
+        }
+        newConfig.setFields(newMap);
+        return newConfig;
     }
 }
