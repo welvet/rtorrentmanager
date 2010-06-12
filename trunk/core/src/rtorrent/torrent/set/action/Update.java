@@ -1,5 +1,6 @@
 package rtorrent.torrent.set.action;
 
+import rtorrent.notice.TorrentNotice;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.TorrentValidateException;
 import rtorrent.torrent.set.TorrentSetException;
@@ -33,6 +34,7 @@ public class Update extends TorrentSetAction {
                 if (!rtorrentService.verify(torrent.getTorrentFileHash()))
                     throw new TorrentSetException("Ќе удалось добавить " + torrent);
                 torrent.setLastUpdated(new Date());
+                notice(torrent, TorrentNotice.UPDATE);
                 log.info(torrent + " обновлен");
             } catch (LoggableException e) {
                 torrent.setNeedUpdate(true); //востанавливаем статус в случае ошибки

@@ -88,7 +88,8 @@ public abstract class Torrent implements Serializable {
      * @return
      */
     public Boolean isComplite() {
-        if ((sizeBytes != null) && (bytesDone != null))
+        //если торрент только что создан, то он не скачан
+        if ((sizeBytes != 0L) && (bytesDone != 0L))
             if (bytesDone / sizeBytes == 1)
                 return true;
         return false;

@@ -1,6 +1,8 @@
 package rtorrent.torrent.set.action;
 
 import org.apache.log4j.Logger;
+import rtorrent.notice.NoticeObserverSingleton;
+import rtorrent.notice.TorrentNotice;
 import rtorrent.service.RtorrentService;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.set.TorrentHashtable;
@@ -33,4 +35,11 @@ public abstract class TorrentSetAction {
     }
 
     protected void action(ActionTorrent torrent) {};
+
+    protected void notice(ActionTorrent torrent, TorrentNotice notice) {
+        ActionTorrent newTorrent = new ActionTorrent();
+        newTorrent.updateAll(torrent);
+        //уведомляем сервис
+        NoticeObserverSingleton.notice(newTorrent, notice);
+    }
 }

@@ -1,5 +1,6 @@
 package rtorrent.torrent.set.action;
 
+import rtorrent.notice.TorrentNotice;
 import rtorrent.service.RtorrentServiceException;
 import rtorrent.torrent.ActionTorrent;
 
@@ -24,8 +25,18 @@ public class SetUpdate extends TorrentSetAction {
 
         //Обновляем торренты, заодно сохраняем список активных хешей
         for (ActionTorrent remoteTorrent : rtorrentSet) {
+            Boolean needNotice = false;
             ActionTorrent localTorrent = torrentSetImpl.getTorrentFromMap(remoteTorrent);
+
+            //проверяем, скчался ли торрент
+            if ((remoteTorrent.isComplite()) && (remoteTorrent.isComplite() != localTorrent.isComplite()))
+                needNotice = true;
+
             localTorrent.updateInfo(remoteTorrent);
+
+            if (needNotice)
+                notice(localTorrent, TorrentNotice.FINISH);
+
             safeTorrenSet.add(localTorrent.getHash());
         }
 

@@ -1,6 +1,9 @@
 package rtorrent.web;
 
 import redstone.xmlrpc.util.Base64;
+import rtorrent.config.Config;
+import rtorrent.config.ConfigManager;
+import rtorrent.utils.ContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -24,16 +27,22 @@ public class AuthFilter implements Filter {
         response.setCharacterEncoding("UTF-8");
 
         //проверяем авторизацию
-        //todo в дальнейшем логин и пасс будут считываться с конфига
-        if (request.getSession().getAttribute("auth") == null) {
-            String secret = String.valueOf(Base64.encode("root:pass".getBytes()));
-            secret = "Basic " + secret;
-            if (!secret.equals(request.getHeader("Authorization"))) {
-                response.setHeader("WWW-Authenticate", "Basic realm=\"Secure Area\"");
-                response.sendError(401);
-                return;
+        ConfigManager manager = (ConfigManager) ContextUtils.lookup("rconfig");
+        Config config = manager.getConfig("server");
+
+        if ((Boolean) config.getFieldValue("auth")) {
+            if (request.getSession().getAttribute("auth") == null) {
+                String login = (String) config.getFieldValue("login");
+                String pass = (String) config.getFieldValue("pass");
+                String secret = String.valueOf(Base64.encode((login + ":" + pass).getBytes()));  
+                secret = "Basic " + secret;
+                if (!secret.equals(request.getHeader("Authorization"))) {
+                    response.setHeader("WWW-Authenticate", "Basic realm=\"Secure Area\"");
+                    response.sendError(401);
+                    return;
+                }
+                request.getSession().setAttribute("auth", true);
             }
-            request.getSession().setAttribute("auth", true);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

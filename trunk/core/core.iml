@@ -15,6 +15,7 @@
     <orderEntry type="library" name="Html" level="project" />
     <annotation-paths>
       <root url="file://$MODULE_DIR$/src/rtorrent/test/resource" />
+      <root url="file://$MODULE_DIR$/src/rtorrent/dialog" />
     </annotation-paths>
   </component>
 </module>

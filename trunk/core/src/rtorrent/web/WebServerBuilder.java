@@ -26,15 +26,10 @@ public class WebServerBuilder {
         properties.put("accessLoggerClassName", "rtorrent.web.WebServLogger");
         properties.put("ajp13Port", "-1");
         properties.put("useJNDI", "true");
-        try {
-            ConfigManager configManager = (ConfigManager) ContextUtils.lookup("rconfig");
-            Config config = configManager.getConfig("WebServer");
-            properties.put("httpsListenAddress", config.getFieldValue("host"));
-            properties.put("httpPort", config.getFieldValue("port"));
-        } catch (Exception e) {
-            properties.put("httpsListenAddress", "0.0.0.0");
-            properties.put("httpPort", "8080");
-        }
+        ConfigManager configManager = (ConfigManager) ContextUtils.lookup("rconfig");
+        Config config = configManager.getConfig("server");
+        properties.put("httpsListenAddress", config.getFieldValue("host"));
+        properties.put("httpPort", config.getFieldValue("port"));
         String war = new File(Initialize.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/../web.war").getAbsolutePath();
         properties.put("warfile", war);
     }

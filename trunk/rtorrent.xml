@@ -28,6 +28,7 @@
             <fileset dir="${resource.in}">
                 <exclude name="**/${test.dir}/**"/>
                 <include name="**/*.xml"/>
+                <include name="**/*.dtd"/>
                 <include name="**/*.xsl"/>
                 <include name="**/*.properties"/>
                 <include name="**/resource/*"/>
