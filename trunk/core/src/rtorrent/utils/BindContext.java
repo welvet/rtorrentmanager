@@ -13,7 +13,12 @@ public class BindContext {
     public static void bind(String s, Object o) {
         try {
             InitialContext context = new InitialContext();
-            context.bind(s, o);
+            try {
+                //странная проверка
+                context.lookup(s);
+            } catch (NamingException e) {
+                context.bind(s, o);
+            }
         } catch (NamingException e) {
             LoggerSingleton.getLogger().error(e);
         }

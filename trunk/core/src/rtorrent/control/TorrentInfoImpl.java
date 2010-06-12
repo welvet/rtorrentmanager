@@ -38,6 +38,7 @@ public class TorrentInfoImpl implements TorrentInfo {
     private Integer calcPercentage(ActionTorrent torrent) {
         if (State.hashing.equals(state))
             return torrent.getHashing().intValue();
+        if (torrent.getSizeBytes() == 0) return 0;
         return Math.round(torrent.getBytesDone()/torrent.getSizeBytes()*100);
     }
 

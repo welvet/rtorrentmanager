@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControlerImpl;
 import rtorrent.dialog.DialogParserImpl;
+import rtorrent.notice.NoticeObserverSingleton;
+import rtorrent.notice.NoticeService;
 import rtorrent.service.RtorrentService;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
@@ -27,8 +29,9 @@ public abstract class RtorrentTestCase extends TestCase {
     TorrentSet torrentSet;
     RtorrentControlerImpl controler;
     ConfigManagerImpl configManager;
-    WebServerBuilder builder;;
+    WebServerBuilder builder;
     private Boolean loaded = false;
+    static final int WAIT_TIME = 3000;
 
     @Override
     protected void setUp() throws Exception {
@@ -58,6 +61,10 @@ public abstract class RtorrentTestCase extends TestCase {
         //создаем веб сервер
         builder = new WebServerBuilder();
         builder.setWar(warPath);
+        //регистрируем NoticeService
+        NoticeService service = new MockNoticeService();
+        NoticeObserverSingleton.clearService();
+        NoticeObserverSingleton.registerService(service);
     }
 
     @Override

@@ -11,7 +11,6 @@ import java.util.Date;
  */
 public class TorrentSetTest extends RtorrentTestCase {
     private String hash;
-    private static final int WAIT_TIME = 3000;
 
     /**
      * Проверям основные операции

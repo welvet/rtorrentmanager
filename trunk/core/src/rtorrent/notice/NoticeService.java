@@ -8,6 +8,8 @@ import rtorrent.torrent.ActionTorrent;
  * Time: 21:48:30
  */
 public interface NoticeService {
+
+    public void initialize();
     /**
      * @param torrent торрент, с которым произошли изменения
      * @param notice тип изменения
