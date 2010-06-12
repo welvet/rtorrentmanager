@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "config.dtd">
+<config title="Планировщик">
+    <value name="updateSet" text="Связь с rtorrent" default="1"/>
+    <value name="updateNotice" text="Уведомления" description="Проверять наличие новых уведомлений" default="10"/>
+    <value name="updateTrackers" text="Обновление трекеров" description="Проверять обновления на трекерах" default="60"/>
+</config>

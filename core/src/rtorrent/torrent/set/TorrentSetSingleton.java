@@ -32,4 +32,8 @@ public class TorrentSetSingleton {
             throw new RuntimeException("TorrentSet не инициализирован");
         return ourInstance;
     }
+
+    public static void run() {
+        ourInstance.update();
+    }
 }

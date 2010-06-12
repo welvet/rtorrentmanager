@@ -41,6 +41,7 @@ public class TorrentJob implements Runnable {
             worker.initialize();
             for (ActionTorrent torrent : torrents) {
                 torrentSet.addOrUpdate((ActionTorrent) worker.work(torrent));
+                log.debug(torrent + " синхронизирован с трекером");
             }
         } catch (TorrentWorkerException e) {
             log.info(e);

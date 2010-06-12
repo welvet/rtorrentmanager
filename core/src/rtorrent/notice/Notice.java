@@ -46,4 +46,11 @@ public class Notice {
         result = 31 * result + (torrent != null ? torrent.hashCode() : 0);
         return result;
     }
+
+    public String toString() {
+        return "Notice{" +
+                "notice=" + notice +
+                ", torrent=" + torrent +
+                '}';
+    }
 }
