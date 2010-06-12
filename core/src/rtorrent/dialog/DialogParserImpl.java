@@ -27,6 +27,10 @@ import java.util.List;
 public class DialogParserImpl implements DialogParser, InContext {
     private Logger logger = LoggerSingleton.getLogger();
 
+    public DialogParserImpl() {
+        bindContext();
+    }
+
     public Dialog parse(String name) {
         try {
             InputStream stream = DialogParserImpl.class.getResourceAsStream(name + ".xml");

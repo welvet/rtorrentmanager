@@ -65,9 +65,13 @@
             <param name="resource.in" value="${core.dir}/src"/>
             <param name="resource.out" value="${build.dir}/${core.dir}"/>
         </antcall>
-        <manifestclasspath jarfile="rtorrentmanager.jar" property="manifest.class.path">
-            <classpath refid="classpath"/>
-        </manifestclasspath>
+        <path id="prepareLibs">
+            <fileset dir="${build.dir}/${lib.dir}"/>
+        </path>
+        <pathconvert property="manifest.class.path" pathsep=" " dirsep="/">
+            <path refid="prepareLibs"/>
+            <map from="${basedir}\${build.dir}\" to=""/>
+        </pathconvert>
         <jar destfile="${build.dir}/core.jar" basedir="${build.dir}/${core.dir}" compress="true">
             <manifest>
                 <attribute name="Main-Class" value="rtorrent.init.Initialize"/>

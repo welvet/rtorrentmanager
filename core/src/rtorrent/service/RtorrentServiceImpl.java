@@ -13,7 +13,6 @@ import rtorrent.torrent.Torrent;
 import rtorrent.utils.ContextUtils;
 import rtorrent.utils.LoggerSingleton;
 
-import javax.naming.NamingException;
 import java.io.FileInputStream;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Arrays;
@@ -69,9 +68,9 @@ public class RtorrentServiceImpl implements RtorrentService {
         initialize();
     }
 
-    public RtorrentServiceImpl() throws NamingException {
+    public RtorrentServiceImpl() {
         ConfigManager configManager = (ConfigManager) ContextUtils.lookup("rconfig");
-        Config config = configManager.getConfig("RtorrentService");
+        Config config = configManager.getConfig("rtorrent");
         String host = (String) config.getFieldValue("host");
         String port = (String) config.getFieldValue("port");
         this.xmlRpcConnection = new XmlRpcConnection(host, new Integer(port));

@@ -28,8 +28,9 @@ public class RtorrentControlerImpl implements RtorrentControler, InContext {
     private Logger log = LoggerSingleton.getLogger();
     ;
 
-    public RtorrentControlerImpl() throws TorrentSetException {
+    public RtorrentControlerImpl() {
         torrentSet = TorrentSetSingleton.getInstance();
+        bindContext();
     }
 
     /**

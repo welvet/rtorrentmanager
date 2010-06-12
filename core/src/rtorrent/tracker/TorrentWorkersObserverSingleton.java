@@ -14,6 +14,14 @@ public class TorrentWorkersObserverSingleton {
         return ourInstance;
     }
 
+    public static void clearWorkers() {
+        ourInstance.clearWorkers();
+    }
+
+    public static void registerWorker(TrackerWorker worker) {
+        ourInstance.registerWorker(worker);
+    }
+
     public static void run() {
         ThreadQueueSingleton.add(ourInstance);
     }

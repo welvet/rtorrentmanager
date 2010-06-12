@@ -10,8 +10,5 @@ import rtorrent.scheduler.SchedulerSingleton;
 public class SchedulerTest extends RtorrentTestCase {
     public void testScheduler() throws Exception {
         SchedulerSingleton.startDefaultTask();
-        while (true) {
-            Thread.sleep(100L);
-        }
     }
 }

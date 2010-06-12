@@ -30,10 +30,11 @@ public class ConfigManagerImpl implements ConfigManager, InContext {
 
     public ConfigManagerImpl(File dir) {
         //создаем директорию с конфигами
-        dir = new File(dir.getAbsolutePath() + "\\" + DIR);
+        dir = new File(dir.getAbsolutePath() + "/" + DIR);
         dir.mkdir();
 
         this.file = dir;
+        bindContext();
     }
 
     public void bindContext() {
@@ -44,7 +45,7 @@ public class ConfigManagerImpl implements ConfigManager, InContext {
         Properties properties = new Properties();
         properties.putAll(config.getFields());
         //сохраняем конфиг по его имени
-        String path = file.getAbsolutePath() + "\\" + config.getName() + EXT;
+        String path = file.getAbsolutePath() + "/" + config.getName() + EXT;
         FileOutputStream stream = new FileOutputStream(path);
         properties.store(stream, null);
         log.debug("Конфиг " + config.getName() + " сохранен");
@@ -53,7 +54,7 @@ public class ConfigManagerImpl implements ConfigManager, InContext {
     private Config load(String name) throws IOException {
         Properties properties = new Properties();
         //загружаем конфиг по имени файла
-        String path = file.getAbsolutePath() + "\\" + name + EXT;
+        String path = file.getAbsolutePath() + "/" + name + EXT;
         FileInputStream stream = new FileInputStream(path);
         properties.load(stream);
         //заполняем поля, настройками

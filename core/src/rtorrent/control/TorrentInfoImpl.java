@@ -30,16 +30,19 @@ public class TorrentInfoImpl implements TorrentInfo {
         percentage = calcPercentage(torrent);
         compliteSize = torrent.getBytesDone();
         fullSize = torrent.getSizeBytes();
-        ratio = torrent.getRatio().floatValue()/100;
+        ratio = torrent.getRatio().floatValue()/(100*100);
         peersConnected = torrent.getPeersConnected().intValue();
         sids = torrent.getPeersConnected().intValue();
     }
 
     private Integer calcPercentage(ActionTorrent torrent) {
-        if (State.hashing.equals(state))
-            return torrent.getHashing().intValue();
         if (torrent.getSizeBytes() == 0) return 0;
-        return Math.round(torrent.getBytesDone()/torrent.getSizeBytes()*100);
+        System.out.println(Math.round((float) (torrent.getBytesDone() / torrent.getSizeBytes()) *100));
+        //todo
+        //Long l1 = new Long(3899197251L);
+        //Long l2 = new Long(1619001344L);
+        //System.out.println(Math.round( l2/l1 *100))
+        return Math.round((float) (torrent.getBytesDone() / torrent.getSizeBytes()) *100);
     }
 
     private void calcState(ActionTorrent torrent) {

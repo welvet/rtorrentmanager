@@ -1,5 +1,6 @@
 package rtorrent.torrent.set;
 
+import rtorrent.service.RtorrentService;
 import rtorrent.torrent.ActionTorrent;
 
 import java.util.Set;
@@ -68,4 +69,6 @@ public interface TorrentSet {
      * @param torrent Торрент файл, для обновления
      */
     public void addOrUpdate(ActionTorrent torrent);
+
+    void setService(RtorrentService service);
 }
