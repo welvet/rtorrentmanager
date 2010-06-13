@@ -1,3 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    background: url("/images/wall.jpg") no-repeat;
+
+}
+
+a {
+    color: blue;
+    outline: none;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+p {
+    margin: 0 0 18px
+}
+
+img {
+    border: none;
+}
+
+input {
+    vertical-align: middle;
+}
+
+#wrapper {
+    width: 720px;
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
 /*основной блок*/
 #main {
     width: 720px;
@@ -39,12 +78,24 @@
 
 #tableConatainer {
     width: 720px;
+    margin-top: 10px;
+}
+
+#tableButtons {
+    float: left;
+    margin: 2px;
+}
+
+.refreshable {
+    border: 1px dotted;
 }
 
 #torrentTable {
     text-align: center;
     width: 600px;
+    background-color: white;
     font-size: 13px;
+    margin: 0 auto;
 }
 
 /*задаем максимальную ширину для имени торрента*/
@@ -90,7 +141,7 @@
 }
 
 #log {
-    width: 720px;
+    width: 718px;
 }
 
 #label {

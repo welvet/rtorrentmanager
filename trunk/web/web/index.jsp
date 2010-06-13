@@ -21,68 +21,76 @@
     </style>
 </head>
 <body>
-<%--блок меню настроек--%>
-<div id="mainMenu">
-    <ul id="jsddm">
-        <li><a href="#">Общее</a>
-            <ul>
-                <li><a href="#" action="switchRtorrent">Запустить/остановить rtorrent</a></li>
-                <li><a href="#" action="shutdownApp">Выключить rmanager</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Настройки</a>
-            <ul>
-                <li><a href="#" dialog="rtorrent">Rtorrent</a></li>
-                <li><a href="#" dialog="scheduler">Планировщик</a></li>
-                <li><a href="#" dialog="server">Web server</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Трекеры</a>
-            <ul>
-                <li><a href="#">Rutracker</a></li>
-                <li><a href="#">LostFilm</a></li>
-            </ul>
-        </li>
-        <li><a href="#" action="help">Help</a></li>
-        <li><a href="#" action="about">About</a></li>
+<div id="wrapper">
+    <%--блок меню настроек--%>
+    <div id="mainMenu">
+        <ul id="jsddm">
+            <li><a href="#">Общее</a>
+                <ul>
+                    <li><a href="#" action="switchRtorrent">Запустить/остановить rtorrent</a></li>
+                    <li><a href="#" action="shutdownApp">Выключить rmanager</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Настройки</a>
+                <ul>
+                    <li><a href="#" dialog="rtorrent">Rtorrent</a></li>
+                    <li><a href="#" dialog="scheduler">Планировщик</a></li>
+                    <li><a href="#" dialog="server">Web server</a></li>
+                    <li><a href="#" dialog="notice">Уведомления</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Трекеры</a>
+                <ul>
+                    <li><a href="#" dialog="rutracker">Rutracker</a></li>
+                    <li><a href="#" dialog="lostfilm">LostFilm</a></li>
+                </ul>
+            </li>
+            <li><a href="#" action="help">Help</a></li>
+            <li><a href="#" action="about">About</a></li>
+        </ul>
+    </div>
+    <!--блок с таблицей-->
+    <div id="tableConatainer">
+        <table id="torrentTable">
+            <thead>
+            <tr>
+                <th>hash</th>
+                <th class="titleTd">Имя</th>
+                <th>Статус</th>
+                <th>&nbsp;</th>
+                <th class="titleSize">Скачано</th>
+                <th class="titleSize">Размер</th>
+                <th>Ратио</th>
+                <th>Пиры</th>
+                <th>Всего</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <!--блок контекстного меню-->
+    <ul id="contextMenu">
+        <li><a href="#start">Запустить</a></li>
+        <li><a href="#stop">Остановить</a></li>
+        <li><a href="#remove">Удалить</a></li>
+        <li><a href="#properties">Свойства</a></li>
     </ul>
-</div>
-<!--блок с таблицей-->
-<div id="tableConatainer">
-    <table id="torrentTable">
-        <thead>
-        <tr>
-            <th>hash</th>
-            <th class="titleTd">Имя</th>
-            <th>Статус</th>
-            <th>&nbsp;</th>
-            <th class="titleSize">Скачано</th>
-            <th class="titleSize">Размер</th>
-            <th>Ратио</th>
-            <th>Пиры</th>
-            <th>Всего</th>
-        </tr>
-        </thead>
-    </table>
-</div>
-<!--блок контекстного меню-->
-<ul id="contextMenu">
-    <li><a href="#start">Запустить</a></li>
-    <li><a href="#stop">Остановить</a></li>
-    <li><a href="#remove">Удалить</a></li>
-    <li><a href="#properties">Свойства</a></li>
-</ul>
-<!--блок диалога с настройками торрента-->
-<div id="torrentDialog" class="dialog">
-</div>
-<br>
-<div id="log" class="fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">
-    <span id="label">Логи <a href="#">(очистить)</a></span>
-    <textarea id="logArea" class="ui-widget" rows="7" cols="110" disabled="disabled">
-        <%@ include file="log.jsp" %>
-    </textarea>
-</div>
-<div id="simpleAction" class="dialog">
+    <!--блок диалога с настройками торрента-->
+    <div id="torrentDialog" class="dialog">
+    </div>
+    <br>
+
+    <div id="log" class="fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">
+        <span id="label">Логи <a href="#">(очистить)</a></span>
+        <textarea id="logArea" class="ui-widget" rows="7" cols="110" disabled="disabled">
+            <%@ include file="log.jsp" %>
+        </textarea>
+    </div>
+    <div id="simpleAction" class="dialog">
+    </div>
+    <div id="tableButtons">
+        <img id="addTorrent" src="/images/add.png"/>
+        <img id="refresh" src="/images/refresh.png"/>
+    </div>
 </div>
 </body>
 </html>

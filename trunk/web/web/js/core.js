@@ -2,6 +2,7 @@
 var torrents = [];
 var selectedTorrent;
 var oTable;
+var refresh = false;
 
 //инициализация таблицы рторрента
 function initializeTable() {
@@ -26,6 +27,9 @@ function initializeTable() {
         "bProcessing": true,
         "sAjaxSource": "/torrent/list/"
     });
+
+    //initialize buttons
+    $("#torrentTable_filter").prepend($("#tableButtons"));
 }
 
 function initializeButtons(parent) {
@@ -168,9 +172,24 @@ function initializeLog() {
     });
 }
 
+function initializeTableButtons() {
+    $("#refresh").click(function() {
+        if (refresh) {
+            stopReload();
+            $(this).removeClass("refreshable");
+            refresh = false;
+        } else {
+            reloadTable();
+            $(this).addClass("refreshable");
+            refresh = true;
+        }
+    })
+}
+
 //public static void main(null)
 $().ready(function() {
     initializeMenu();
     initializeLog();
     initializeTable();
+    initializeTableButtons();
 });

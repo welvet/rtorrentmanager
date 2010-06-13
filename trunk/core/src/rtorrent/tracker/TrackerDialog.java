@@ -35,6 +35,7 @@ public class TrackerDialog extends Dialog {
         input.setFieldName("watching");
         input.setFieldValue(torrent.isWatching());
         input.setFieldText("Наблюдаемый");
+        input.setPosition(-2);
         addField(input);
         //tracker
         SelectField selectField = new SelectField();
@@ -42,6 +43,7 @@ public class TrackerDialog extends Dialog {
         selectField.setFieldValues(TrackerUtils.strings());
         selectField.setFieldValue(tracker != null ? TrackerUtils.trackers2string(tracker.getTracker()) : "");
         selectField.setFieldText("Трекер");
+        selectField.setPosition(-1);
         addField(selectField);
 
     }

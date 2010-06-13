@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config SYSTEM "config.dtd">
-
 <config title="Настройка web сервера">
-    <value name="host" text="Хост" default="0.0.0.0"/>
-    <value name="port" text="Порт" default="8080"/>
-    <value name="login" text="Логин" default="admin"/>
-    <value name="pass" text="Пароль" default="admin"/>
-    <checkbox name="auth" text="Авторизация" description="Использовать авторизацию" default="true"/>
+    <value name="host" text="Хост" default="0.0.0.0" position="1"/>
+    <value name="port" text="Порт" default="8080" position="2"/>
+    <value name="login" text="Логин" default="admin" position="4"/>
+    <value name="pass" text="Пароль" default="admin" position="5"/>
+    <checkbox name="auth" text="Авторизация" description="Использовать авторизацию" default="true" position="3"/>
 </config>

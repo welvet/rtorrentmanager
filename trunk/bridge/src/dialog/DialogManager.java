@@ -4,6 +4,7 @@ import rtorrent.config.Config;
 import rtorrent.config.ConfigManager;
 import rtorrent.control.RtorrentControler;
 import rtorrent.utils.ContextUtils;
+import rtorrent.utils.DialogUtils;
 
 /**
  * User: welvet
@@ -15,7 +16,9 @@ public class DialogManager {
     public static Dialog createTorrentDialog(String hash) {
         //если это торрент диалог, то делегируем создание контролеру
         RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");
-        return controler.createTorrentDialog(hash);
+        Dialog dialog = controler.createTorrentDialog(hash);
+        new DialogUtils().sort(dialog);
+        return dialog;
     }
 
     public static Dialog createDialog(String name) {
@@ -24,6 +27,8 @@ public class DialogManager {
 
         Config config = manager.getConfig(name);
         Dialog dialog = parser.parse(name);
+
+        new DialogUtils().sort(dialog);
 
         dialog.setPath(name);
 

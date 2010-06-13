@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "config.dtd">
+<config title="Настройка Rutracker">
+    <value name="login" text="Логин" default=""/>
+    <value name="pass" text="Пароль" default=""/>
+</config>

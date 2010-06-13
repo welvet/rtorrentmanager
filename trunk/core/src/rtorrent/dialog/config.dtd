@@ -9,11 +9,16 @@
 <!ATTLIST value text CDATA #REQUIRED>
 <!ATTLIST value default CDATA #REQUIRED>
 <!ATTLIST value description CDATA "">
+<!ATTLIST value position CDATA "0">
+
 <!ATTLIST checkbox name CDATA #REQUIRED>
 <!ATTLIST checkbox text CDATA #REQUIRED>
 <!ATTLIST checkbox default CDATA #REQUIRED>
 <!ATTLIST checkbox description CDATA "">
+<!ATTLIST checkbox position CDATA "0">
+
 <!ATTLIST select name CDATA #REQUIRED>
 <!ATTLIST select text CDATA #REQUIRED>
 <!ATTLIST select default CDATA #REQUIRED>
 <!ATTLIST select description CDATA "">
+<!ATTLIST select position CDATA "0">
