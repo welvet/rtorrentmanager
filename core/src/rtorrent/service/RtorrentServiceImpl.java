@@ -57,7 +57,7 @@ public class RtorrentServiceImpl implements RtorrentService {
             "d.get_up_total=",
             "d.get_ratio=",
             "d.get_peers_connected=",
-            "d.get_peers_complete=",
+            "d.get_peers_not_connected=",
             "d.get_hashing=",
     };
     private static List list = Arrays.asList(download_variable);

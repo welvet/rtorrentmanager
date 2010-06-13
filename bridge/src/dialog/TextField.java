@@ -17,6 +17,6 @@ public class TextField extends Input {
     }
 
     public String getHtml() {
-        return "<input name=\"" + fieldName + "\" type=\"text\" value=\"" + fieldValue + "\"/>";
+        return "<input name=\"" + fieldName + "\" type=\"" + (hidden ? "hidden" : "text") + "\" value=\"" + fieldValue + "\"/>";
     }
 }

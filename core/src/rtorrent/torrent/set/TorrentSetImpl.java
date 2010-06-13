@@ -52,7 +52,9 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     }
 
     public void update() {
-        ThreadQueueSingleton.add(this);
+        //если рторрент жив, то обновляемся
+        if (rtorrentService.isAlive())
+            ThreadQueueSingleton.add(this);
     }
 
     public void run() {

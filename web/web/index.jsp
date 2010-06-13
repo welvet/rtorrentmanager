@@ -32,7 +32,7 @@
             <th class="titleSize" >Размер</th>
             <th>Ратио</th>
             <th>Пиры</th>
-            <th>Сиды</th>
+            <th>Всего</th>
         </tr>
         </thead>
     </table>
@@ -47,9 +47,5 @@
 <!--блок диалога с настройками торрента-->
 <div id="torrentDialog" class="dialog">
 </div>
-<!--блок диалога с настройками-->
-<!--дебаг-->
-<button onclick="doAction('settings', null);">Remove me</button>
-<!--/дебаг-->
 </body>
 </html>

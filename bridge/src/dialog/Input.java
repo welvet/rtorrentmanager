@@ -10,7 +10,15 @@ public abstract class Input {
     protected String fieldText;
     protected String fieldDescription;
     protected Object fieldValue;
+    protected Boolean hidden = false;
 
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
 
     public String getFieldName() {
         return fieldName;

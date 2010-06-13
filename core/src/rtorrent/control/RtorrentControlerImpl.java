@@ -1,5 +1,6 @@
 package rtorrent.control;
 
+import dialog.Dialog;
 import org.apache.log4j.Logger;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.TorrentInfo;
@@ -7,6 +8,8 @@ import rtorrent.torrent.TorrentValidateException;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetException;
 import rtorrent.torrent.set.TorrentSetSingleton;
+import rtorrent.tracker.SimpleTrackerImpl;
+import rtorrent.tracker.TrackerDialog;
 import rtorrent.utils.BindContext;
 import rtorrent.utils.InContext;
 import rtorrent.utils.LoggerSingleton;
@@ -25,12 +28,12 @@ import java.util.Set;
  */
 public class RtorrentControlerImpl implements RtorrentControler, InContext {
     private TorrentSet torrentSet;
-    private Logger log = LoggerSingleton.getLogger();
-    ;
+    private Logger log = LoggerSingleton.getLogger();    
 
     public RtorrentControlerImpl() {
         torrentSet = TorrentSetSingleton.getInstance();
         bindContext();
+        log.debug("RtorrentControlerImpl инициализирован");
     }
 
     /**
@@ -82,7 +85,21 @@ public class RtorrentControlerImpl implements RtorrentControler, InContext {
         torrentSet.addOrUpdate(torrent);
     }
 
-    public void configureTorrent(String hash) {
-        throw new UnsupportedOperationException();
+    public void configureTorrent(Dialog dialog) {
+        TrackerDialog trackerDialog = (TrackerDialog) dialog;
+        SimpleTrackerImpl track = new SimpleTrackerImpl(trackerDialog.getUrl(), trackerDialog.getTracekr());
+        ActionTorrent torrent = torrentSet.getByHash(trackerDialog.getHash());
+        torrent.setWatching(trackerDialog.isWatching());
+        torrent.setTracker(track);
+        torrentSet.addOrUpdate(torrent);
+    }
+
+    public Dialog createTorrentDialog(String hash) {
+        ActionTorrent torrent = torrentSet.getByHash(hash);
+        return new TrackerDialog(torrent);
+    }
+
+    public void notifyUpdate() {
+        TorrentSetSingleton.run();
     }
 }

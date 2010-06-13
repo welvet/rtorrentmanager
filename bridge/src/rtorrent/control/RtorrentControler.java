@@ -1,5 +1,6 @@
 package rtorrent.control;
 
+import dialog.Dialog;
 import rtorrent.torrent.TorrentInfo;
 
 import java.io.File;
@@ -50,7 +51,17 @@ public interface RtorrentControler {
      * Обновить настройки торрента
      * ссылку, параметр isWatching
      *
-     * @param hash
+     * @param dialog диалог с настройками
      */
-    public void configureTorrent(String hash);
+    public void configureTorrent(Dialog dialog);
+
+    /**
+     * Обновить информацию с рторрентом
+     */
+    public void notifyUpdate();
+
+    /**
+     * Создать диалог с настройками
+     */
+    public Dialog createTorrentDialog(String hash);
 }

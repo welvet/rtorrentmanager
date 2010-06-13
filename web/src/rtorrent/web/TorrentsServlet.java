@@ -46,5 +46,6 @@ public class TorrentsServlet extends HttpServlet {
         JsonList jsonList = new JsonList(objects);
         String rsp = gson.toJson(jsonList, JsonList.class);
         response.getWriter().print(rsp);
+        controler.notifyUpdate();
     }
 }
