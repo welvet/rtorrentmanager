@@ -5,6 +5,7 @@ import rtorrent.torrent.ActionTorrent;
 import rtorrent.utils.TrackerUtils;
 
 /**
+ * Для всех трекеров одинаковые настройки
  * User: welvet
  * Date: 13.06.2010
  * Time: 14:31:39

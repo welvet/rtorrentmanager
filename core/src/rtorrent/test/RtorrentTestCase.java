@@ -1,6 +1,7 @@
 package rtorrent.test;
 
 import junit.framework.TestCase;
+import rtorrent.action.ActionManagerImpl;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControlerImpl;
 import rtorrent.dialog.DialogParserImpl;
@@ -10,6 +11,7 @@ import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
+import rtorrent.utils.LoggerSingleton;
 import rtorrent.web.WebServerBuilder;
 
 import javax.naming.InitialContext;
@@ -42,13 +44,15 @@ public abstract class RtorrentTestCase extends TestCase {
         torrent2File = new File(RtorrentTestCase.class.getResource("resource/").getPath() + "test2.torrent");
         //ссылка на темп директорию
         dir = new File(System.getProperty("java.io.tmpdir"));
+        //logger
+        LoggerSingleton.initialize(dir);
+        new ActionManagerImpl();
         //сслка на собраный варник
-        //todo переделать на темп дир
         warPath = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
         //создаем рторрент сервис
 //        rtorrentService = new MockRtorrentService();
         //создаем синглтон
-        rtorrentService = new RtorrentServiceImpl("serv", 500);
+        rtorrentService = new RtorrentServiceImpl("serv", 5000);
         TorrentSetSingleton.initialze(rtorrentService, datFile);
         torrentSet = TorrentSetSingleton.getInstance();
         //создаем контролер

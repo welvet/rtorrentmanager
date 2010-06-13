@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ page contentType="text/html;UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <title>Rtorrent manager</title>
@@ -10,15 +10,43 @@
     <script type="text/javascript" language="javascript" src="js/jquery.timers-1.2.js"></script>
     <script type="text/javascript" language="javascript" src="js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="js/jquery.contextMenu.js"></script>
+    <script type="text/javascript" language="javascript" src="js/jsddm.js"></script>
     <script type="text/javascript" language="javascript" src="js/core.js"></script>
     <style type="text/css">
         @import "css/jquery.contextMenu.css";
         @import "css/jquery-ui-1.8.1.custom.css";
+        @import "css/jsddm.css";
         @import "css/core.css";
 
     </style>
 </head>
 <body>
+<%--блок меню настроек--%>
+<div id="mainMenu">
+    <ul id="jsddm">
+        <li><a href="#">Общее</a>
+            <ul>
+                <li><a href="#">Запустить/остановить rtorrent</a></li>
+                <li><a href="#">Выключить rmanager</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Настройки</a>
+            <ul>
+                <li><a href="#" dialog="rtorrent">Rtorrent</a></li>
+                <li><a href="#" dialog="scheduler">Планировщик</a></li>
+                <li><a href="#" dialog="server">Web server</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Трекеры</a>
+            <ul>
+                <li><a href="#">Rutracker</a></li>
+                <li><a href="#">LostFilm</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">About</a></li>
+    </ul>
+</div>
 <!--блок с таблицей-->
 <div id="tableConatainer">
     <table id="torrentTable">
@@ -28,8 +56,8 @@
             <th class="titleTd">Имя</th>
             <th>Статус</th>
             <th>&nbsp;</th>
-            <th class="titleSize" >Скачано</th>
-            <th class="titleSize" >Размер</th>
+            <th class="titleSize">Скачано</th>
+            <th class="titleSize">Размер</th>
             <th>Ратио</th>
             <th>Пиры</th>
             <th>Всего</th>
@@ -46,6 +74,13 @@
 </ul>
 <!--блок диалога с настройками торрента-->
 <div id="torrentDialog" class="dialog">
+</div>
+<br>
+<div id="log" class="fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">
+    <span id="label">Логи <a href="#">(очистить)</a></span>
+    <textarea id="logArea" class="ui-widget" rows="7" cols="110" disabled="disabled">
+        <%@ include file="log.jsp" %>
+    </textarea>
 </div>
 </body>
 </html>

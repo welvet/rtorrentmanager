@@ -2,6 +2,8 @@ package rtorrent.init;
 
 import dialog.DialogParser;
 import org.apache.log4j.Logger;
+import rtorrent.action.ActionManager;
+import rtorrent.action.ActionManagerImpl;
 import rtorrent.config.ConfigManager;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControler;
@@ -29,38 +31,41 @@ public class Initialize {
     private static Logger log = LoggerSingleton.getLogger();
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        //todo не работают проценты
-        //todo сделать форсед обновление, если страничка открыта
-        try {        //отключаем консоль
-//        System.in.close();
-//        System.out.close();
-        //создаем рабочую директорию
-        File workDir = new File(System.getProperty("user.home") + "/" + ".rmanager");
-        workDir.mkdirs();
-        //инициализируем диалоги
-        DialogParser parser = new DialogParserImpl();
-        //инициализируем конфиги
-        ConfigManager manager = new ConfigManagerImpl(workDir);
-        //инициализируем рторрент сервис
-        RtorrentService service = new RtorrentServiceImpl();
-        //инициализируем синглтон
-        TorrentSetSingleton.initialze(service, workDir);
-        //инициализируем контролер
-        RtorrentControler controler = new RtorrentControlerImpl();
-        //регистрируем нотисы
-        NoticeService noticeService = new LogNoticeService();
-        NoticeObserverSingleton.registerService(noticeService);
-        //регистрируем трекеры
+        try {
+            //отключаем консоль
+//            System.in.close();
+//            System.out.close();
+            //создаем рабочую директорию
+            File workDir = new File(System.getProperty("user.home") + "/" + ".rmanager");
+            workDir.mkdirs();
+            //инициализируем логер
+            LoggerSingleton.initialize(workDir);
+            //инициализируем action
+            ActionManager actionManager = new ActionManagerImpl();
+            //инициализируем диалоги
+            DialogParser parser = new DialogParserImpl();
+            //инициализируем конфиги
+            ConfigManager manager = new ConfigManagerImpl(workDir);
+            //инициализируем рторрент сервис
+            RtorrentService service = new RtorrentServiceImpl();
+            //инициализируем синглтон
+            TorrentSetSingleton.initialze(service, workDir);
+            //инициализируем контролер
+            RtorrentControler controler = new RtorrentControlerImpl();
+            //регистрируем нотисы
+            NoticeService noticeService = new LogNoticeService();
+            NoticeObserverSingleton.registerService(noticeService);
+            //регистрируем трекеры
 //        TorrentWorkersObserverSingleton.registerWorker();
-        //запускаем шедулер
-        SchedulerSingleton.startDefaultTask();
-        //запускаем веб сервер
-        WebServerBuilder builder = new WebServerBuilder();
-        builder.build();
-        //переводим основную нить в слип
-        while (true) {
-            Thread.sleep(1000);
-        }
+            //запускаем шедулер
+            SchedulerSingleton.startDefaultTask();
+            //запускаем веб сервер
+            WebServerBuilder builder = new WebServerBuilder();
+            builder.build();
+            //переводим основную нить в слип
+            while (true) {
+                Thread.sleep(1000);
+            }
         } catch (Exception e) {
             log.error(e);
         }

@@ -15,7 +15,7 @@ public abstract class ActionTorrentBase extends Torrent {
     private Boolean needAdd = false;
     private Boolean needUpdate = false;
     private Boolean needDelete = false;
-    private Boolean watching = false; //ќпредел€ем, будем ли следить за обновлени€ми на трекере TODO необходимо добавить валидацию на url чтобы избежать лишних ошибок. (необходимо это делать на сервисном слое, а не на вью)
+    private Boolean watching = false; //ќпредел€ем, будем ли следить за обновлени€ми на трекере
     private Date lastUpdated = new Date(0L); //ƒата последнего обновлени€ торрента
     private Tracker tracker;
 

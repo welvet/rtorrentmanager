@@ -63,7 +63,6 @@ function rowCallback(nRow, aData, iDisplayIndex) {
         menu: 'contextMenu'
     },
             function(action, el, pos) {
-                //тут вероятно будет кейс на функции. функция будет вида doStart(hash);
                 if (selectedTorrent != undefined) {
                     doAction(action, selectedTorrent);
                 }
@@ -88,7 +87,7 @@ function rowCallback(nRow, aData, iDisplayIndex) {
     //устанавливаем изображение для статуса торрента
     var img = $(nRow).children().get(1);
     $(img).html("<img src=\"images/" + aData[2] + ".jpg\"/>");
-    //восстанавливаем выделеный торрент после обновления todo в будущем работаем только с selectedTorrent
+    //восстанавливаем выделеный торрент после обновления 
     if ((aData[0] == selectedTorrent) && (selectedTorrent != undefined))
         $(nRow).addClass("rowSelected");
     return nRow;
@@ -104,25 +103,58 @@ function reloadTable() {
 
 //эта функция будет вызываться как из контекстного меню, так и через "кнопки управления"
 function doAction(action, hash) {
-    $.get("/torrent/?action=" + action + "&hash=" + hash, {}, function(data) {
-        $("#torrentDialog").html(data);
-        //проверяем, нужно ли создавать диалог
-        if ($("#torrentDialog #needUserNotice").val() == "true") {
-            //инициализируем кнопки
-            initializeButtons("#torrentDialog");
-            //показываем диалог
-            $("#torrentDialog .dialog").show();
-            //открываем диалог
-            $("#torrentDialog").dialog({ modal: false, resizable: false,
-                draggable: true, width: 500, height: 400 });
-            //устанавливаем заголовок
-            $("#ui-dialog-title-torrentDialog").html($("#torrentDialog #title").val());
+    $.get("/torrent/?action=" + action + "&hash=" + hash, {}, openDialog); //
+}
+
+function loadDialog(name) {
+    $.get("/settings/?dialog=" + name, {}, openDialog);
+}
+
+function openDialog(data) {
+    $("#torrentDialog").html(data);
+    //проверяем, нужно ли создавать диалог
+    if ($("#torrentDialog #needUserNotice").val() == "true") {
+        //инициализируем кнопки
+        initializeButtons("#torrentDialog");
+        //показываем диалог
+        $("#torrentDialog .dialog").show();
+        //открываем диалог
+        $("#torrentDialog").dialog({ modal: false, resizable: false,
+            draggable: true, width: 500, height: 400 });
+        //устанавливаем заголовок
+        $("#ui-dialog-title-torrentDialog").html($("#torrentDialog #title").val());
+    }
+}
+
+function initializeMenu() {
+    $("#mainMenu li a").each(function() {
+        if ($(this).attr("dialog") != "undefined") {
+            $(this).click(function() {
+                loadDialog($(this).attr("dialog"));
+            });
         }
-    }); //
+    });
+}
+
+function afterAction(data) {
+    //nothing
+}
+
+function doSimpleAction(name) {
+    $.get("/action/?action=" + name, {}, afterAction);
+}
+
+function initializeLog() {
+    $("#log #label a").click(function() {
+        doSimpleAction("clearLog");
+        $("#logArea").empty()
+    });
 }
 
 //public static void main(null)
 $().ready(function() {
+    initializeMenu();
+    initializeLog();
     initializeTable();
     reloadTable();
 });
