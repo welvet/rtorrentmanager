@@ -8,6 +8,11 @@
     font-size: 10px;
 }
 
+#mainMenu {
+    width: 720px;
+    height: 25px;
+}
+
 /*блок диалогов*/
 
 #torrentDialog {
@@ -17,9 +22,17 @@
 .dialog {
     display: none;
 }
+
 #buttons {
     width: 100%;
     text-align: right;
+    margin-top: 10px;
+}
+
+#scroll {
+    max-height: 300px;
+    min-height: 300px;
+    overflow-y: scroll;
 }
 
 /*блок таблицы*/
@@ -68,4 +81,26 @@
 /*блок контекстного меню*/
 #contextMenu {
     display: none;
+}
+
+/*логи*/
+#logArea {
+    font-size: 0.8em;
+    margin-left: 12px;
+}
+
+#log {
+    width: 720px;
+}
+
+#label {
+    margin-left: 4px;
+}
+
+#label a {
+    font-size: 0.7em;
+    text-decoration: none;
+    margin-left: 600px;
+    font-family: "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+    color: #1c94c4;
 }

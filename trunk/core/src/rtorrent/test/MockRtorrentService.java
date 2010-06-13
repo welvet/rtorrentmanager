@@ -25,7 +25,7 @@ public class MockRtorrentService implements RtorrentService {
         try {
             newTorrent.setFile(torrent.getFile().getFile());
         } catch (TorrentValidateException e) {
-            e.printStackTrace();  // TODO change me
+            e.printStackTrace(); 
         }
         try {
             if (newTorrent.getTorrentFileHash() != null) {
