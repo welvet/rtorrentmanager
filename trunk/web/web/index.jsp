@@ -26,8 +26,8 @@
     <ul id="jsddm">
         <li><a href="#">Общее</a>
             <ul>
-                <li><a href="#">Запустить/остановить rtorrent</a></li>
-                <li><a href="#">Выключить rmanager</a></li>
+                <li><a href="#" action="switchRtorrent">Запустить/остановить rtorrent</a></li>
+                <li><a href="#" action="shutdownApp">Выключить rmanager</a></li>
             </ul>
         </li>
         <li><a href="#">Настройки</a>
@@ -43,8 +43,8 @@
                 <li><a href="#">LostFilm</a></li>
             </ul>
         </li>
-        <li><a href="#">Help</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="#" action="help">Help</a></li>
+        <li><a href="#" action="about">About</a></li>
     </ul>
 </div>
 <!--блок с таблицей-->
@@ -81,6 +81,8 @@
     <textarea id="logArea" class="ui-widget" rows="7" cols="110" disabled="disabled">
         <%@ include file="log.jsp" %>
     </textarea>
+</div>
+<div id="simpleAction" class="dialog">
 </div>
 </body>
 </html>

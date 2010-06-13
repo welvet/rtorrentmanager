@@ -86,7 +86,7 @@ function rowCallback(nRow, aData, iDisplayIndex) {
     $(name).addClass("titleTd");
     //устанавливаем изображение для статуса торрента
     var img = $(nRow).children().get(1);
-    $(img).html("<img src=\"images/" + aData[2] + ".jpg\"/>");
+    $(img).html("<img src=\"images/" + aData[2] + ".png\"/>");
     //восстанавливаем выделеный торрент после обновления 
     if ((aData[0] == selectedTorrent) && (selectedTorrent != undefined))
         $(nRow).addClass("rowSelected");
@@ -94,6 +94,8 @@ function rowCallback(nRow, aData, iDisplayIndex) {
 }
 
 function reloadTable() {
+    torrents = [];
+    oTable.fnReloadAjax(oTable.fnSettings());
     $(oTable).everyTime(10000, "table", function() {
         //обнуляем массив с торрентами и обновляем его с сервера
         torrents = [];
@@ -101,9 +103,13 @@ function reloadTable() {
     });
 }
 
+function stopReload() {
+    $(oTable).stopTime("table");
+}
+
 //эта функция будет вызываться как из контекстного меню, так и через "кнопки управления"
 function doAction(action, hash) {
-    $.get("/torrent/?action=" + action + "&hash=" + hash, {}, openDialog); //
+    $.get("/torrent/?action=" + action + "&hash=" + hash, {}, openDialog);
 }
 
 function loadDialog(name) {
@@ -128,16 +134,27 @@ function openDialog(data) {
 
 function initializeMenu() {
     $("#mainMenu li a").each(function() {
-        if ($(this).attr("dialog") != "undefined") {
+        if ($(this).attr("dialog") != undefined) {
             $(this).click(function() {
                 loadDialog($(this).attr("dialog"));
+            });
+        }
+        if ($(this).attr("action") != undefined) {
+            $(this).click(function() {
+                doSimpleAction($(this).attr("action"))
             });
         }
     });
 }
 
 function afterAction(data) {
-    //nothing
+    if (data.length > 0)
+    {
+        $("#simpleAction").html(data);
+        if ($("#simpleAction #actionDialog") != null)
+            $("#simpleAction #actionDialog").dialog({ modal: false, resizable: false,
+                draggable: true, width: 500, height: 400 });
+    }
 }
 
 function doSimpleAction(name) {
@@ -156,5 +173,4 @@ $().ready(function() {
     initializeMenu();
     initializeLog();
     initializeTable();
-    reloadTable();
 });

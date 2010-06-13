@@ -33,8 +33,9 @@ public class Initialize {
     public static void main(String[] args) throws InterruptedException, IOException {
         try {
             //отключаем консоль
-//            System.in.close();
-//            System.out.close();
+            System.in.close();
+            System.err.close();
+            System.out.close();
             //создаем рабочую директорию
             File workDir = new File(System.getProperty("user.home") + "/" + ".rmanager");
             workDir.mkdirs();

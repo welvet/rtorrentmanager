@@ -2,6 +2,8 @@
 <project version="4">
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/web/web/css/core.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/web/dialogs/about.jsp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/web/dialogs/help.jsp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/web/index.jsp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/web/js/core.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/web/js/jquery-1.4.2.min.js" charset="UTF-8" />

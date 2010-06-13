@@ -2,7 +2,7 @@ package dialog;
 
 import rtorrent.config.Config;
 import rtorrent.config.ConfigManager;
-import rtorrent.control.RtorrentControler;     
+import rtorrent.control.RtorrentControler;
 import rtorrent.utils.ContextUtils;
 
 /**
@@ -36,17 +36,19 @@ public class DialogManager {
     }
 
     public static void updateDialog(Dialog dialog) {
+        if (dialog.getPath().equals("torrent")) {
+            //если это диалог настройки торрента, то делегируем его создание контролеру
+            RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");
+            controler.configureTorrent(dialog);
+            return;
+        }
         ConfigManager manager = (ConfigManager) ContextUtils.lookup("rconfig");
         Config config = manager.getConfig(dialog.getPath());
 
         for (Input input : dialog.getInputs()) {
             config.setFieldValue(input.getFieldName(), input.getFieldValue());
         }
-        //если это диалог настройки торрента, то делегируем его создание контролеру
-        if (dialog.getPath().equals("torrent")) {
-            RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");
-            controler.configureTorrent(dialog);
-        } else
-            manager.saveConfig(config);
+
+        manager.saveConfig(config);
     }
 }
