@@ -22,7 +22,7 @@ public class SettingsServlet extends HttpServlet {
             return;
         }
 
-        if (request.getAttribute("dialog") == null)
+        if (request.getAttribute("dialog") == null)    
             request.setAttribute("dialog", request.getParameter("dialog"));
         DialogHelper.createDialog(request);              
         request.getRequestDispatcher("/json.jsp").forward(request, response);

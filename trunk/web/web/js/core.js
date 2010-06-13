@@ -4,7 +4,6 @@ var selectedTorrent;
 var oTable;
 
 //инициализация таблицы рторрента
-//todo потом эта страница будет загружаться аяксом
 function initializeTable() {
     oTable = $('#torrentTable').dataTable({
         bPaginate:false,
@@ -95,10 +94,7 @@ function rowCallback(nRow, aData, iDisplayIndex) {
     return nRow;
 }
 
-//открыть диалог с логами ошибок todo вероятно он будет модальным и требовать поддтверждения от пользователя
-
 function reloadTable() {
-    //todo обновляем таблицу с торрентом каждые 10000 мсекунд, вероятно стоит сделать это значение настраиваемым
     $(oTable).everyTime(10000, "table", function() {
         //обнуляем массив с торрентами и обновляем его с сервера
         torrents = [];
@@ -112,8 +108,6 @@ function doAction(action, hash) {
         $("#torrentDialog").html(data);
         //проверяем, нужно ли создавать диалог
         if ($("#torrentDialog #needUserNotice").val() == "true") {
-            //устанавливаем заголовок
-            $("#torrentDialog").attr("title", $("#torrentDialog #title").val());
             //инициализируем кнопки
             initializeButtons("#torrentDialog");
             //показываем диалог
@@ -121,6 +115,8 @@ function doAction(action, hash) {
             //открываем диалог
             $("#torrentDialog").dialog({ modal: false, resizable: false,
                 draggable: true, width: 500, height: 400 });
+            //устанавливаем заголовок
+            $("#ui-dialog-title-torrentDialog").html($("#torrentDialog #title").val());
         }
     }); //
 }

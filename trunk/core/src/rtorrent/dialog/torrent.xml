@@ -2,4 +2,11 @@
 <!DOCTYPE config SYSTEM "config.dtd">
 <config title="Торрент">
     <checkbox name="watched" text="Наблюдаемый" default="false"/>
+    <select name="tracker" text="Трекер" default="None">
+        <option>None</option>
+        <option>Rutracker</option>
+        <option>LostFilm</option>
+    </select>
+    <value name="requestUrl" text="Url" default="" description="Подробнее об урл написано в настройках трекера"/>
+    <value name="hash" text="Hash" default=""/>
 </config>

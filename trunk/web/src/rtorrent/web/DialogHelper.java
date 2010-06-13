@@ -16,22 +16,34 @@ import java.util.Map;
 public class DialogHelper {
 
     public static void createDialog(HttpServletRequest request) {
-        String s = (String) request.getAttribute("dialog");
-        Dialog dialog = DialogManager.createDialog(s);
+        Dialog dialog;
+        if (request.getAttribute("torrentHash") != null) {
+            dialog = DialogManager.createTorrentDialog((String) request.getAttribute("torrentHash"));
+        } else {
+            String s = (String) request.getAttribute("dialog");
+            dialog = DialogManager.createDialog(s);
+        }
 
         request.setAttribute("dialog", "properties.jsp");
         request.setAttribute("currentDialog", dialog);
     }
 
     public static void updateDialog(Map parameterMap) {
-        Dialog dialog = DialogManager.createDialog(((String[]) parameterMap.get("path"))[0]);
+        Dialog dialog;
+        String s = ((String[]) parameterMap.get("path"))[0];
+
+        if (s.equals("torrent"))                    
+            dialog = DialogManager.createTorrentDialog(((String[]) parameterMap.get("hash"))[0]);
+        else
+            dialog = DialogManager.createDialog(s);
+
         parameterMap.remove("path");
 
         for (Input input : dialog.getInputs()) {
             if (input instanceof CheckField)
-                input.setFieldValue(parameterMap.get(input.getFieldName()) != null); 
+                input.setFieldValue(parameterMap.get(input.getFieldName()) != null);
             else
-                input.setFieldValue(((String []) parameterMap.get(input.getFieldName()))[0]);
+                input.setFieldValue(((String[]) parameterMap.get(input.getFieldName()))[0]);
         }
 
         DialogManager.updateDialog(dialog);
