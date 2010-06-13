@@ -54,29 +54,15 @@ public class DialogParserImpl implements DialogParser, InContext {
             Document tempDocument = DocumentBuilderFactory.newInstance()
                     .newDocumentBuilder().newDocument();
 
-
-            //парсим тег value
-            NodeList list = (NodeList) xPath.evaluate("//value", document, XPathConstants.NODESET);
-            for (Integer i = 0; i < list.getLength(); i++) {
-                Node tempRoot = tempDocument.importNode(list.item(i), true);
-                tempDocument.appendChild(tempRoot);
-                TextField field = new TextField();
-                field.setFieldName(xPath.evaluate("/value/@name", tempDocument));
-                field.setFieldText(xPath.evaluate("/value/@text", tempDocument));
-                field.setFieldValue(xPath.evaluate("/value/@default", tempDocument));
-                field.setFieldDescription(xPath.evaluate("/value/@description", tempDocument));
-                dialog.addField(field);
-                tempDocument.removeChild(tempRoot);
-            }
-
             //парсим тег checkbox
-            list = (NodeList) xPath.evaluate("//checkbox", document, XPathConstants.NODESET);
+            NodeList list = (NodeList) xPath.evaluate("//checkbox", document, XPathConstants.NODESET);
             for (Integer i = 0; i < list.getLength(); i++) {
                 Node tempRoot = tempDocument.importNode(list.item(i), true);
                 tempDocument.appendChild(tempRoot);
                 CheckField field = new CheckField();
                 field.setFieldName(xPath.evaluate("/checkbox/@name", tempDocument));
                 field.setFieldText(xPath.evaluate("/checkbox/@text", tempDocument));
+                field.setPosition(parsePosition(xPath.evaluate("/checkbox/@position", tempDocument)));
                 String value = xPath.evaluate("/checkbox/@default", tempDocument);
                 Boolean boleanValue = value.equals("true");
                 field.setFieldValue(boleanValue);
@@ -84,6 +70,22 @@ public class DialogParserImpl implements DialogParser, InContext {
                 dialog.addField(field);
                 tempDocument.removeChild(tempRoot);
             }
+
+            //парсим тег value
+            list = (NodeList) xPath.evaluate("//value", document, XPathConstants.NODESET);
+            for (Integer i = 0; i < list.getLength(); i++) {
+                Node tempRoot = tempDocument.importNode(list.item(i), true);
+                tempDocument.appendChild(tempRoot);
+                TextField field = new TextField();
+                field.setFieldName(xPath.evaluate("/value/@name", tempDocument));
+                field.setFieldText(xPath.evaluate("/value/@text", tempDocument));
+                field.setPosition(parsePosition(xPath.evaluate("/value/@position", tempDocument)));
+                field.setFieldValue(xPath.evaluate("/value/@default", tempDocument));
+                field.setFieldDescription(xPath.evaluate("/value/@description", tempDocument));
+                dialog.addField(field);
+                tempDocument.removeChild(tempRoot);
+            }
+
 
             //парсим тег select
             list = (NodeList) xPath.evaluate("//select", document, XPathConstants.NODESET);
@@ -94,6 +96,7 @@ public class DialogParserImpl implements DialogParser, InContext {
                 field.setFieldName(xPath.evaluate("/select/@name", tempDocument));
                 field.setFieldText(xPath.evaluate("/select/@text", tempDocument));
                 field.setFieldValue(xPath.evaluate("/select/@default", tempDocument));
+                field.setPosition(parsePosition(xPath.evaluate("/select/@position", tempDocument)));
                 field.setFieldDescription(xPath.evaluate("/select/@description", tempDocument));
                 //устанавливаем значения дочерних элементов
                 NodeList childNodes = (NodeList) xPath.evaluate("/select/option", tempDocument, XPathConstants.NODESET);
@@ -113,6 +116,12 @@ public class DialogParserImpl implements DialogParser, InContext {
             logger.error("Диалог с именем " + name + " не существует");
             throw new RuntimeException();
         }
+    }
+
+    private Integer parsePosition(String s) {
+        if ((s != null) && (!s.isEmpty()))
+            return new Integer(s);
+        else return 0;
     }
 
     public void bindContext() {

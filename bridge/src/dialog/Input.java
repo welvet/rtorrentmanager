@@ -11,6 +11,15 @@ public abstract class Input {
     protected String fieldDescription;
     protected Object fieldValue;
     protected Boolean hidden = false;
+    private Integer position = 0;
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
 
     public Boolean getHidden() {
         return hidden;
