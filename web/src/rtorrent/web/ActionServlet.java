@@ -23,8 +23,15 @@ public class ActionServlet extends HttpServlet {
         String actionName = request.getParameter("action");
         ActionManager manager = (ActionManager) ContextUtils.lookup("raction");
 
-        if (actionName.equals("clearLog")) {
-            manager.doAction("clearLog", null);
+        if (actionName.equals("help")) {
+            request.getRequestDispatcher("/dialogs/help.jsp").forward(request, response);
+            return;
         }
+        if (actionName.equals("about")) {
+            request.getRequestDispatcher("/dialogs/about.jsp").forward(request, response);
+            return;
+        }
+
+        manager.doAction(actionName, null);
     }
 }
