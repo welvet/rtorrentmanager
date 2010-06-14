@@ -9,9 +9,6 @@ import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControler;
 import rtorrent.control.RtorrentControlerImpl;
 import rtorrent.dialog.DialogParserImpl;
-import rtorrent.notice.LogNoticeService;
-import rtorrent.notice.NoticeObserverSingleton;
-import rtorrent.notice.NoticeService;
 import rtorrent.scheduler.SchedulerSingleton;
 import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceImpl;
@@ -54,8 +51,8 @@ public class Initialize {
             //инициализируем контролер
             RtorrentControler controler = new RtorrentControlerImpl();
             //регистрируем нотисы
-            NoticeService noticeService = new LogNoticeService();
-            NoticeObserverSingleton.registerService(noticeService);
+//            NoticeService noticeService = new LogNoticeService();
+//            NoticeObserverSingleton.registerService(noticeService);
             //регистрируем трекеры
 //        TorrentWorkersObserverSingleton.registerWorker();
             //запускаем шедулер

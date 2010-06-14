@@ -1,6 +1,7 @@
 package rtorrent.tracker;
 
 import rtorrent.thread.ThreadQueueSingleton;
+import rtorrent.tracker.rutracker.RuTrackerWorker;
 
 /**
  * User: welvet
@@ -14,11 +15,16 @@ public class TorrentWorkersObserverSingleton {
         return ourInstance;
     }
 
+    public static void initialize() {
+        clearWorkers();
+        registerWorker(RuTrackerWorker.class);
+    }
+
     public static void clearWorkers() {
         ourInstance.clearWorkers();
     }
 
-    public static void registerWorker(TrackerWorker worker) {
+    public static void registerWorker(Class <? extends TrackerWorker> worker) {
         ourInstance.registerWorker(worker);
     }
 

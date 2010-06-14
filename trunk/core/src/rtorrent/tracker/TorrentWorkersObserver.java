@@ -26,8 +26,13 @@ public class TorrentWorkersObserver implements Runnable {
     /**
      * @param worker регистрируемый сервис
      */
-    public void registerWorker(TrackerWorker worker) {
-        workers.put(worker.whoIs(), worker);
+    public void registerWorker(Class<? extends TrackerWorker> worker) {
+        try {
+            TrackerWorker trackerWorker = worker.newInstance();
+            workers.put(trackerWorker.whoIs(), trackerWorker);
+        } catch (Exception e) {
+            log.error(e);
+        }
     }
 
     public void clearWorkers() {

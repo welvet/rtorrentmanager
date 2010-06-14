@@ -37,8 +37,7 @@ public class TrackerTest extends RtorrentTestCase {
         ActionTorrent torrent = new ActionTorrent(torrentFile);
         
         ActionTorrent torrent2 = new ActionTorrent(torrent2File);
-        try {//создаем воркер
-            MockTrackerWorker worker = new MockTrackerWorker();
+        try {
             //создаем торрент
 
             //устанавливаем обработчик трекера
@@ -52,7 +51,7 @@ public class TrackerTest extends RtorrentTestCase {
             //устанавливаем обработчик
             TorrentWorkersObserver observer = TorrentWorkersObserverSingleton.getInstance();
             observer.clearWorkers();
-            observer.registerWorker(worker);
+            observer.registerWorker(MockTrackerWorker.class);
             //запускаем его
             TorrentWorkersObserverSingleton.run();
             Thread.sleep(WAIT_TIME);

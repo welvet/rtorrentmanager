@@ -19,4 +19,8 @@ public class LogNoticeService implements NoticeService {
     public void notice(ActionTorrent torrent, TorrentNotice notice) {
         log.info(torrent + " " + notice);
     }
+
+    public boolean checkConfig() {
+        return true;
+    }
 }
