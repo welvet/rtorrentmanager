@@ -5,10 +5,7 @@
  */
 package rtorrent.utils;
 
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.Priority;
+import org.apache.log4j.*;
 
 import java.io.*;
 
@@ -94,5 +91,11 @@ public class LoggerSingleton {
 
     public static Logger getLogger() {
         return logger;
+    }
+
+    public static void debug() {
+        ConsoleAppender appender = new ConsoleAppender(new PatternLayout());
+        appender.setThreshold(Priority.DEBUG);
+        LoggerSingleton.getLogger().addAppender(appender);        
     }
 }

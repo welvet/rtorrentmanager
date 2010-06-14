@@ -4,8 +4,11 @@ import org.apache.log4j.Logger;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
+import rtorrent.tracker.rutracker.RuTrackerException;
+import rtorrent.utils.ContextUtils;
 import rtorrent.utils.LoggerSingleton;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,14 +40,17 @@ public class TorrentJob implements Runnable {
     }
 
     public void run() {
-        try {//инициализируем торрент сервис
-            worker.initialize();
+        try {
+            //инициализируем торрент сервис
+            worker.initialize((File) ContextUtils.lookup("workdir"));
             for (ActionTorrent torrent : torrents) {
                 torrentSet.addOrUpdate((ActionTorrent) worker.work(torrent));
                 log.debug(torrent + " синхронизирован с трекером");
             }
         } catch (TorrentWorkerException e) {
             log.info(e);
+        } catch (RuTrackerException e) {
+            log.warn(e);
         }
     }
 }

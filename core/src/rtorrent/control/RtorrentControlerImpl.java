@@ -99,6 +99,10 @@ public class RtorrentControlerImpl implements RtorrentControler, InContext {
         return new TrackerDialog(torrent);
     }
 
+    public Boolean checkAlive() {
+        return torrentSet.serviceAlive();
+    }
+
     public void notifyUpdate() {
         TorrentSetSingleton.run();
     }

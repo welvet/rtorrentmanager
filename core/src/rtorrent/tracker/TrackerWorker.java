@@ -1,6 +1,9 @@
 package rtorrent.tracker;
 
 import rtorrent.torrent.TorrentFacade;
+import rtorrent.tracker.rutracker.RuTrackerException;
+
+import java.io.File;
 
 /**
  * User: welvet
@@ -8,10 +11,10 @@ import rtorrent.torrent.TorrentFacade;
  * Time: 22:13:45
  */
 public interface TrackerWorker{
-    public void initialize() throws TorrentWorkerException;    
+    public void initialize(File workDir) throws TorrentWorkerException;
 
     //обработать торрент
-    public TorrentFacade work(TorrentFacade torrent);
+    public TorrentFacade work(TorrentFacade torrent) throws RuTrackerException;
 
     public Trackers whoIs();
 }

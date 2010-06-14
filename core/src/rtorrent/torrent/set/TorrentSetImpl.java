@@ -2,6 +2,7 @@ package rtorrent.torrent.set;
 
 import org.apache.log4j.Logger;
 import rtorrent.service.RtorrentService;
+import rtorrent.service.RtorrentServiceException;
 import rtorrent.thread.ThreadQueueSingleton;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.utils.LoggerSingleton;
@@ -76,7 +77,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
         Set<ActionTorrent> watchedSet = new HashSet<ActionTorrent>();
         for (ActionTorrent torrent : torrents.values()) {
             //отдаем торрент только если он наблюдаемый и если он не остановлен
-            if (torrent.isWatching() && (torrent.isStart() || torrent.isNeedStart()) && !torrent.isNeedStop()) {
+            if (torrent.isWatching()) {
                 ActionTorrent watchedTorrent = new ActionTorrent();
                 watchedTorrent.updateAll(torrent);
                 watchedSet.add(watchedTorrent);
@@ -108,6 +109,10 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
         torrentSetHelper = new TorrentSetHelper(this);
     }
 
+    public Boolean serviceAlive() {
+        return rtorrentService.isAlive();
+    }
+
     TorrentHashtable getTorrents() {
         return torrents;
     }
@@ -122,5 +127,21 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
 
     void setTorrents(TorrentHashtable torrents) {
         this.torrents = torrents;
+    }
+
+    public void shutdown() {
+        try {
+            rtorrentService.shutdown();
+        } catch (RtorrentServiceException e) {
+            log.warn("Невозможно остановить rtorrent " + e.getMessage());
+        }
+    }
+
+    public void launch() {
+        try {
+            rtorrentService.launch();
+        } catch (RtorrentServiceException e) {
+            log.warn("Невозможно запустить rtorrent " + e.getMessage());
+        }
     }
 }

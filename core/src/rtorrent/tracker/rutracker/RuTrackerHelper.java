@@ -119,23 +119,32 @@ public class RuTrackerHelper {
     }
 
     public Boolean checkAuth() throws RuTrackerException {
+        XpathUtils utils = null;
         try {
             HttpGet httpGet = new HttpGet(new URI(HOST + "forum/index.php"));
             BasicHttpResponse response = (BasicHttpResponse) httpClient.execute(httpGet);
             //создаем страничку
-            XpathUtils utils = new XpathUtils(response.getEntity().getContent());
+            utils = new XpathUtils(response.getEntity().getContent());
 
-            if (login.equals(utils.doXPath("//DIV[@class=\"topmenu\"]//B[@class=\"med\"]/text()")))
+            if (!login.isEmpty() && login.equals(utils.doXPath("//DIV[@class=\"topmenu\"]//B[@class=\"med\"]/text()")))
                 return true;
             else {
-                log.warn("Не удалось авторизироваться на rutracker.org. Подробности в лог файле");
-                log.info(utils.getFile());
-                throw new Exception("Ошибка авторизации");
+                return false;
             }
         } catch (Exception e) {
+            log.warn("Не удалось авторизироваться на rutracker.org. Подробности в лог файле");
+            if (utils != null) {
+                try {
+                    log.info(utils.getFile());
+                } catch (Exception e1) {
+                     throw new RuTrackerException(e);
+                }
+            }
             throw new RuTrackerException(e);
         }
     }
+
+    //true если нужен апдейт
 
     public Boolean checkTorrent(String url) throws RuTrackerException {
         try {
@@ -160,7 +169,7 @@ public class RuTrackerHelper {
             torrentsMap.put(url, date);
             saver.save(torrentsMap);
             log.info("Торрент " + url + " не найден в списке");
-            return false;
+            return true;
         } catch (Exception e) {
             throw new RuTrackerException(e);
         }

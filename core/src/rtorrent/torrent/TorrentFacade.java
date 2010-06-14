@@ -3,6 +3,7 @@ package rtorrent.torrent;
 import rtorrent.tracker.Tracker;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * User: welvet
@@ -25,4 +26,9 @@ public interface TorrentFacade {
      * @param needUpdate обновить торрент
      */
     public void setNeedUpdate(Boolean needUpdate);
+
+    /**
+     * @param lastUpdated дата последнего обновления
+     */
+    public void setLastUpdated(Date lastUpdated);
 }

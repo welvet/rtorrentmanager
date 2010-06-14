@@ -18,6 +18,7 @@ import java.util.*;
 public class MockRtorrentService implements RtorrentService {
     private HashMap<String, ActionTorrent> torrentHashMap = new HashMap<String, ActionTorrent>();
     private Logger log = LoggerSingleton.getLogger();
+    private boolean isRun = true;
 
     public void add(ActionTorrent torrent) throws RtorrentServiceException {
         ActionTorrent newTorrent = new ActionTorrent();
@@ -78,6 +79,14 @@ public class MockRtorrentService implements RtorrentService {
     }
 
     public Boolean isAlive() {
-        return true;
+        return isRun;
+    }
+
+    public void launch() {
+        isRun = true;
+    }
+
+    public void shutdown() {
+        isRun = false;
     }
 }

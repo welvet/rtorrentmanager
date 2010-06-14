@@ -5,6 +5,8 @@ import rtorrent.torrent.TorrentFacade;
 import rtorrent.torrent.TorrentValidateException;
 import rtorrent.tracker.*;
 
+import java.io.File;
+
 /**
  * User: welvet
  * Date: 12.06.2010
@@ -13,7 +15,7 @@ import rtorrent.tracker.*;
 public class TrackerTest extends RtorrentTestCase {
     private class MockTrackerWorker implements TrackerWorker {
 
-        public void initialize() throws TorrentWorkerException {
+        public void initialize(File workDir) throws TorrentWorkerException {
             System.out.println("MockTrackerWorker инициализирован");
         }
 

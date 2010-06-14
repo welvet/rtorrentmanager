@@ -13,6 +13,7 @@ import rtorrent.scheduler.SchedulerSingleton;
 import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.set.TorrentSetSingleton;
+import rtorrent.utils.BindContext;
 import rtorrent.utils.LoggerSingleton;
 import rtorrent.web.WebServerBuilder;
 
@@ -29,15 +30,30 @@ public class Initialize {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         try {
-            //отключаем консоль
-            System.in.close();
-            System.err.close();
-            System.out.close();
+//            todo проверить работу стратегий
+//            todo написать запуск рторрента
+//            todo добавить кнопку "проверить все"
+//            todo доделать кнопку "остановить все"
+//            todo выводить lastUpdate куда нибудь (например в диалго)
+//            todo написать хелп
+//            todo проверить работу
+//            todo проверить абоут
+//            todo добавить кнопку "остановить и проверить все"
+//            todo дописать лостфильм
             //создаем рабочую директорию
             File workDir = new File(System.getProperty("user.home") + "/" + ".rmanager");
             workDir.mkdirs();
+            BindContext.bind("workdir", workDir);
             //инициализируем логер
             LoggerSingleton.initialize(workDir);
+            if (args[0] != null && args[0].equals("debug"))
+                LoggerSingleton.debug();
+            else {
+                //отключаем консоль
+                System.in.close();
+                System.err.close();
+                System.out.close();
+            }
             //инициализируем action
             ActionManager actionManager = new ActionManagerImpl();
             //инициализируем диалоги
@@ -50,11 +66,6 @@ public class Initialize {
             TorrentSetSingleton.initialze(service, workDir);
             //инициализируем контролер
             RtorrentControler controler = new RtorrentControlerImpl();
-            //регистрируем нотисы
-//            NoticeService noticeService = new LogNoticeService();
-//            NoticeObserverSingleton.registerService(noticeService);
-            //регистрируем трекеры
-//        TorrentWorkersObserverSingleton.registerWorker();
             //запускаем шедулер
             SchedulerSingleton.startDefaultTask();
             //запускаем веб сервер

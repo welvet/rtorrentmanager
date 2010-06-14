@@ -1,5 +1,7 @@
 package rtorrent.test;
 
+import rtorrent.tracker.TorrentWorkersObserverSingleton;
+
 import java.io.IOException;
 
 /**
@@ -12,8 +14,9 @@ public class WebServerTest extends RtorrentTestCase {
     public void testStart() throws IOException, InterruptedException {
         try {//загружаем сервер
         builder.build();
+            TorrentWorkersObserverSingleton.run();
             while (true) {
-                Thread.sleep(1000);
+                Thread.sleep(1000L);
             }
         } catch (Exception e) {
             fail();

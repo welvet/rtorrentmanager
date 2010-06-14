@@ -6,4 +6,18 @@ package rtorrent.tracker;
  * Time: 22:18:47
  */
 public class TorrentWorkerException extends Exception {
+    public TorrentWorkerException() {
+    }
+
+    public TorrentWorkerException(String message) {
+        super(message);
+    }
+
+    public TorrentWorkerException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public TorrentWorkerException(Throwable cause) {
+        super(cause);
+    }
 }

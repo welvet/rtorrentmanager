@@ -1,6 +1,9 @@
 package rtorrent.test;
 
-import rtorrent.scheduler.SchedulerSingleton;
+import rtorrent.notice.NoticeObserverSingleton;
+import rtorrent.notice.TorrentNotice;
+import rtorrent.scheduler.DownAndCheckTask;
+import rtorrent.torrent.ActionTorrent;
 
 /**
  * User: welvet
@@ -9,6 +12,11 @@ import rtorrent.scheduler.SchedulerSingleton;
  */
 public class SchedulerTest extends RtorrentTestCase {
     public void testScheduler() throws Exception {
-        SchedulerSingleton.startDefaultTask();
+
+        NoticeObserverSingleton.notice(new ActionTorrent(), TorrentNotice.FINISH);
+
+        DownAndCheckTask task = new DownAndCheckTask();
+        task.run();
+        Thread.sleep(10000);
     }
 }

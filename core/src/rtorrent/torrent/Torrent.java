@@ -104,7 +104,7 @@ public abstract class Torrent implements Serializable {
 
     @Override
     public int hashCode() {
-        return hash.hashCode();
+        return hash != null ? hash.hashCode() : 0;
     }
 
     public Long getPeersComplite() {

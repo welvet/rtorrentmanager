@@ -69,5 +69,18 @@ public interface TorrentSet {
      */
     public void addOrUpdate(ActionTorrent torrent);
 
-    void setService(RtorrentService service);
+    /**
+     * @param service обновить сервис
+     */
+    public void setService(RtorrentService service);
+
+    /**
+     * @return запущен ли сервис
+     */
+    public Boolean serviceAlive();
+
+    public void launch();
+
+    public void shutdown();
+
 }

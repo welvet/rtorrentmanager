@@ -1,6 +1,7 @@
 package rtorrent.thread;
 
 import org.apache.log4j.Logger;
+import rtorrent.scheduler.AfterExecuteCallback;
 import rtorrent.utils.LoggerSingleton;
 
 import java.util.concurrent.BlockingQueue;
@@ -29,5 +30,8 @@ public class RtorrentThreadPoolExecutor extends ThreadPoolExecutor {
     protected void afterExecute(Runnable r, Throwable t) {
         String msg = (t == null) ? "" : " Ошибка: " + t.getMessage();
         log.debug(r.getClass().getName() + " обработано" + msg);
+        //выполняем калбек todo есть вероятность что это не будет работать
+        if (ThreadQueueSingleton.size() == 0)
+            AfterExecuteCallback.afterExecute();
     }
 }
