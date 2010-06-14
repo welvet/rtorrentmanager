@@ -15,6 +15,7 @@ import java.io.*;
 public class XpathUtils {
     private Document document;
     private XPath xPath;
+    private File temp;
 
     public XpathUtils(InputStream stream) throws Exception {
         DOMParser parser = new DOMParser();
@@ -22,7 +23,7 @@ public class XpathUtils {
         xPath = factory.newXPath();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        File temp = File.createTempFile("parser", ".tmp");
+        temp = File.createTempFile("parser", ".tmp");
         BufferedWriter out = new BufferedWriter(new FileWriter(temp));
 
         temp.deleteOnExit();
@@ -39,5 +40,17 @@ public class XpathUtils {
 
     public String doXPath(String expression) throws Exception {
         return xPath.evaluate(expression, document);
+    }
+
+    public String getFile() throws Exception {
+        BufferedReader reader = new BufferedReader(new FileReader(temp));
+        StringBuilder builder = new StringBuilder();
+        while (true) {
+            String ln = reader.readLine();
+            if (ln == null)
+                break;
+            builder.append(ln);
+        }
+        return builder.toString();
     }
 }

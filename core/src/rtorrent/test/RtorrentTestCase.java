@@ -1,12 +1,15 @@
 package rtorrent.test;
 
 import junit.framework.TestCase;
+import org.apache.log4j.Appender;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.PatternLayout;
 import rtorrent.action.ActionManagerImpl;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControlerImpl;
 import rtorrent.dialog.DialogParserImpl;
+import rtorrent.notice.NoticeObserverSingleton;
 import rtorrent.service.RtorrentService;
-import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
 import rtorrent.utils.LoggerSingleton;
@@ -48,9 +51,9 @@ public abstract class RtorrentTestCase extends TestCase {
         //сслка на собраный варник
         warPath = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
         //создаем рторрент сервис
-//        rtorrentService = new MockRtorrentService();
+        rtorrentService = new MockRtorrentService();
         //создаем синглтон
-        rtorrentService = new RtorrentServiceImpl("serv", 5000);
+//        rtorrentService = new RtorrentServiceImpl("serv", 5000);
         TorrentSetSingleton.initialze(rtorrentService, datFile);
         torrentSet = TorrentSetSingleton.getInstance();
         //создаем контролер
@@ -65,10 +68,11 @@ public abstract class RtorrentTestCase extends TestCase {
         //создаем веб сервер
         builder = new WebServerBuilder();
         builder.setWar(warPath);
-        //регистрируем NoticeService  TODO !!!
-//        NoticeService service = new MockNoticeService();
-//        NoticeObserverSingleton.clearService();
-//        NoticeObserverSingleton.registerService(service);
+        NoticeObserverSingleton.clearService();
+        NoticeObserverSingleton.registerService(MockNoticeService.class);
+
+        Appender appender = new ConsoleAppender(new PatternLayout());
+        LoggerSingleton.getLogger().addAppender(appender);
     }
 
     @Override
