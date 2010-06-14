@@ -1,17 +1,20 @@
 package rtorrent.test;
 
 import junit.framework.TestCase;
-import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.PatternLayout;
+import org.apache.log4j.Priority;
 import rtorrent.action.ActionManagerImpl;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControlerImpl;
 import rtorrent.dialog.DialogParserImpl;
 import rtorrent.notice.NoticeObserverSingleton;
 import rtorrent.service.RtorrentService;
+import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
+import rtorrent.tracker.TorrentWorkersObserverSingleton;
+import rtorrent.utils.BindContext;
 import rtorrent.utils.LoggerSingleton;
 import rtorrent.web.WebServerBuilder;
 
@@ -45,15 +48,16 @@ public abstract class RtorrentTestCase extends TestCase {
         torrent2File = new File(RtorrentTestCase.class.getResource("resource/").getPath() + "test2.torrent");
         //ссылка на темп директорию
         dir = new File(System.getProperty("java.io.tmpdir"));
+        BindContext.bind("workdir", dir);
         //logger
         LoggerSingleton.initialize(dir);
         new ActionManagerImpl();
         //сслка на собраный варник
         warPath = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
         //создаем рторрент сервис
-        rtorrentService = new MockRtorrentService();
+//        rtorrentService = new MockRtorrentService();
         //создаем синглтон
-//        rtorrentService = new RtorrentServiceImpl("serv", 5000);
+        rtorrentService = new RtorrentServiceImpl("serv", 5000);
         TorrentSetSingleton.initialze(rtorrentService, datFile);
         torrentSet = TorrentSetSingleton.getInstance();
         //создаем контролер
@@ -71,7 +75,10 @@ public abstract class RtorrentTestCase extends TestCase {
         NoticeObserverSingleton.clearService();
         NoticeObserverSingleton.registerService(MockNoticeService.class);
 
-        Appender appender = new ConsoleAppender(new PatternLayout());
+        TorrentWorkersObserverSingleton.initialize();
+
+        ConsoleAppender  appender = new ConsoleAppender(new PatternLayout());
+        appender.setThreshold(Priority.DEBUG);
         LoggerSingleton.getLogger().addAppender(appender);
     }
 

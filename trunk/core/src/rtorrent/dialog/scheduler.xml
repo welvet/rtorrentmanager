@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config SYSTEM "config.dtd">
 <config title="Настройка планировщика">
-    <value name="updateSet" text="Связь с rtorrent (сек)" default="360"/>
-    <value name="updateNotice" text="Уведомления (сек)" description="Проверять наличие новых уведомлений" default="600"/>
-    <value name="updateTrackers" text="Обновление трекеров (сек)" description="Проверять обновления на трекерах" default="3600"/>
-</config>
+    <value name="updateSet" text="Связь с rtorrent (сек)" default="360" position="1"/>
+    <value name="updateNotice" text="Уведомления (сек)" description="Проверять наличие новых уведомлений" default="600" position="2"/>
+    <value name="updateTrackers" text="Обновление трекеров (сек)" description="Проверять обновления на трекерах" default="3600" position="3"/>
+    <checkbox name="downAndCheckNeed" text="Останавливать рторрент перед обновлением" default="false" position="4"/>
+    <value name="downAndCheck" text="Останавливать" default="14400"/>
+</config>                

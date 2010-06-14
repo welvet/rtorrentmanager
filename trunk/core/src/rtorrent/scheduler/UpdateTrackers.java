@@ -9,9 +9,11 @@ import java.util.TimerTask;
  * Date: 13.06.2010
  * Time: 0:36:36
  */
-public class UpdateTrackers extends TimerTask{
+public class UpdateTrackers extends TimerTask {
     @Override
     public void run() {
-        TorrentWorkersObserverSingleton.run();
+        //если рторрент не запущен, то работаем
+        if (!CheckStrategy.getRun())
+            TorrentWorkersObserverSingleton.run();
     }
 }

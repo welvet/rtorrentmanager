@@ -16,7 +16,7 @@ import java.util.TimerTask;
  * Time: 0:33:58
  */
 public class SchedulerSingleton {
-    private static final Integer PER_MINUTE = 1000;
+    private static final Integer PER_SEC = 1000;
     private static HashMap<String, Timer> timerHashMap = new HashMap<String, Timer>();
     private static Logger logger = LoggerSingleton.getLogger();
 
@@ -27,6 +27,7 @@ public class SchedulerSingleton {
         addTask(UpdateNoticeTask.class, new Integer((String) config.getFieldValue("updateNotice")));
         addTask(UpdateSetTask.class, new Integer((String) config.getFieldValue("updateSet")));
         addTask(UpdateTrackers.class, new Integer((String) config.getFieldValue("updateTrackers")));
+        addTask(UpdateStrategyTask.class, new Integer((String) config.getFieldValue("downAndCheck")));
     }
 
     public static void addTask(Class<? extends TimerTask> clazz, Integer min) {
@@ -36,7 +37,7 @@ public class SchedulerSingleton {
         }
         Timer timer = new Timer();
         try {
-            timer.scheduleAtFixedRate(clazz.newInstance(), min * PER_MINUTE, min * PER_MINUTE);
+            timer.scheduleAtFixedRate(clazz.newInstance(), min * PER_SEC, min * PER_SEC);
             timerHashMap.put(clazz.getName(), timer);
             logger.debug("Задача " + clazz.getName() + " добавлена");
         } catch (Exception e) {

@@ -67,4 +67,14 @@ public interface RtorrentService {
      * @return
      */
     public Boolean isAlive();
+
+    /**
+     * Запустить rtorrent
+     */
+    public void launch() throws RtorrentServiceException;
+
+    /**
+     * Оставновить rtorrent
+     */
+    public void shutdown() throws RtorrentServiceException;
 }

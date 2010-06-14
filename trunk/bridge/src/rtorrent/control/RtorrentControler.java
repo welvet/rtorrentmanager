@@ -64,4 +64,9 @@ public interface RtorrentControler {
      * Создать диалог с настройками
      */
     public Dialog createTorrentDialog(String hash);
+
+    /**
+     * @return запущен ли сервис
+     */
+    public Boolean checkAlive();
 }

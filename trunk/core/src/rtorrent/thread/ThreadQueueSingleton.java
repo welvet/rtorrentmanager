@@ -20,4 +20,8 @@ public class ThreadQueueSingleton {
                     return;
         threadPool.execute(runnable);
     }
+
+    public static int size() {
+        return queue.size();
+    }
 }

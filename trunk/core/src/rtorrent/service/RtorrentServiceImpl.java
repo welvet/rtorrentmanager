@@ -195,4 +195,17 @@ public class RtorrentServiceImpl implements RtorrentService {
     public synchronized Boolean isAlive() {
         return xmlRpcConnection.isConnected();
     }
+
+    public void launch() throws RtorrentServiceException {
+//        TODO REALIZE ME
+        throw new RuntimeException("realize me");
+    }
+
+    public void shutdown() throws RtorrentServiceException {
+        try {
+            system.shutdown();
+        } catch (Exception e) {
+            throw new RtorrentServiceException(e);
+        }
+    }
 }
