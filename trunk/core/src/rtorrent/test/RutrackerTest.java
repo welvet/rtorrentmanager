@@ -1,5 +1,6 @@
 package rtorrent.test;
 
+import rtorrent.torrent.ActionTorrent;
 import rtorrent.tracker.rutracker.RuTrackerHelper;
 
 /**
@@ -9,10 +10,12 @@ import rtorrent.tracker.rutracker.RuTrackerHelper;
  */
 public class RutrackerTest extends RtorrentTestCase {
     public void testConnection() throws Exception {
-        RuTrackerHelper helper = new RuTrackerHelper("welvet", "");
+        if (true) throw new RuntimeException("Для того чтобы этот тест работал нужно ввести логин и пароль");
+        RuTrackerHelper helper = new RuTrackerHelper("", "", dir);
         helper.auth();
         assertTrue(helper.checkAuth());
-//        helper.checkTorrent("2616371");
-        helper.downloadFile("2616371");
+        assertNotNull(helper.checkTorrent("2616371"));
+        ActionTorrent torrent = new ActionTorrent(helper.downloadFile("2616371"));
+        assertNotNull(torrent.getTorrentFileHash());
     }
 }

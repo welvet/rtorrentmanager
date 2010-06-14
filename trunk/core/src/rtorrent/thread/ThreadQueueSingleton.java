@@ -16,11 +16,8 @@ public class ThreadQueueSingleton {
     private static RtorrentThreadPoolExecutor threadPool = new RtorrentThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, queue);
 
     public static void add(Runnable runnable) {
-        for (Runnable r : queue) {
-            //не даем одному объекту выполниться несколько раз
-            if (r.equals(runnable))
+            if (queue.contains(runnable))
                     return;
-        }
         threadPool.execute(runnable);
     }
 }
