@@ -17,4 +17,8 @@ public class MockNoticeService implements NoticeService{
     public void notice(ActionTorrent torrent, TorrentNotice notice) {
         System.out.println(torrent.toString() + notice.toString());
     }
+
+    public boolean checkConfig() {
+        return true;
+    }
 }

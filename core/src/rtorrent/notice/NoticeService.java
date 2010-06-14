@@ -15,4 +15,9 @@ public interface NoticeService {
      * @param notice тип изменения
      */
     public void notice(ActionTorrent torrent, TorrentNotice notice);
+
+    /**
+     * @return true если активен
+     */
+    public boolean checkConfig();
 }

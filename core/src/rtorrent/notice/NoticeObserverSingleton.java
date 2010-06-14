@@ -19,11 +19,22 @@ public class NoticeObserverSingleton {
     public static HashMap<NoticeService, NoticeJob> jobs = new HashMap<NoticeService, NoticeJob>();
     public static Logger log = LoggerSingleton.getLogger();
 
+    public void initialize() {
+        clearService();
+        registerService(LogNoticeService.class);
+    }
+
     /**
      * @param service регистрируемый сервис
      */
-    public static void registerService(NoticeService service) {
-        services.add(service);
+    public static void registerService(Class<? extends NoticeService> service) {
+        try {
+            NoticeService noticeService = service.newInstance();
+            if (noticeService.checkConfig())
+                services.add(noticeService);
+        } catch (Exception e) {
+            log.error(e);
+        }
     }
 
     public static void clearService() {
@@ -42,13 +53,13 @@ public class NoticeObserverSingleton {
             currentNotice.setNotice(notice);
             currentNotice.setTorrent(torrent);
             //добавляем новое уведомление
-            log.debug(currentNotice+" добавлено");
+            log.debug(currentNotice + " добавлено");
             job.addNotice(currentNotice);
         }
     }
 
     public static void run() {
-        for (NoticeJob job :jobs.values())
+        for (NoticeJob job : jobs.values())
             ThreadQueueSingleton.add(job);
     }
 }

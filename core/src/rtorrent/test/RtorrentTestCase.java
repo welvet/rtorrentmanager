@@ -5,8 +5,6 @@ import rtorrent.action.ActionManagerImpl;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControlerImpl;
 import rtorrent.dialog.DialogParserImpl;
-import rtorrent.notice.NoticeObserverSingleton;
-import rtorrent.notice.NoticeService;
 import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.set.TorrentSet;
@@ -67,10 +65,10 @@ public abstract class RtorrentTestCase extends TestCase {
         //создаем веб сервер
         builder = new WebServerBuilder();
         builder.setWar(warPath);
-        //регистрируем NoticeService
-        NoticeService service = new MockNoticeService();
-        NoticeObserverSingleton.clearService();
-        NoticeObserverSingleton.registerService(service);
+        //регистрируем NoticeService  TODO !!!
+//        NoticeService service = new MockNoticeService();
+//        NoticeObserverSingleton.clearService();
+//        NoticeObserverSingleton.registerService(service);
     }
 
     @Override
