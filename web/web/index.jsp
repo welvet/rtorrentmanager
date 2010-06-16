@@ -27,7 +27,7 @@
         <ul id="jsddm">
             <li><a href="#">Общее</a>
                 <ul>
-                    <li><a href="#" action="switchRtorrent">Запустить/остановить rtorrent</a></li>
+                    <li><a href="#" action="checkAll">Проверить все</a></li>
                     <li><a href="#" action="shutdownApp">Выключить rmanager</a></li>
                 </ul>
             </li>
@@ -60,6 +60,7 @@
                 <th>&nbsp;</th>
                 <th class="titleSize">Скачано</th>
                 <th class="titleSize">Размер</th>
+                <th>Обновлен</th>
                 <th>Ратио</th>
                 <th>Пиры</th>
                 <th>Всего</th>
@@ -81,7 +82,7 @@
 
     <div id="log" class="fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">
         <span id="label">Логи <a href="#">(очистить)</a></span>
-        <textarea id="logArea" class="ui-widget" rows="7" cols="110" disabled="disabled">
+        <textarea id="logArea" class="ui-widget" rows="7" cols="117" disabled="disabled">
             <%@ include file="log.jsp" %>
         </textarea>
     </div>

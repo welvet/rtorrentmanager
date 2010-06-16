@@ -60,7 +60,7 @@ public class RtorrentServiceImpl implements RtorrentService {
             "d.get_peers_not_connected=",
             "d.get_hashing=",
     };
-    private static List list = Arrays.asList(download_variable);
+    private static List<String> list = Arrays.asList(download_variable);
 
     @Deprecated
     public RtorrentServiceImpl(String host, Integer port) {
@@ -196,16 +196,23 @@ public class RtorrentServiceImpl implements RtorrentService {
         return xmlRpcConnection.isConnected();
     }
 
-    public void launch() throws RtorrentServiceException {
-//        TODO REALIZE ME
-        throw new RuntimeException("realize me");
+    public void launch(List<Torrent> list) throws RtorrentServiceException {
+        for (Torrent torrent : list) {
+            try {
+                start(torrent);
+            } catch (Exception e) {
+                log.debug("Во время запуска " + torrent + " произошла ошибка: " + e.getMessage());
+            }
+        }
     }
 
-    public void shutdown() throws RtorrentServiceException {
-        try {
-            system.shutdown();
-        } catch (Exception e) {
-            throw new RtorrentServiceException(e);
+    public void shutdown(List<Torrent> list) throws RtorrentServiceException {
+        for (Torrent torrent : list) {
+            try {
+                stop(torrent);
+            } catch (Exception e) {
+                log.debug("Во время остановки " + torrent + " произошла ошибка: " + e.getMessage());
+            }
         }
     }
 }

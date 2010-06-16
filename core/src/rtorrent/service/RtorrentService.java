@@ -3,6 +3,7 @@ package rtorrent.service;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.Torrent;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -71,10 +72,10 @@ public interface RtorrentService {
     /**
      * Запустить rtorrent
      */
-    public void launch() throws RtorrentServiceException;
+    public void launch(List<Torrent> list) throws RtorrentServiceException;
 
     /**
      * Оставновить rtorrent
      */
-    public void shutdown() throws RtorrentServiceException;
+    public void shutdown(List<Torrent> list) throws RtorrentServiceException;
 }

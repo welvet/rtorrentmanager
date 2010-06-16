@@ -30,16 +30,15 @@ public class Initialize {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         try {
-//            todo проверить работу стратегий
-//            todo написать запуск рторрента
-//            todo добавить кнопку "проверить все"
-//            todo доделать кнопку "остановить все"
-//            todo выводить lastUpdate куда нибудь (например в диалго)
-//            todo написать хелп
-//            todo проверить работу
-//            todo проверить абоут
-//            todo добавить кнопку "остановить и проверить все"
+//            todo доделать addTorrent            
 //            todo дописать лостфильм
+//            todo написать уведомления по емейл
+//            todo написать уведомления по рсс
+//            todo написать standalone клиент            
+//            todo написать хелп
+//            todo написать абоут
+//            todo написать хелп на google
+//            todo проверить работу
             //создаем рабочую директорию
             File workDir = new File(System.getProperty("user.home") + "/" + ".rmanager");
             workDir.mkdirs();

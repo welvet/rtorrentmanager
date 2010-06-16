@@ -21,7 +21,7 @@ public class DownAndCheckTask extends TimerTask {
         //если рторрент запущен, то работаем согласно этой статегии
         if (CheckStrategy.getRun()) {
             try {
-                //не проверяем, напущен ли рторрент во время работы
+                //не проверяем, запущен ли рторрент во время работы
                 CheckStrategy.setNeedCheck(false);
                 //останавливаем рторрент
                 TorrentSetSingleton.getInstance().shutdown();

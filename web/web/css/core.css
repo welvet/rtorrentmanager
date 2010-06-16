@@ -32,14 +32,14 @@ input {
 }
 
 #wrapper {
-    width: 720px;
+    width: 758px;
     margin-top: 10px;
     margin-left: 40px;
 }
 
 /*основной блок*/
 #main {
-    width: 720px;
+    width: 758px;
     height: 100%;
 }
 
@@ -48,7 +48,7 @@ input {
 }
 
 #mainMenu {
-    width: 720px;
+    width: 758px;
     height: 25px;
 }
 
@@ -77,7 +77,7 @@ input {
 /*блок таблицы*/
 
 #tableConatainer {
-    width: 720px;
+    width: 758px;
     margin-top: 10px;
 }
 
@@ -141,7 +141,7 @@ input {
 }
 
 #log {
-    width: 718px;
+    width: 758px;
 }
 
 #label {
@@ -151,7 +151,7 @@ input {
 #label a {
     font-size: 0.7em;
     text-decoration: none;
-    margin-left: 600px;
+    margin-left: 654px;
     font-family: "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
     color: #1c94c4;
 }
