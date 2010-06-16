@@ -82,6 +82,14 @@ public class MockRtorrentService implements RtorrentService {
         return isRun;
     }
 
+    public void launch(List<Torrent> list) throws RtorrentServiceException {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void shutdown(List<Torrent> list) throws RtorrentServiceException {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public void launch() {
         isRun = true;
     }

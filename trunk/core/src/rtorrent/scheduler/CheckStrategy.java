@@ -6,8 +6,8 @@ import rtorrent.control.RtorrentControler;
 import rtorrent.utils.ContextUtils;
 
 /**
- * янярнъмхе лнфер лемърэяъ ме рнкэйн б гюбхяхлнярх нр прнппемрю
- * ме якедсер хяонкэгнбюрэ щрнр йкюяя цде-рн еые
+ * TODO оепедекюрэ йкюяя р.й. прнппемр анкэье ме нярюмюбкхбюеряъ, ю нярюмюбкхбючряъ рнкэйн гюосыемше рнппемрш
+ *
  * User: welvet
  * Date: 14.06.2010
  * Time: 20:11:23
@@ -19,6 +19,7 @@ class CheckStrategy {
     /**
      * @return ГЮОСЫЕМ КХ ПРНППЕМР
      */
+    @Deprecated
     static Boolean getRun() {
         ConfigManager manager = (ConfigManager) ContextUtils.lookup("rconfig");
         Config config = manager.getConfig("scheduler");
@@ -29,10 +30,12 @@ class CheckStrategy {
     /**
      * @param needCheck МСФМН КХ ОПНБЕПЪРЭ ПРНППЕМР
      */
+    @Deprecated
     static void setNeedCheck(Boolean needCheck) {
         CheckStrategy.needCheck = needCheck;
     }
 
+    @Deprecated
     static void check() {
         if (needCheck) {
             RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");

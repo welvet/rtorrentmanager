@@ -5,10 +5,13 @@ import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceException;
 import rtorrent.thread.ThreadQueueSingleton;
 import rtorrent.torrent.ActionTorrent;
+import rtorrent.torrent.Torrent;
 import rtorrent.utils.LoggerSingleton;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,6 +26,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     private Logger log = LoggerSingleton.getLogger();
     private TorrentSetHelper torrentSetHelper;
     private TorrentSetSaver torrentSetSaver;
+    private List<Torrent> pausedList;
 
     public TorrentSetImpl(RtorrentService rtorrentService, File file) {
         this.rtorrentService = rtorrentService;
@@ -129,17 +133,29 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
         this.torrents = torrents;
     }
 
-    public void shutdown() {
+    public void launch() {
         try {
-            rtorrentService.shutdown();
+            if (pausedList != null)
+            //запускаем ранее остановленые торренты
+                rtorrentService.launch(pausedList);
         } catch (RtorrentServiceException e) {
             log.warn("Невозможно остановить rtorrent " + e.getMessage());
         }
+        pausedList = null;
     }
 
-    public void launch() {
+    public void shutdown() {
         try {
-            rtorrentService.launch();
+            pausedList = new ArrayList<Torrent>();
+            for (ActionTorrent torrent : torrents.values()) {
+                if (torrent.isStart()) {
+                    ActionTorrent pausedTorrent = new ActionTorrent();
+                    pausedTorrent.updateAll(torrent);
+                    pausedList.add(torrent);
+                }
+            }
+            //останавливаем все запущеные торренты
+            rtorrentService.shutdown(pausedList);
         } catch (RtorrentServiceException e) {
             log.warn("Невозможно запустить rtorrent " + e.getMessage());
         }

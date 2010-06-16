@@ -20,6 +20,7 @@ function initializeTable() {
             null,
             null,
             null,
+            null,
             null
         ],
         bLengthChange: false,

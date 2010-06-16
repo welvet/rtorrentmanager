@@ -15,7 +15,7 @@
     padding: 5px 12px;
     text-decoration: none;
     margin-left: 1px;
-    width: 119px;
+    width: 126px;
     color: #EAFFED;
     white-space: nowrap
 }
@@ -31,7 +31,7 @@
     position: absolute;
     visibility: hidden;
     border-top: 1px solid white;
-    min-width: 144px;
+    min-width: 152px;
 }
 
 #jsddm li ul li {

@@ -20,7 +20,8 @@ public class TorrentInfoImpl implements TorrentInfo {
     private Float ratio;
     private Integer peersConnected;
     private Integer sids;
-    private static final int ITEMS_COUNT = 9;
+    private Object lastUpdate;
+    private static final int ITEMS_COUNT = 10;
 
 
     public void copyInfo(ActionTorrent torrent) {
@@ -30,6 +31,7 @@ public class TorrentInfoImpl implements TorrentInfo {
         percentage = calcPercentage(torrent);
         compliteSize = torrent.getBytesDone();
         fullSize = torrent.getSizeBytes();
+        lastUpdate = (torrent.getLastUpdated().getTime() == 0L) ? "---" : torrent.getLastUpdated();
         ratio = torrent.getRatio().floatValue()/(100*10);
         peersConnected = torrent.getPeersConnected().intValue();
         sids = torrent.getPeersComplite().intValue();
@@ -63,9 +65,10 @@ public class TorrentInfoImpl implements TorrentInfo {
         objects[3] = percentage+"%";
         objects[4] = SizeFormater.formatSize(compliteSize, 2);
         objects[5] = SizeFormater.formatSize(fullSize, 2);
-        objects[6] = ratio;
-        objects[7] = peersConnected;
-        objects[8] = sids;
+        objects[6] = lastUpdate;
+        objects[7] = ratio;
+        objects[8] = peersConnected;
+        objects[9] = sids;
         return objects;
     }
 

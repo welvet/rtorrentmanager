@@ -1,9 +1,7 @@
 package rtorrent.action;
 
 import org.apache.log4j.Logger;
-import rtorrent.action.actions.ClearLog;
-import rtorrent.action.actions.GetLog;
-import rtorrent.action.actions.ShutdownApp;
+import rtorrent.action.actions.*;
 import rtorrent.utils.BindContext;
 import rtorrent.utils.InContext;
 import rtorrent.utils.LoggerSingleton;
@@ -24,6 +22,8 @@ public class ActionManagerImpl implements ActionManager, InContext {
         actionMap.put("clearLog", ClearLog.class);
         actionMap.put("getLog", GetLog.class);
         actionMap.put("shutdownApp", ShutdownApp.class);
+        actionMap.put("checkAll", CheckAll.class);
+        actionMap.put("TEST", TEST.class);
     }
 
     public ActionManagerImpl() {
