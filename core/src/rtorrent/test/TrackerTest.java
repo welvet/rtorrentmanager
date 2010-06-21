@@ -1,11 +1,9 @@
 package rtorrent.test;
 
 import rtorrent.torrent.ActionTorrent;
-import rtorrent.torrent.TorrentFacade;
-import rtorrent.torrent.TorrentValidateException;
-import rtorrent.tracker.*;
-
-import java.io.File;
+import rtorrent.tracker.MockTrackerWorker;
+import rtorrent.tracker.TorrentWorkersObserver;
+import rtorrent.tracker.TorrentWorkersObserverSingleton;
 
 /**
  * User: welvet
@@ -13,27 +11,7 @@ import java.io.File;
  * Time: 22:44:03
  */
 public class TrackerTest extends RtorrentTestCase {
-    private class MockTrackerWorker implements TrackerWorker {
 
-        public void initialize(File workDir) throws TorrentWorkerException {
-            System.out.println("MockTrackerWorker инициализирован");
-        }
-
-        public TorrentFacade work(TorrentFacade torrent) {
-            try {
-                //обновляем торрент
-                torrent.setFile(torrent2File);
-                torrent.setNeedUpdate(true);
-                return torrent;
-            } catch (TorrentValidateException e) {
-                throw new RuntimeException("Не найден тестовый файл");
-            }
-        }
-
-        public Trackers whoIs() {
-            return Trackers.MOCK;
-        }
-    }
 
     public void testTorrentWorker() throws Exception {
         ActionTorrent torrent = new ActionTorrent(torrentFile);
@@ -50,6 +28,7 @@ public class TrackerTest extends RtorrentTestCase {
             torrentSet.update();
             Thread.sleep(WAIT_TIME);
 
+            MockTrackerWorker.torrent2File = torrent2File;
             //устанавливаем обработчик
             TorrentWorkersObserver observer = TorrentWorkersObserverSingleton.getInstance();
             observer.clearWorkers();

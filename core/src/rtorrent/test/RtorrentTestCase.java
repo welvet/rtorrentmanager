@@ -10,7 +10,6 @@ import rtorrent.control.RtorrentControlerImpl;
 import rtorrent.dialog.DialogParserImpl;
 import rtorrent.notice.NoticeObserverSingleton;
 import rtorrent.service.RtorrentService;
-import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
 import rtorrent.tracker.TorrentWorkersObserverSingleton;
@@ -37,7 +36,7 @@ public abstract class RtorrentTestCase extends TestCase {
     RtorrentControlerImpl controler;
     ConfigManagerImpl configManager;
     WebServerBuilder builder;
-    private Boolean loaded = false;
+    private static Boolean loaded = false;
     static final int WAIT_TIME = 3000;
 
     @Override
@@ -55,9 +54,9 @@ public abstract class RtorrentTestCase extends TestCase {
         //сслка на собраный варник
         warPath = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
         //создаем рторрент сервис
-//        rtorrentService = new MockRtorrentService();
+        rtorrentService = new MockRtorrentService();
         //создаем синглтон
-        rtorrentService = new RtorrentServiceImpl("serv", 5000);
+//        rtorrentService = new RtorrentServiceImpl("serv", 5000);
         TorrentSetSingleton.initialze(rtorrentService, datFile);
         torrentSet = TorrentSetSingleton.getInstance();
         //создаем контролер
@@ -77,9 +76,12 @@ public abstract class RtorrentTestCase extends TestCase {
 
         TorrentWorkersObserverSingleton.initialize();
 
-        ConsoleAppender  appender = new ConsoleAppender(new PatternLayout());
-        appender.setThreshold(Priority.DEBUG);
-        LoggerSingleton.getLogger().addAppender(appender);
+        if (!loaded) {
+            loaded = true;
+            ConsoleAppender appender = new ConsoleAppender(new PatternLayout());
+            appender.setThreshold(Priority.DEBUG);
+            LoggerSingleton.getLogger().addAppender(appender);
+        }
     }
 
     @Override

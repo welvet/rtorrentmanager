@@ -1,7 +1,6 @@
 package rtorrent.tracker;
 
 import rtorrent.torrent.TorrentFacade;
-import rtorrent.tracker.rutracker.RuTrackerException;
 
 import java.io.File;
 
@@ -14,7 +13,7 @@ public interface TrackerWorker{
     public void initialize(File workDir) throws TorrentWorkerException;
 
     //обработать торрент
-    public TorrentFacade work(TorrentFacade torrent) throws RuTrackerException;
+    public TorrentFacade work(TorrentFacade torrent) throws TrackerException;
 
     public Trackers whoIs();
 }

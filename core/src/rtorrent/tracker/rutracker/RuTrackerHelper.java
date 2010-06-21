@@ -1,70 +1,47 @@
 package rtorrent.tracker.rutracker;
 
-import org.apache.http.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.protocol.HttpContext;
-import org.apache.log4j.Logger;
-import rtorrent.utils.LoggerSingleton;
+import rtorrent.tracker.HttpHelper;
+import rtorrent.tracker.TrackerException;
+import rtorrent.tracker.WorkSaver;
 import rtorrent.utils.XpathUtils;
 
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * User: welvet
  * Date: 14.06.2010
  * Time: 0:45:20
  */
-public class RuTrackerHelper {
-    private String login;
-    private String password;
-    private Logger log = LoggerSingleton.getLogger();
-    private DefaultHttpClient httpClient = new DefaultHttpClient();
-    private static final String USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.0.4) Gecko/2008102920 AdCentriaIM/1.7 Firefox/3.0.4\"";
+public class RuTrackerHelper extends HttpHelper {
     private static final String RUTRACKER_ORG = "rutracker.org";
     private static final String loginUrl = "http://login." + RUTRACKER_ORG + "/forum/login.php";
     private static final String HOST = "http://" + RUTRACKER_ORG + "/";
     private static final String THEME = "http://" + RUTRACKER_ORG + "/forum/viewtopic.php?t=";
     private static final String DOWNLOAD = "http://dl." + RUTRACKER_ORG + "/forum/dl.php?t=";
-    private static final int TIMEOUT = 20000;
-    private Map<String, String> torrentsMap;
-    private RuTrackerSaver saver;
-    private File workDir;
+    private WorkSaver saver;
 
     public RuTrackerHelper(String login, String password, File workDir) {
-        this.login = login;
-        this.password = password;
-        this.workDir = workDir;
+        super(login, password, workDir);
         //выставляем агента
-        httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
-            public void process(HttpRequest httpRequest, HttpContext httpContext) throws HttpException, IOException {
-                httpRequest.setHeader(HTTP.USER_AGENT, USER_AGENT);
-            }
-        });
-        //выставляем таймаут
-        HttpParams params = httpClient.getParams();
-        HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), TIMEOUT);
-        HttpConnectionParams.setSoTimeout(httpClient.getParams(), TIMEOUT);
-        httpClient.setParams(params);
+
         //загружаем сохраненную мапу с последними датами
-        saver = new RuTrackerSaver(new File(workDir.getAbsolutePath() + "/rutracker.dat"));
+        saver = new WorkSaver(new File(workDir.getAbsolutePath() + "/rutracker.dat"));
         torrentsMap = saver.load();
     }
 
-    public void auth() throws RuTrackerException {
+    public void auth() throws TrackerException {
         try {
             HttpPost httpPost = new HttpPost();
             httpPost.setURI(new URI(loginUrl));
@@ -91,7 +68,7 @@ public class RuTrackerHelper {
             }
             log.debug("Попытка авторизации на rutracker прошла успешно");
         } catch (Exception e) {
-            throw new RuTrackerException(e);
+            throw new TrackerException(e);
         }
     }
 
@@ -118,7 +95,7 @@ public class RuTrackerHelper {
         return null;
     }
 
-    public Boolean checkAuth() throws RuTrackerException {
+    public Boolean checkAuth() throws TrackerException {
         XpathUtils utils = null;
         try {
             HttpGet httpGet = new HttpGet(new URI(HOST + "forum/index.php"));
@@ -137,16 +114,16 @@ public class RuTrackerHelper {
                 try {
                     log.info(utils.getFile());
                 } catch (Exception e1) {
-                     throw new RuTrackerException(e);
+                     throw new TrackerException(e);
                 }
             }
-            throw new RuTrackerException(e);
+            throw new TrackerException(e);
         }
     }
 
     //true если нужен апдейт
 
-    public Boolean checkTorrent(String url) throws RuTrackerException {
+    public Boolean checkTorrent(String url) throws TrackerException {
         try {
             HttpGet httpGet = new HttpGet(new URI(THEME + url));
             BasicHttpResponse response = (BasicHttpResponse) httpClient.execute(httpGet);
@@ -158,7 +135,7 @@ public class RuTrackerHelper {
             if (date == null) {
                 log.warn("Не удалось проверить торрент с url:" + url + ". Подробности в лог файле");
                 log.info(utils.getFile());
-                throw new RuTrackerException("Ошибка проверки файла");
+                throw new TrackerException("Ошибка проверки файла");
             }
 
             if (string != null) {
@@ -171,7 +148,7 @@ public class RuTrackerHelper {
             log.info("Торрент " + url + " не найден в списке");
             return true;
         } catch (Exception e) {
-            throw new RuTrackerException(e);
+            throw new TrackerException(e);
         }
     }
 
@@ -180,7 +157,7 @@ public class RuTrackerHelper {
      * @return торрент файл, либо null если во время закачки была ошибка
      *         todo необходимо выщитвать хеш файла, перед тем как отдавать его rtorrent
      */
-    public File downloadFile(String url) throws RuTrackerException {
+    public File downloadFile(String url) throws TrackerException {
         try {
             //проходим проверку
             BasicClientCookie netscapeCookie = new BasicClientCookie("bb_dl", url);
@@ -199,7 +176,7 @@ public class RuTrackerHelper {
 
             return file;
         } catch (Exception e) {
-            throw new RuTrackerException(e);
+            throw new TrackerException(e);
         }
     }
 }

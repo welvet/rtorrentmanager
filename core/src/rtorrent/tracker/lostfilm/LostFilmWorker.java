@@ -1,4 +1,4 @@
-package rtorrent.tracker.rutracker;
+package rtorrent.tracker.lostfilm;
 
 import org.apache.log4j.Logger;
 import rtorrent.config.Config;
@@ -14,18 +14,18 @@ import java.util.Date;
 
 /**
  * User: welvet
- * Date: 14.06.2010
- * Time: 0:41:08
+ * Date: 21.06.2010
+ * Time: 20:49:30
  */
-public class RuTrackerWorker implements TrackerWorker {
-    public RuTrackerHelper helper;
-    private Logger logger = LoggerSingleton.getLogger();
-    private static String cookie;
+public class LostFilmWorker implements TrackerWorker {
+    private static LostFilmCookie cookie;
+    private static Logger logger = LoggerSingleton.getLogger();
+    private LostFilmHelper helper;
 
     public void initialize(File workDir) throws TorrentWorkerException {
         ConfigManager manager = (ConfigManager) ContextUtils.lookup("rconfig");
-        Config config = manager.getConfig("rutracker");
-        helper = new RuTrackerHelper((String) config.getFieldValue("login"), (String) config.getFieldValue("pass"), workDir);
+        Config config = manager.getConfig("lostfilm");
+        helper = new LostFilmHelper((String) config.getFieldValue("login"), (String) config.getFieldValue("pass"), workDir);
         if (cookie != null)
             helper.setRemoteCookie(cookie);
         try {
@@ -56,12 +56,13 @@ public class RuTrackerWorker implements TrackerWorker {
             throw new TrackerException();
         } catch (TrackerException e) {
             throw new TrackerException(e);
-        } catch (TorrentValidateException e) {
+        } catch (
+                TorrentValidateException e) {
             throw new TrackerException(e);
         }
     }
 
     public Trackers whoIs() {
-        return Trackers.RUTRACKER;
+        return Trackers.LOSTFILM;
     }
 }
