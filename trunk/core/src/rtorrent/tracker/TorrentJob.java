@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
-import rtorrent.tracker.rutracker.RuTrackerException;
 import rtorrent.utils.ContextUtils;
 import rtorrent.utils.LoggerSingleton;
 
@@ -49,7 +48,7 @@ public class TorrentJob implements Runnable {
             }
         } catch (TorrentWorkerException e) {
             log.info(e);
-        } catch (RuTrackerException e) {
+        } catch (TrackerException e) {
             log.warn(e);
         }
     }

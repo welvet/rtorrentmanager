@@ -1,4 +1,4 @@
-package rtorrent.tracker.rutracker;
+package rtorrent.tracker;
 
 import org.apache.log4j.Logger;
 import rtorrent.utils.LoggerSingleton;
@@ -12,11 +12,11 @@ import java.util.Map;
  * Date: 14.06.2010
  * Time: 19:15:29
  */
-public class RuTrackerSaver {
+public class WorkSaver {
     private File file;
     private Logger log = LoggerSingleton.getLogger();
 
-    public RuTrackerSaver(File file) {
+    public WorkSaver(File file) {
         this.file = file;
     }
 
