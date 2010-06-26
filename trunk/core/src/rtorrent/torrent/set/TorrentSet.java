@@ -81,6 +81,22 @@ public interface TorrentSet {
 
     public void launch();
 
+    /**
+     * запустить принудительно
+     */
+    public void forceLaunch();
+
     public void shutdown();
 
+    /**
+     * Остановить принудительно
+     */
+    public void forceShutdown();
+
+    /**
+     * @return остановлен ли вручную
+     */
+    public Boolean isForceShutdown();
+
+    public boolean isAllPaused();
 }

@@ -10,6 +10,7 @@ import rtorrent.control.RtorrentControlerImpl;
 import rtorrent.dialog.DialogParserImpl;
 import rtorrent.notice.NoticeObserverSingleton;
 import rtorrent.service.RtorrentService;
+import rtorrent.service.RtorrentServiceImpl;
 import rtorrent.torrent.set.TorrentSet;
 import rtorrent.torrent.set.TorrentSetSingleton;
 import rtorrent.tracker.TorrentWorkersObserverSingleton;
@@ -57,7 +58,7 @@ public abstract class RtorrentTestCase extends TestCase {
         //создаем рторрент сервис
         rtorrentService = new MockRtorrentService();
         //создаем синглтон
-//        rtorrentService = new RtorrentServiceImpl("serv", 5000);
+        rtorrentService = new RtorrentServiceImpl("serv", 5000);
         TorrentSetSingleton.initialze(rtorrentService, datFile);
         torrentSet = TorrentSetSingleton.getInstance();
         //создаем контролер

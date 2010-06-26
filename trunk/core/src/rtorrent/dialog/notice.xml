@@ -4,7 +4,7 @@
     <value name="path" text="Шаблон ссылки" default="ftp://127.0.0.1/torrents/" position="1"/>
     <value name="replace" text="Строка для замены" default="/home/rtorrent/" position="2"/>
     <checkbox name="needEmailNotice" text="Получать уведомления по e-mail" default="false" position="3"/>
-    <select name="levelEmailNotice" text="Level" default="update" position="4">
+    <select name="levelEmailNotice" text="Level email уведомлений" default="update" position="4">
         <option>update</option>
         <option>finish</option>
     </select>
@@ -14,7 +14,7 @@
     <value name="fromMail" text="От" default="@mail.ru" position="8"/>
     <value name="toMail" text="Кому" default="@sms.beemail.ru" position="9"/>
     <checkbox name="needRssNotice" text="Генерировать rss ленту" default="true" position="10"/>
-    <select name="levelRssNotice" text="Level" default="finish" position="11">
+    <select name="levelRssNotice" text="Level rss уведомлений" default="finish" position="11">
         <option>update</option>
         <option>finish</option>
     </select>

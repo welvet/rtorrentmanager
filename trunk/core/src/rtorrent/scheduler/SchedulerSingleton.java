@@ -27,7 +27,8 @@ public class SchedulerSingleton {
         addTask(UpdateNoticeTask.class, new Integer((String) config.getFieldValue("updateNotice")));
         addTask(UpdateSetTask.class, new Integer((String) config.getFieldValue("updateSet")));
         addTask(UpdateTrackers.class, new Integer((String) config.getFieldValue("updateTrackers")));
-        addTask(UpdateStrategyTask.class, new Integer((String) config.getFieldValue("downAndCheck")));
+        addTask(UpdateStrategyTask.class, new Integer((String) config.getFieldValue("updateSet")));
+        addTask(DownAndCheckTask.class, new Integer((String) config.getFieldValue("downAndCheck")));
     }
 
     public static void addTask(Class<? extends TimerTask> clazz, Integer min) {

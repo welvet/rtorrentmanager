@@ -9,20 +9,20 @@ import rtorrent.utils.LoggerSingleton;
  * Time: 20:40:14
  */
 public class AfterExecuteCallback {
-    private static Boolean use = false;
+    private static volatile Boolean use = false;
 
     static void setUse(Boolean use) {
         AfterExecuteCallback.use = use;
     }
 
-    public static void afterExecute() {
+    public static synchronized void afterExecute() {
         if (use) {
+            //отключаем себя
+            use = false;
             //запускаем рторрент
             TorrentSetSingleton.getInstance().launch();
             //востанавливаем проверку
             CheckStrategy.setNeedCheck(true);
-            //отключаем себя
-            use = false;
             LoggerSingleton.getLogger().debug("AfterExecuteCallback выполнен");
         }
 

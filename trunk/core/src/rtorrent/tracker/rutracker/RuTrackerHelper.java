@@ -103,11 +103,7 @@ public class RuTrackerHelper extends HttpHelper {
             //создаем страничку
             utils = new XpathUtils(response.getEntity().getContent());
 
-            if (!login.isEmpty() && login.equals(utils.doXPath("//DIV[@class=\"topmenu\"]//B[@class=\"med\"]/text()")))
-                return true;
-            else {
-                return false;
-            }
+            return !login.isEmpty() && login.equals(utils.doXPath("//DIV[@class=\"topmenu\"]//B[@class=\"med\"]/text()"));
         } catch (Exception e) {
             log.warn("Не удалось авторизироваться на rutracker.org. Подробности в лог файле");
             if (utils != null) {
@@ -140,7 +136,8 @@ public class RuTrackerHelper extends HttpHelper {
 
             if (string != null) {
                 log.debug("Торрент с url " + url + " проверен");
-                return string.equals(date);
+                //если строки не совпадают, то нужно обновлять
+                return !string.equals(date);
             }
 
             torrentsMap.put(url, date);

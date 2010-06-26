@@ -112,6 +112,7 @@ function onceReloadTable() {
     setTimeout(function() {
         torrents = [];
         oTable.fnReloadAjax(oTable.fnSettings());
+        $("#switch").attr("src","/action/?action=checkRtorrent&rand="+Math.random());
     }, 2500);
 }
 
@@ -189,6 +190,9 @@ function initializeLog() {
 function initializeTableButtons() {
     $("#addTorrent").click(function() {
         doSimpleAction("addTorrent");
+    });
+    $("#switch").click(function() {
+        doSimpleAction("shitchTorrent");
     });
     $("#refresh").click(function() {
         if (refresh) {
