@@ -58,6 +58,10 @@ input {
     font-size: 12px;
 }
 
+#actionDialog {
+    font-size: 12px;
+}
+
 .dialog {
     display: none;
 }

@@ -11,6 +11,7 @@
     <script type="text/javascript" language="javascript" src="js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="js/jquery.contextMenu.js"></script>
     <script type="text/javascript" language="javascript" src="js/jsddm.js"></script>
+    <script type="text/javascript" language="javascript" src="js/ajaxfileupload.js"></script>
     <script type="text/javascript" language="javascript" src="js/core.js"></script>
     <style type="text/css">
         @import "css/jquery.contextMenu.css";
