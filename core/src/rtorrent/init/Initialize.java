@@ -30,6 +30,8 @@ public class Initialize {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         try {
+//            todo исправить автообновление на странице (setTimeout) - добавить проверку
+//            todo отдавать rss через веб            
 //            todo написать standalone клиент
 //            todo написать хелп
 //            todo написать абоут
@@ -41,12 +43,18 @@ public class Initialize {
             BindContext.bind("workdir", workDir);
             //инициализируем логер
             LoggerSingleton.initialize(workDir);
-            if (args[0] != null && args[0].equals("debug"))
-                LoggerSingleton.debug();
+            if (args != null && args.length > 0)
+                if (args[0].equals("--debug"))
+                    LoggerSingleton.debug();
+                else {
+                    System.out.println("Help:");
+                    System.out.println("java -jar core.jar --debug to debug");
+                    System.exit(0);
+                }
             else {
                 //отключаем консоль
-                System.in.close();
                 System.err.close();
+                System.in.close();
                 System.out.close();
             }
             //инициализируем action

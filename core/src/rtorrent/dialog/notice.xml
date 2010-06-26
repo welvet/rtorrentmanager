@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config SYSTEM "config.dtd">
 <config title="Настройка уведомлений">
-    <value name="path" text="Шаблон ссылки" default="ftp://127.0.0.1/torrents/" position="1"/>
+    <value name="pathToTorrent" text="Шаблон ссылки" default="ftp://127.0.0.1/torrents/" position="1"/>
     <value name="replace" text="Строка для замены" default="/home/rtorrent/" position="2"/>
     <checkbox name="needEmailNotice" text="Получать уведомления по e-mail" default="false" position="3"/>
     <select name="levelEmailNotice" text="Level email уведомлений" default="update" position="4">

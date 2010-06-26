@@ -42,6 +42,6 @@ public class NoticeJob implements Runnable {
             }
         } catch (Exception e) {
             log.info(e);
-        }
+        } 
     }
 }

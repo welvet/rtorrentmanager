@@ -12,6 +12,10 @@ import rtorrent.tracker.rutracker.RuTrackerWorker;
 public class TorrentWorkersObserverSingleton {
     private static TorrentWorkersObserver ourInstance = new TorrentWorkersObserver();
 
+    static {
+        initialize();
+    }
+
     public static TorrentWorkersObserver getInstance() {
         return ourInstance;
     }

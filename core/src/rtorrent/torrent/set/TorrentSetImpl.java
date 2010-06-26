@@ -144,7 +144,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     public void launch() {
         //если не остановлен вручную
         if (!forceShutdown) {
-            plainShutdown = true;
+            plainShutdown = false;
             doLaunch();
         }
     }
@@ -163,7 +163,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     public void shutdown() {
         //если не остановлен вручную
         if (!forceShutdown) {
-            plainShutdown = false;
+            plainShutdown = true;
             doShutdown();
         }
     }

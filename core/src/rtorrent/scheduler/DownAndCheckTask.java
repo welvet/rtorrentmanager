@@ -28,9 +28,11 @@ public class DownAndCheckTask extends TimerTask {
                 //ждем пока рторрент остановиться
                 Thread.sleep(10000);
 
+                AfterExecuteCallback.newIterator();
+                AfterExecuteCallback.setUse(true);
                 NoticeObserverSingleton.run();
                 TorrentWorkersObserverSingleton.run();
-                AfterExecuteCallback.setUse(true);
+                //ждем другие потоки
                 log.debug("DownAndCheck стратегия запущена");
 
             } catch (Exception e) {
