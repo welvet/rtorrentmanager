@@ -1,6 +1,8 @@
 package rtorrent.test;
 
+import rtorrent.notice.NoticeService;
 import rtorrent.notice.TorrentNotice;
+import rtorrent.notice.email.EmailNoticeService;
 import rtorrent.notice.rss.RssNoticeService;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.utils.Saver;
@@ -22,5 +24,12 @@ public class RssNoticeTest extends RtorrentTestCase {
             service.notice(torrent, TorrentNotice.FINISH);
         }
         assertEquals(saver.load().size(), torrentSet.getSet().size());
+    }
+    //будет работать только с корректным конфигом
+    public void testSimpleEmailNotice() throws Exception {
+        NoticeService service = new EmailNoticeService();
+        service.initialize();
+        ActionTorrent torrent = torrentSet.getSet().iterator().next();
+        service.notice(torrent, TorrentNotice.UPDATE);
     }
 }
