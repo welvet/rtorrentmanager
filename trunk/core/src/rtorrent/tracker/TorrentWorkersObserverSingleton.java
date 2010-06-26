@@ -1,6 +1,7 @@
 package rtorrent.tracker;
 
 import rtorrent.thread.ThreadQueueSingleton;
+import rtorrent.tracker.lostfilm.LostFilmWorker;
 import rtorrent.tracker.rutracker.RuTrackerWorker;
 
 /**
@@ -18,6 +19,7 @@ public class TorrentWorkersObserverSingleton {
     public static void initialize() {
         clearWorkers();
         registerWorker(RuTrackerWorker.class);
+        registerWorker(LostFilmWorker.class);
     }
 
     public static void clearWorkers() {

@@ -107,7 +107,7 @@
     <target name="build" depends="init, compile-bridge, compile-core, compile-web"/>
 
     <target name="prepare-test">
-        <copy todir="${out.production}/${core.dir}">
+        <copy todir="${out.production}/${core.dir}" overwrite="true">
             <fileset dir="${core.dir}/src">
                 <include name="**/*.xml"/>
                 <include name="**/*.xsl"/>

@@ -9,7 +9,20 @@ import java.io.Serializable;
  * Time: 22:11:41
  */
 public enum Trackers implements Serializable {
-    RUTRACKER, //rutracker.org
-    LOSTFILM, //lostfilm
-    MOCK //мок трекер
+    MOCK("none"), //мок трекер
+    RUTRACKER("rutracker"), //rutracker.org
+    LOSTFILM("lostfilm"); //lostfilm
+
+    private String name;
+    Trackers(String name) {
+        this.name = name;
+    }            
+
+    public String toString() {
+        return name;
+    }
+
+    public Boolean compare(String name) {
+        return this.name.equals(name);
+    }
 }
