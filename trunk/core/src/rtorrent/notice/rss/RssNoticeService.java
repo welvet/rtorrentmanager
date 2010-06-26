@@ -50,7 +50,7 @@ public class RssNoticeService implements NoticeService {
             rssNotice.setTitle(torrent.getName());
             rssNotice.setDescription(torrent.getName() + " is " + notice);
             rssNotice.setPubDate(new Date());
-            rssNotice.setLink(config.getFieldValue("path") + torrent.getDir().replace((String) config.getFieldValue("replace"), ""));
+            rssNotice.setLink(config.getFieldValue("pathToTorrent") + torrent.getDir().replace((String) config.getFieldValue("replace"), ""));
             rssNotice.setAuthor(AUTHOR);
             list.add(rssNotice);
             saver.save(list);

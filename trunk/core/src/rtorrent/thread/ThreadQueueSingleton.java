@@ -1,5 +1,10 @@
 package rtorrent.thread;
 
+import rtorrent.notice.NoticeJob;
+import rtorrent.scheduler.AfterExecuteCallback;
+import rtorrent.tracker.TorrentJob;
+import rtorrent.tracker.TorrentWorkersObserver;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +23,8 @@ public class ThreadQueueSingleton {
     public static void add(Runnable runnable) {
             if (queue.contains(runnable))
                     return;
+        if ((runnable instanceof TorrentJob) || (runnable instanceof NoticeJob) || runnable instanceof TorrentWorkersObserver)
+            AfterExecuteCallback.jobStart();
         threadPool.execute(runnable);
     }
 

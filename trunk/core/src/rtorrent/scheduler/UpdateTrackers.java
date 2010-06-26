@@ -1,6 +1,7 @@
 package rtorrent.scheduler;
 
 import rtorrent.tracker.TorrentWorkersObserverSingleton;
+import rtorrent.utils.LoggerSingleton;
 
 import java.util.TimerTask;
 
@@ -13,7 +14,9 @@ public class UpdateTrackers extends TimerTask {
     @Override
     public void run() {
         //если рторрент не запущен, то работаем
-        if (!CheckStrategy.getRun())
+        if (!CheckStrategy.getRun()) {
             TorrentWorkersObserverSingleton.run();
+        LoggerSingleton.getLogger().debug("DownAndCheck стратегия запущена"); 
+        }
     }
 }
