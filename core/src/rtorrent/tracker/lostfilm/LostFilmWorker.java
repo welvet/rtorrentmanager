@@ -33,7 +33,7 @@ public class LostFilmWorker implements TrackerWorker {
                 helper.auth();
                 //вторая попытка
                 if (!helper.checkAuth())
-                    throw new TorrentWorkerException("Ошибка авторизации на rutracker.org");
+                    throw new TorrentWorkerException("Ошибка авторизации на lostfilm");
             }
             cookie = helper.getCookie();
         } catch (Exception e) {

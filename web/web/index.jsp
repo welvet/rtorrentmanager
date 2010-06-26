@@ -92,6 +92,7 @@
     <div id="tableButtons">
         <img id="addTorrent" src="/images/add.png"/>
         <img id="refresh" src="/images/refresh.png"/>
+        <img id="switch" src="/action/?action=checkRtorrent"/>
     </div>
 </div>
 </body>

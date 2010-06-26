@@ -61,11 +61,7 @@ public class LostFilmHelper extends HttpHelper {
             //создаем страничку
             utils = new XpathUtils(response.getEntity().getContent());
 
-            if (!login.isEmpty() && utils.doXPath("//DIV[@class=\"prof\"]/SPAN[1]/text()").startsWith(login))
-                return true;
-            else {
-                return false;
-            }
+            return !login.isEmpty() && utils.doXPath("//DIV[@class=\"prof\"]/SPAN[1]/text()").startsWith(login);
         } catch (Exception e) {
             log.warn("Не удалось авторизироваться на lostfilm.tv. Подробности в лог файле");
             if (utils != null) {
@@ -138,7 +134,8 @@ public class LostFilmHelper extends HttpHelper {
 
             if (string != null) {
                 log.debug("Торрент с url " + url + " проверен");
-                return string.equals(date);
+                //если строки не совпадают, то нужно обновлять
+                return !string.equals(date);
             }
 
             torrentsMap.put(url, date);

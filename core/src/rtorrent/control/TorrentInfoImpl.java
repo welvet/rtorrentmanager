@@ -3,6 +3,7 @@ package rtorrent.control;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.torrent.State;
 import rtorrent.torrent.TorrentInfo;
+import rtorrent.torrent.set.TorrentSetSingleton;
 import rtorrent.utils.SizeFormater;
 
 /**
@@ -48,13 +49,16 @@ public class TorrentInfoImpl implements TorrentInfo {
     private void calcState(ActionTorrent torrent) {
         if (torrent.isStart())
             state = State.start;
-        else state = State.stop;
         if (torrent.isComplite())
             state = State.finish;
         if (torrent.isHashChecking())
             state = State.hashing;
         if (torrent.isNeedDelete())
             state = State.delete;
+        if (!torrent.isStart())
+            state = State.stop;
+        if (TorrentSetSingleton.getInstance().isAllPaused())
+            state = State.stop;
     }
 
     public Object[] toArray() {

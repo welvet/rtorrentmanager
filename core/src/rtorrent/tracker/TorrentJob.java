@@ -47,7 +47,7 @@ public class TorrentJob implements Runnable {
                 log.debug(torrent + " синхронизирован с трекером");
             }
         } catch (TorrentWorkerException e) {
-            log.info(e);
+            log.warn(e);
         } catch (TrackerException e) {
             log.warn(e);
         }

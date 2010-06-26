@@ -84,10 +84,17 @@ public class ActionServlet extends HttpServlet {
         }
 
         if (actionName.equals("saveTorrent")) {
-            File file = saveFile(request.getContentType(), request); 
+            File file = saveFile(request.getContentType(), request);
             RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");
             controler.addTorrent(file);
             return;
+        }
+
+        if (actionName.equals("checkRtorrent")) {
+            String s;
+            if (!(Boolean) manager.doAction("checkRtorrent", null)) s = "start";
+            else s = "stop";
+            request.getRequestDispatcher("/images/" + s + "_a.png").forward(request, response);
         }
 
         manager.doAction(actionName, null);

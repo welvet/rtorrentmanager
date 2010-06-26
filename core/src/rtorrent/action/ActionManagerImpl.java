@@ -23,6 +23,8 @@ public class ActionManagerImpl implements ActionManager, InContext {
         actionMap.put("getLog", GetLog.class);
         actionMap.put("shutdownApp", ShutdownApp.class);
         actionMap.put("checkAll", CheckAll.class);
+        actionMap.put("checkRtorrent", CheckRtorrent.class);
+        actionMap.put("shitchTorrent", SwitchTorrent.class);
     }
 
     public ActionManagerImpl() {
