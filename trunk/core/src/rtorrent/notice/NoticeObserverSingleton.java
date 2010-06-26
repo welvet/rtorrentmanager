@@ -1,6 +1,8 @@
 package rtorrent.notice;
 
 import org.apache.log4j.Logger;
+import rtorrent.notice.email.EmailNoticeService;
+import rtorrent.notice.rss.RssNoticeService;
 import rtorrent.thread.ThreadQueueSingleton;
 import rtorrent.torrent.ActionTorrent;
 import rtorrent.utils.LoggerSingleton;
@@ -21,7 +23,8 @@ public class NoticeObserverSingleton {
 
     public void initialize() {
         clearService();
-        registerService(LogNoticeService.class);
+        registerService(RssNoticeService.class);
+        registerService(EmailNoticeService.class);
     }
 
     /**

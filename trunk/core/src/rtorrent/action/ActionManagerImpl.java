@@ -23,7 +23,6 @@ public class ActionManagerImpl implements ActionManager, InContext {
         actionMap.put("getLog", GetLog.class);
         actionMap.put("shutdownApp", ShutdownApp.class);
         actionMap.put("checkAll", CheckAll.class);
-        actionMap.put("TEST", TEST.class);
     }
 
     public ActionManagerImpl() {
