@@ -30,10 +30,9 @@ public class Initialize {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         try {
-//            todo доделать addTorrent            
-//            todo написать уведомления по емейл
 //            todo написать уведомления по рсс
-//            todo написать standalone клиент            
+//            todo написать уведомления по емейл
+//            todo написать standalone клиент
 //            todo написать хелп
 //            todo написать абоут
 //            todo написать хелп на google

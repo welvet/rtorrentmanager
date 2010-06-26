@@ -108,6 +108,13 @@ function reloadTable() {
     });
 }
 
+function onceReloadTable() {
+    setTimeout(function() {
+        torrents = [];
+        oTable.fnReloadAjax(oTable.fnSettings());
+    }, 2500);
+}
+
 function stopReload() {
     $(oTable).stopTime("table");
 }
@@ -130,10 +137,12 @@ function openDialog(data) {
         //показываем диалог
         $("#torrentDialog .dialog").show();
         //открываем диалог
-        $("#torrentDialog").dialog({ modal: false, resizable: false,
+        $("#torrentDialog").dialog({ modal: true, resizable: false,
             draggable: true, width: 500, height: 400 });
         //устанавливаем заголовок
         $("#ui-dialog-title-torrentDialog").html($("#torrentDialog #title").val());
+    } else {
+        onceReloadTable();
     }
 }
 
@@ -156,9 +165,13 @@ function afterAction(data) {
     if (data.length > 0)
     {
         $("#simpleAction").html(data);
-        if ($("#simpleAction #actionDialog") != null)
-            $("#simpleAction #actionDialog").dialog({ modal: false, resizable: false,
+        if ($("#actionDialog") != null) {
+            $("#actionDialog .dialog").show();
+            $("#actionDialog").dialog({ modal: true, resizable: false,
                 draggable: true, width: 500, height: 400 });
+        }
+    } else {
+        onceReloadTable();
     }
 }
 
@@ -174,6 +187,9 @@ function initializeLog() {
 }
 
 function initializeTableButtons() {
+    $("#addTorrent").click(function() {
+        doSimpleAction("addTorrent");
+    });
     $("#refresh").click(function() {
         if (refresh) {
             stopReload();
