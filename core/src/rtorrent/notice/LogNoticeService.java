@@ -23,4 +23,5 @@ public class LogNoticeService implements NoticeService {
     public boolean checkConfig() {
         return true;
     }
+
 }

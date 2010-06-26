@@ -6,6 +6,16 @@ package rtorrent.notice;
  * Time: 21:31:31
  */
 public enum TorrentNotice {
-    FINISH, //скачан
-    UPDATE //обновлен
+    UPDATE("update"), //обновлен
+    FINISH("done"); //скачан
+
+    private String name;
+
+    TorrentNotice(String name) {
+        this.name = name;
+    }
+
+    public String toString() {
+        return name;
+    }
 }

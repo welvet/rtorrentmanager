@@ -13,11 +13,7 @@ import java.util.List;
 public class TrackerUtils {
 
     public static String trackers2string(Trackers trackers) {
-        for (Trackers trak : Trackers.values()) {
-            if (trak.equals(trackers))
-                return trak.toString();
-        }
-        return null;
+        return trackers.toString();
     }
 
     public static Trackers[] trackers() {
@@ -31,7 +27,10 @@ public class TrackerUtils {
         return strings;
     }
 
-    public static Trackers string2trackers(String tracekr) {
-        return Trackers.valueOf(tracekr);
+    public static Trackers string2trackers(String tracker) {
+        for (Trackers trak : Trackers.values())
+            if (trak.compare(tracker))
+                return trak;
+        throw new RuntimeException("Трекер не найден");
     }
 }

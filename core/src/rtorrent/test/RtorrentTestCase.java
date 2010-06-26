@@ -46,7 +46,8 @@ public abstract class RtorrentTestCase extends TestCase {
         torrentFile = new File(RtorrentTestCase.class.getResource("resource/").getPath() + "test.torrent");
         torrent2File = new File(RtorrentTestCase.class.getResource("resource/").getPath() + "test2.torrent");
         //ссылка на темп директорию
-        dir = new File(System.getProperty("java.io.tmpdir"));
+        dir = new File(System.getProperty("java.io.tmpdir") + "/rtorrent");
+        dir.mkdirs();
         BindContext.bind("workdir", dir);
         //logger
         LoggerSingleton.initialize(dir);

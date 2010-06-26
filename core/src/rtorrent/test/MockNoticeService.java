@@ -21,4 +21,5 @@ public class MockNoticeService implements NoticeService{
     public boolean checkConfig() {
         return true;
     }
+
 }
