@@ -10,7 +10,7 @@
         $("#uploadButton").button();
         $("#uploadButton").click(function() {
             $.ajaxFileUpload({
-                url:'/action/?action=saveTorrent',
+                url:'/upload/',
                 secureuri:false,
                 fileElementId:'torrentFile',
                 dataType: 'json',
