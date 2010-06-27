@@ -45,6 +45,16 @@
         <url-pattern>/action/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UploadTorrent</servlet-name>
+        <servlet-class>rtorrent.web.UploadServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UploadTorrent</servlet-name>
+        <url-pattern>/upload/</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>rtorrent.web.AuthFilter</filter-class>

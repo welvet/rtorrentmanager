@@ -131,6 +131,9 @@ public class LostFilmHelper extends HttpHelper {
                 log.info(utils.getFile());
                 throw new TrackerException("Ошибка проверки файла");
             }
+            //обновляем мапу
+            torrentsMap.put(url, date);
+            saver.save(torrentsMap);
 
             if (string != null) {
                 log.debug("Торрент с url " + url + " проверен");
@@ -138,7 +141,6 @@ public class LostFilmHelper extends HttpHelper {
                 return !string.equals(date);
             }
 
-            torrentsMap.put(url, date);
             saver.save(torrentsMap);
             log.info("Торрент " + url + " не найден в списке");
             return true;
