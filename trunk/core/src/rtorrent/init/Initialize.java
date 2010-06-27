@@ -29,7 +29,8 @@ public class Initialize {
     private static Logger log = LoggerSingleton.getLogger();
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        try {            
+        try {
+//            todo переделать конфиг шедулера на минуты            
 //            todo написать standalone клиент
 //            todo написать хелп
 //            todo написать абоут
