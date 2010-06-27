@@ -29,9 +29,7 @@ public class Initialize {
     private static Logger log = LoggerSingleton.getLogger();
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        try {
-//            todo исправить автообновление на странице (setTimeout) - добавить проверку
-//            todo отдавать rss через веб            
+        try {            
 //            todo написать standalone клиент
 //            todo написать хелп
 //            todo написать абоут

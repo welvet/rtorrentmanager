@@ -36,12 +36,14 @@ public class NoticeJob implements Runnable {
         try {
             service.initialize();
             for (Notice notice : new HashSet<Notice>(notices)) {
-                service.notice(notice.getTorrent(), notice.getNotice());
+                if (service.checkConfig()) {
+                    service.notice(notice.getTorrent(), notice.getNotice());
+                }
                 log.debug(notice + " выполнено");
                 notices.remove(notice);
             }
         } catch (Exception e) {
             log.info(e);
-        } 
+        }
     }
 }

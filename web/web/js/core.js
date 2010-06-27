@@ -110,8 +110,6 @@ function reloadTable() {
 
 function onceReloadTable() {
     setTimeout(function() {
-        torrents = [];
-        oTable.fnReloadAjax(oTable.fnSettings());
         $("#switch").attr("src","/action/?action=checkRtorrent&rand="+Math.random());
     }, 2500);
 }
@@ -142,8 +140,6 @@ function openDialog(data) {
             draggable: true, width: 500, height: 400 });
         //устанавливаем заголовок
         $("#ui-dialog-title-torrentDialog").html($("#torrentDialog #title").val());
-    } else {
-        onceReloadTable();
     }
 }
 

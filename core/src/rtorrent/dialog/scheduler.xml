@@ -4,6 +4,6 @@
     <value name="updateSet" text="Связь с rtorrent (сек)" default="360" position="1"/>
     <value name="updateNotice" text="Уведомления (сек)" description="Проверять наличие новых уведомлений" default="600" position="2"/>
     <value name="updateTrackers" text="Обновление трекеров (сек)" description="Проверять обновления на трекерах" default="3600" position="3"/>
-    <checkbox name="downAndCheckNeed" text="Останавливать рторрент перед обновлением" default="false" position="4"/>
+    <checkbox name="downAndCheckNeed" text="Останавливать рторрент перед обновлением" default="true" position="4"/>
     <value name="downAndCheck" text="Приостанавливать каждые (сек)" default="14400" position="5"/>
 </config>                
