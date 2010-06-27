@@ -94,7 +94,7 @@ public class LoggerSingleton {
     }
 
     public static void debug() {
-        ConsoleAppender appender = new ConsoleAppender(new PatternLayout());
+        ConsoleAppender appender = new ConsoleAppender(patternLayout);
         appender.setThreshold(Priority.DEBUG);
         LoggerSingleton.getLogger().addAppender(appender);        
     }

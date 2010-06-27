@@ -36,6 +36,8 @@ public class Update extends TorrentSetAction {
                 torrent.setLastUpdated(new Date());
                 notice(torrent, TorrentNotice.UPDATE);
                 log.info(torrent + " обновлен");
+                torrent.getFile().getFile().deleteOnExit();
+                torrent.setFile(null);
             } catch (LoggableException e) {
                 torrent.setNeedUpdate(true); //востанавливаем статус в случае ошибки
             } catch (TorrentValidateException e) {

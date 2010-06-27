@@ -4,6 +4,7 @@ import dialog.DialogParser;
 import org.apache.log4j.Logger;
 import rtorrent.action.ActionManager;
 import rtorrent.action.ActionManagerImpl;
+import rtorrent.client.ClientListner;
 import rtorrent.config.ConfigManager;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControler;
@@ -70,6 +71,9 @@ public class Initialize {
             RtorrentControler controler = new RtorrentControlerImpl();
             //запускаем шедулер
             SchedulerSingleton.startDefaultTask();
+            //инициализируем сервер для клиента
+            ClientListner clientListner = new ClientListner();
+            clientListner.start();
             //запускаем веб сервер
             WebServerBuilder builder = new WebServerBuilder();
             builder.build();

@@ -6,7 +6,9 @@ package rtorrent;
  * Time: 13:51:48
  */
 public class ConfigSingleton {
-    private static String addres = "http://127.0.0.1:8888";
+    private static String host = "127.0.0.1";
+    private static String port = "4444";
+    private static String httpPort = "8888";
     private static String login = "";
     private static String pass = "";
     private static Boolean needStop = true;
@@ -35,15 +37,33 @@ public class ConfigSingleton {
         ConfigSingleton.needStop = needStop;
     }
 
-    public static String getAddres() {
-        return addres;
+    public static String getHost() {
+        return host;
     }
 
-    public static void setAddres(String addres) {
-        ConfigSingleton.addres = addres;
+    public static void setHost(String host) {
+        ConfigSingleton.host = host;
     }
 
     public static void update() {
         
     }
+
+    public static String getPort() {
+        return port;
+    }
+
+    public static void setPort(String port) {
+        ConfigSingleton.port = port;
+    }
+
+    public static String getHttpPort() {
+        return httpPort;
+    }
+
+    public static void setHttpPort(String httpPort) {
+        ConfigSingleton.httpPort = httpPort;
+    }
 }
+
+

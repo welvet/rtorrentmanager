@@ -39,6 +39,7 @@
                     <li><a href="#" dialog="scheduler">Планировщик</a></li>
                     <li><a href="#" dialog="server">Web server</a></li>
                     <li><a href="#" dialog="notice">Уведомления</a></li>
+                    <li><a href="#" dialog="client">Клиент</a></li>
                 </ul>
             </li>
             <li><a href="#">Трекеры</a>

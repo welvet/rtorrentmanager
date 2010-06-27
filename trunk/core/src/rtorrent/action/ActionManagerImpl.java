@@ -25,6 +25,7 @@ public class ActionManagerImpl implements ActionManager, InContext {
         actionMap.put("checkAll", CheckAll.class);
         actionMap.put("checkRtorrent", CheckRtorrent.class);
         actionMap.put("shitchTorrent", SwitchTorrent.class);
+        actionMap.put("torrentArray", TorrentArray.class);
     }
 
     public ActionManagerImpl() {
