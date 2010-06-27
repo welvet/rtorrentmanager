@@ -20,7 +20,6 @@
                 error: function (data, status, e) {
                     //закрываем диалог кнопкой
                     $(".ui-dialog-titlebar-close").click();
-                    onceReloadTable();
                 }
             });
         });

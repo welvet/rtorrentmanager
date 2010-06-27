@@ -28,6 +28,7 @@
         <ul id="jsddm">
             <li><a href="#">Общее</a>
                 <ul>
+                    <li><a href="/action/?action=rss">Rss</a></li>
                     <li><a href="#" action="checkAll">Проверить все</a></li>
                     <li><a href="#" action="shutdownApp">Выключить rmanager</a></li>
                 </ul>

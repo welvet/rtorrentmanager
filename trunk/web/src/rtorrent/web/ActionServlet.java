@@ -8,10 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * User: welvet
@@ -87,6 +84,19 @@ public class ActionServlet extends HttpServlet {
             File file = saveFile(request.getContentType(), request);
             RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");
             controler.addTorrent(file);
+            return;
+        }
+
+        if (actionName.equals("rss")) {
+            File rss = new File(((File) ContextUtils.lookup("workdir")).getAbsolutePath() + "/" + "rss.xml");
+            if (!rss.isFile())
+                return;
+            BufferedReader reader = new BufferedReader(new FileReader(rss));
+            String s = reader.readLine();
+            while (s != null) {
+                response.getWriter().write(s);
+                s = reader.readLine();
+            }
             return;
         }
 

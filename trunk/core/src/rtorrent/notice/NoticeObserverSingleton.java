@@ -21,7 +21,11 @@ public class NoticeObserverSingleton {
     public static HashMap<NoticeService, NoticeJob> jobs = new HashMap<NoticeService, NoticeJob>();
     public static Logger log = LoggerSingleton.getLogger();
 
-    public void initialize() {
+    static {
+        initialize();
+    }
+
+    public static void initialize() {
         clearService();
         registerService(RssNoticeService.class);
         registerService(EmailNoticeService.class);
@@ -33,8 +37,7 @@ public class NoticeObserverSingleton {
     public static void registerService(Class<? extends NoticeService> service) {
         try {
             NoticeService noticeService = service.newInstance();
-            if (noticeService.checkConfig())
-                services.add(noticeService);
+            services.add(noticeService);
         } catch (Exception e) {
             log.error(e);
         }
