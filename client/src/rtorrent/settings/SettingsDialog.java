@@ -26,6 +26,8 @@ public class SettingsDialog extends JDialog {
     private JButton ÓÚÏÂÌ‡Button;
     private JCheckBox stopTorrent;
     private JPasswordField passField;
+    private JTextField portField;
+    private JTextField httpPortField;
 
 
     @Override
@@ -42,7 +44,9 @@ public class SettingsDialog extends JDialog {
         setResizable(false);
         AWTUtilities.setWindowOpacity(this, 0.9f);
 
-        hostFiled.setText(ConfigSingleton.getAddres());
+        hostFiled.setText(ConfigSingleton.getHost());
+        portField.setText(ConfigSingleton.getPort());
+        httpPortField.setText(ConfigSingleton.getHttpPort());
         loginField.setText(ConfigSingleton.getLogin());
         passField.setText(ConfigSingleton.getPass());
         stopTorrent.setSelected(ConfigSingleton.getNeedStop());
@@ -76,7 +80,9 @@ public class SettingsDialog extends JDialog {
 
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ConfigSingleton.setAddres(hostFiled.getText());
+                ConfigSingleton.setHost(hostFiled.getText());
+                ConfigSingleton.setPort(portField.getText());
+                ConfigSingleton.setHost(httpPortField.getText());
                 ConfigSingleton.setLogin(loginField.getText());
                 ConfigSingleton.setPass(passField.getText());
                 ConfigSingleton.setNeedStop(stopTorrent.isSelected());

@@ -1,6 +1,7 @@
 package rtorrent.torrent.set.action;
 
 import rtorrent.torrent.ActionTorrent;
+import rtorrent.torrent.TorrentValidateException;
 import rtorrent.torrent.set.TorrentSetException;
 import rtorrent.utils.LoggableException;
 
@@ -19,8 +20,12 @@ public class Add extends TorrentSetAction {
                 log.info(torrent + " добавлен");
                 //Меняем состояние
                 torrent.setNeedStart(true);
+                torrent.getFile().getFile().deleteOnExit();
+                torrent.setFile(null);
             } catch (LoggableException e) {
                 //ничего не делаем, логирование ошибки в конструкторе исключения
+            } catch (TorrentValidateException e) {
+                log.warn(e);
             }
         }
     }

@@ -6,6 +6,8 @@ import rtorrent.torrent.TorrentInfo;
 import rtorrent.torrent.set.TorrentSetSingleton;
 import rtorrent.utils.SizeFormater;
 
+import java.util.Date;
+
 /**
  * User: welvet
  * Date: 01.06.2010
@@ -23,6 +25,7 @@ public class TorrentInfoImpl implements TorrentInfo {
     private Integer sids;
     private Object lastUpdate;
     private static final int ITEMS_COUNT = 10;
+    private static final Double DAY = (double) 1000 * 60 * 60 * 24;
 
 
     public void copyInfo(ActionTorrent torrent) {
@@ -32,17 +35,24 @@ public class TorrentInfoImpl implements TorrentInfo {
         percentage = calcPercentage(torrent);
         compliteSize = torrent.getBytesDone();
         fullSize = torrent.getSizeBytes();
-        lastUpdate = (torrent.getLastUpdated().getTime() == 0L) ? "---" : torrent.getLastUpdated();
-        ratio = torrent.getRatio().floatValue()/(100*10);
+        lastUpdate = (torrent.getLastUpdated().getTime() == 0L) ? "---" : calcDate(torrent.getLastUpdated());
+        ratio = torrent.getRatio().floatValue() / (100 * 10);
         peersConnected = torrent.getPeersConnected().intValue();
         sids = torrent.getPeersComplite().intValue();
     }
+
+    private Object calcDate(Date lastUpdated) {
+        Long l = (new Date().getTime() - lastUpdated.getTime());
+        Double aDouble = l / DAY;
+        return aDouble.intValue();
+    }
+
 
     private Integer calcPercentage(ActionTorrent torrent) {
         if (torrent.getSizeBytes() == 0) return 0;
         Double a = Double.longBitsToDouble(torrent.getBytesDone());
         Double b = Double.longBitsToDouble(torrent.getSizeBytes());
-        Long result = Math.round( a/b *100);
+        Long result = Math.round(a / b * 100);
         return result.intValue();
     }
 
@@ -66,7 +76,7 @@ public class TorrentInfoImpl implements TorrentInfo {
         objects[0] = hash;
         objects[1] = name;
         objects[2] = state;
-        objects[3] = percentage+"%";
+        objects[3] = percentage + "%";
         objects[4] = SizeFormater.formatSize(compliteSize, 2);
         objects[5] = SizeFormater.formatSize(fullSize, 2);
         objects[6] = lastUpdate;

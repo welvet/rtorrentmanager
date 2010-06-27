@@ -35,7 +35,7 @@ public class Icon {
                 public void actionPerformed(ActionEvent e) {
                     java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
                     try {
-                        desktop.browse(new URI(ConfigSingleton.getAddres()));
+                        desktop.browse(new URI("http://" + ConfigSingleton.getHost() + ":" + ConfigSingleton.getHttpPort()));
                     } catch (Exception e1) {
                         throw new RuntimeException(e1);
                     }
@@ -81,5 +81,7 @@ public class Icon {
             return (new ImageIcon(imageURL, description)).getImage();
         }
     }
+
+    
 
 }

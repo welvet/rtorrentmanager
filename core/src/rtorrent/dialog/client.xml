@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "config.dtd">
+<config title="Настройка клиента">
+    <checkbox name="useClient" text="Использовать клиента" default="true"/>
+    <value name="clientHost" text="Хост" default="0.0.0.0"/>
+    <value name="clientPort" text="Порт" default="4444"/>
+    <value name="login" text="Логин" default=""/>
+    <value name="pass" text="Пароль" default=""/>
+</config>

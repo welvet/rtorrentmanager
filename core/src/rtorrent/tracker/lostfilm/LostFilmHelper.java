@@ -151,7 +151,9 @@ public class LostFilmHelper extends HttpHelper {
 
     public File downloadFile(String url) throws TrackerException {
         try {
-            HttpGet httpGet = new HttpGet(new URI(HOSTA + torrentsMap.get(url)));
+            String s = torrentsMap.get(url);
+            s = s.replace(" ", "%20");
+            HttpGet httpGet = new HttpGet(new URI(HOSTA + s));
             BasicHttpResponse response = (BasicHttpResponse) httpClient.execute(httpGet);
 
             File file = new File(workDir.getAbsolutePath() + "/" + System.currentTimeMillis() + url + ".torrent");
