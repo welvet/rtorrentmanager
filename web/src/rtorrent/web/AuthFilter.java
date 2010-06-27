@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class AuthFilter implements Filter {
     public void destroy() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //To change body of implemented methods use File | settings | File Templates.
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
