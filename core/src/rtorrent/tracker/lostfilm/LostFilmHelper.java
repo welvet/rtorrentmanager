@@ -146,6 +146,8 @@ public class LostFilmHelper extends HttpHelper {
             log.info("Торрент " + url + " не найден в списке");
             return true;
         } catch (Exception e) {
+            torrentsMap.remove(url);
+            saver.save(torrentsMap);
             throw new TrackerException(e);
         }
     }
