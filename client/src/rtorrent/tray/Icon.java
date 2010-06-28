@@ -1,12 +1,15 @@
 package rtorrent.tray;
 
 import rtorrent.ConfigSingleton;
+import rtorrent.client.RequestManager;
 import rtorrent.settings.SettingsDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URI;
 import java.net.URL;
 
@@ -16,7 +19,9 @@ import java.net.URL;
  * Time: 13:33:35
  */
 public class Icon {
+    private static RequestManager manager = new RequestManager();
     private TrayIcon trayIcon;
+    private Boolean aBoolean = false;
 
 
     public void createIcon() throws Exception {
@@ -27,7 +32,7 @@ public class Icon {
             final PopupMenu popup = new PopupMenu();
             final SystemTray tray = SystemTray.getSystemTray();
 
-            trayIcon = new TrayIcon(createImage("images/fail.png", "tray icon"));
+            trayIcon = new TrayIcon(createImage("images/fail.png", null));
 
 
             MenuItem startBrowser = new MenuItem("Запустить RtorrentManager");
@@ -43,6 +48,20 @@ public class Icon {
             });
 
             MenuItem stratRtrorrent = new MenuItem("Запустить/остановить rtorrent");
+            stratRtrorrent.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    switchIcon();
+                }
+            });
+
+            //действие при клике
+            trayIcon.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getButton() == 1)
+                        switchIcon();
+                }
+            });
 
             MenuItem settings = new MenuItem("Настройки");
             settings.addActionListener(new ActionListener() {
@@ -71,6 +90,11 @@ public class Icon {
         }
     }
 
+    private void switchIcon() {
+        manager.switchTorrent();
+        changIcon(!aBoolean, false);
+    }
+
     protected static Image createImage(String path, String description) {
         URL imageURL = Icon.class.getResource(path);
 
@@ -82,6 +106,18 @@ public class Icon {
         }
     }
 
-    
 
+    public void changIcon(Boolean aBoolean, Boolean fail) {
+        this.aBoolean = aBoolean;
+        String s;
+        if (!fail) {
+            if (aBoolean)
+                s = "load";
+            else s = "not_load";
+        } else {
+            s = "fail";
+        }
+        trayIcon.setImage(createImage("images/" + s + ".png", null));
+        trayIcon.setToolTip("Rtorrent " + s.replace("_", " "));
+    }
 }

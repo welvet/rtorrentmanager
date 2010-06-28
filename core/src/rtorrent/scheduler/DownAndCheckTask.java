@@ -20,30 +20,36 @@ public class DownAndCheckTask extends TimerTask {
     public void run() {
         //если рторрент запущен, то работаем согласно этой статегии
         if (CheckStrategy.getRun()) {
-            try {
-                //не проверяем, запущен ли рторрент во время работы
-                CheckStrategy.setNeedCheck(false);
-                //останавливаем рторрент
-                TorrentSetSingleton.getInstance().shutdown();
-                //ждем пока рторрент остановиться
-                Thread.sleep(10000);
 
-                AfterExecuteCallback.newIterator();
-                AfterExecuteCallback.setUse(true);
-                NoticeObserverSingleton.run();
-                TorrentWorkersObserverSingleton.run();
-                //ждем другие потоки
-                log.debug("DownAndCheck стратегия запущена");
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        //не проверяем, запущен ли рторрент во время работы
+                        CheckStrategy.setNeedCheck(false);
+                        //останавливаем рторрент
+                        TorrentSetSingleton.getInstance().shutdown();
+                        //ждем пока рторрент остановиться
+                        Thread.sleep(10000);
 
-            } catch (Exception e) {
-                log.error(e);
-                CheckStrategy.setNeedCheck(true);
-                CheckStrategy.check();
-                if (!CheckStrategy.getRun()) {
-                    //востанавливаем рторрент в случае ошибки
-                    TorrentSetSingleton.getInstance().launch();
+                        AfterExecuteCallback.newIterator();
+                        AfterExecuteCallback.setUse(true);
+                        NoticeObserverSingleton.run();
+                        TorrentWorkersObserverSingleton.run();
+                        //ждем другие потоки
+                        log.debug("DownAndCheck стратегия запущена");
+                    } catch (Exception e) {
+                        log.error(e);
+                        CheckStrategy.setNeedCheck(true);
+                        CheckStrategy.check();
+                        if (!CheckStrategy.getRun()) {
+                            //востанавливаем рторрент в случае ошибки
+                            TorrentSetSingleton.getInstance().launch();
+                        }
+                    }
                 }
-            }
+            }.run();
+
         }
     }
 }

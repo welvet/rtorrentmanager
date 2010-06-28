@@ -21,7 +21,7 @@ public class Connector{
 
 
     public Serializable request(Serializable serializable) throws IOException, ClassNotFoundException {
-        Socket socket = new Socket("serv", 4444);
+        Socket socket = new Socket(ConfigSingleton.getHost(), new Integer(ConfigSingleton.getPort()));
         Message message = new Message();
         message.setLogin(ConfigSingleton.getLogin());
         message.setPass(ConfigSingleton.getPass());

@@ -1,4 +1,6 @@
-package rtorrent.client;
+package rtorrent.test;
+
+import rtorrent.client.RequestManager;
 
 /**
  * User: welvet

@@ -31,8 +31,8 @@ public class Initialize {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         try {
-//            todo переделать конфиг шедулера на минуты            
-//            todo написать standalone клиент
+//            todo дописать автозапуск при простое клиента
+//            todo написать
 //            todo написать хелп
 //            todo написать абоут
 //            todo написать хелп на google
@@ -48,7 +48,7 @@ public class Initialize {
                     LoggerSingleton.debug();
                 else {
                     System.out.println("Help:");
-                    System.out.println("java -jar core.jar --debug to debug");
+                    System.out.println("    java -jar core.jar --debug to debug");
                     System.exit(0);
                 }
             else {
