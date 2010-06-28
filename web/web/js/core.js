@@ -101,17 +101,22 @@ function rowCallback(nRow, aData, iDisplayIndex) {
 function reloadTable() {
     torrents = [];
     oTable.fnReloadAjax(oTable.fnSettings());
+    onceReloadTable();
     $(oTable).everyTime(10000, "table", function() {
         //обнуляем массив с торрентами и обновляем его с сервера
         torrents = [];
         oTable.fnReloadAjax(oTable.fnSettings());
+        onceReloadTable();
     });
 }
 
 function onceReloadTable() {
     setTimeout(function() {
-        $("#switch").attr("src","/action/?action=checkRtorrent&rand="+Math.random());
-    }, 2500);
+        $("#switch").attr("src", "/action/?action=checkRtorrent&rand=" + Math.random());
+        $.get("/log.jsp", {}, function(data) {
+            $("#logArea").text(data);
+        });
+    }, 1500);
 }
 
 function stopReload() {
@@ -209,4 +214,5 @@ $().ready(function() {
     initializeLog();
     initializeTable();
     initializeTableButtons();
+    onceReloadTable();
 });
