@@ -16,7 +16,7 @@ import java.util.TimerTask;
  * Time: 0:33:58
  */
 public class SchedulerSingleton {
-    private static final Integer PER_SEC = 1000;
+    private static final Integer PER_SEC = 1000 * 60;
     private static HashMap<String, Timer> timerHashMap = new HashMap<String, Timer>();
     private static Logger logger = LoggerSingleton.getLogger();
 

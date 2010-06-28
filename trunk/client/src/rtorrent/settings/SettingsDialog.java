@@ -82,7 +82,7 @@ public class SettingsDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 ConfigSingleton.setHost(hostFiled.getText());
                 ConfigSingleton.setPort(portField.getText());
-                ConfigSingleton.setHost(httpPortField.getText());
+                ConfigSingleton.setHttpPort(httpPortField.getText());
                 ConfigSingleton.setLogin(loginField.getText());
                 ConfigSingleton.setPass(passField.getText());
                 ConfigSingleton.setNeedStop(stopTorrent.isSelected());

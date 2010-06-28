@@ -1,6 +1,18 @@
 <project name="RtorrentManager" basedir=".">
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
     <property file="rtorrent.properties"/>
+    <property name="javac2.home" value="${idea.home}/lib"/>
+    <path id="javac2.classpath">
+        <pathelement location="${javac2.home}/javac2.jar"/>
+        <pathelement location="${javac2.home}/jdom.jar"/>
+        <pathelement location="${javac2.home}/asm.jar"/>
+        <pathelement location="${javac2.home}/asm-commons.jar"/>
+    </path>
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions"
+             classpathref="javac2.classpath"/>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
     <path id="classpath">
         <fileset dir="${lib.dir}">
             <include name="*.jar"/>
@@ -20,6 +32,7 @@
         <mkdir dir="${build.dir}/${web.dir}/WEB-INF"/>
         <mkdir dir="${build.dir}/${web.dir}/WEB-INF/classes"/>
         <mkdir dir="${build.dir}/${web.dir}/WEB-INF/lib"/>
+        <mkdir dir="${build.dir}/${client.dir}/"/>
     </target>
 
     <target name="copy-resources">
@@ -104,7 +117,7 @@
         <delete dir="${build.dir}/${web.dir}"/>
     </target>
 
-    <target name="build" depends="init, compile-bridge, compile-core, compile-web"/>
+    <target name="build" depends="init, compile-bridge, compile-core, compile-web, compile-client"/>
 
     <target name="prepare-test">
         <copy todir="${out.production}/${core.dir}" overwrite="true">
@@ -115,6 +128,26 @@
                 <include name="**/resource/*"/>
             </fileset>
         </copy>
+    </target>
+
+    <target name="compile-client" depends="init, compile-bridge">
+        <unzip src="${build.dir}/lib/bridge.jar" dest="${build.dir}/${client.dir}/"/>
+        <!--копируем картинки-->
+        <copy todir="${build.dir}/${client.dir}" overwrite="true">
+            <fileset dir="${client.dir}/src">
+                <include name="**/**/*.png"/>
+            </fileset>
+        </copy>
+        <unzip src="idea.zip" dest="${build.dir}/${client.dir}"/>
+        <javac2 srcdir="${client.dir}" destdir="${build.dir}/${client.dir}">
+            <exclude name="**/${test.dir}/**"/>
+        </javac2>
+        <jar destfile="${build.dir}/client.jar" basedir="${build.dir}/${client.dir}" compress="true">
+            <manifest>
+                <attribute name="Main-Class" value="rtorrent.init.Initialize"/>
+            </manifest>
+        </jar>
+        <delete dir="${build.dir}/${client.dir}"/>
     </target>
 
 </project>
