@@ -77,6 +77,7 @@ public class LostFilmHelper extends HttpHelper {
 
     public void auth() throws TrackerException {
         try {
+            httpClient.getCookieStore().clear();
             HttpPost httpPost = new HttpPost();
             httpPost.setURI(new URI(loginUrl));
             //выставляем параметры для авторизации

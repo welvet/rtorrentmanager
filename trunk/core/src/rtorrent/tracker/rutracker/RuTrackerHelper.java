@@ -43,6 +43,8 @@ public class RuTrackerHelper extends HttpHelper {
 
     public void auth() throws TrackerException {
         try {
+            //очищаем куки перед авторизацией
+            httpClient.getCookieStore().clear();
             HttpPost httpPost = new HttpPost();
             httpPost.setURI(new URI(loginUrl));
             //выставляем параметры для авторизации
