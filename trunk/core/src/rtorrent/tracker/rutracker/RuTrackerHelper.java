@@ -112,7 +112,7 @@ public class RuTrackerHelper extends HttpHelper {
                 try {
                     log.info(utils.getFile());
                 } catch (Exception e1) {
-                     throw new TrackerException(e);
+                    throw new TrackerException(e);
                 }
             }
             throw new TrackerException(e);
@@ -128,7 +128,7 @@ public class RuTrackerHelper extends HttpHelper {
             XpathUtils utils = new XpathUtils(response.getEntity().getContent());
 
             String string = torrentsMap.get(url);
-            String date = utils.doXPath("//DIV[@id=\"tor-reged\"]//SPAN[@title=\"Зарегистрирован\"]/text()");
+            String date = utils.doXPath("//DIV[@id=\"tor-reged\"]/TABLE/TBODY/TR[2]/TD[2]/SPAN/text()");
 
             if (date == null) {
                 log.warn("Не удалось проверить торрент с url:" + url + ". Подробности в лог файле");
@@ -136,14 +136,15 @@ public class RuTrackerHelper extends HttpHelper {
                 throw new TrackerException("Ошибка проверки файла");
             }
 
+            torrentsMap.put(url, date);
+            saver.save(torrentsMap);
+
             if (string != null) {
                 log.debug("Торрент с url " + url + " проверен");
                 //если строки не совпадают, то нужно обновлять
                 return !string.equals(date);
             }
 
-            torrentsMap.put(url, date);
-            saver.save(torrentsMap);
             log.info("Торрент " + url + " не найден в списке");
             return true;
         } catch (Exception e) {
@@ -175,6 +176,8 @@ public class RuTrackerHelper extends HttpHelper {
 
             return file;
         } catch (Exception e) {
+            torrentsMap.remove(url);
+            saver.save(torrentsMap);
             throw new TrackerException(e);
         }
     }

@@ -28,14 +28,16 @@ public class EmailNoticeService implements NoticeService {
 
     public void notice(ActionTorrent torrent, TorrentNotice notice) {
         try {
-            SimpleEmail email = new SimpleEmail();
-            email.setHostName((String) config.getFieldValue("host"));
-            email.setAuthentication((String) config.getFieldValue("login"), (String) config.getFieldValue("pass"));
-            email.setFrom((String) config.getFieldValue("fromMail"));
-            email.addTo((String) config.getFieldValue("toMail"));
-            email.setSubject(torrent.getName());
-            email.setMsg(torrent.getName() + " is " + notice);
-            email.send();
+            if (notice.equals(level)) {
+                SimpleEmail email = new SimpleEmail();
+                email.setHostName((String) config.getFieldValue("host"));
+                email.setAuthentication((String) config.getFieldValue("login"), (String) config.getFieldValue("pass"));
+                email.setFrom((String) config.getFieldValue("fromMail"));
+                email.addTo((String) config.getFieldValue("toMail"));
+                email.setSubject(torrent.getName());
+                email.setMsg(torrent.getName() + " is " + notice);
+                email.send();
+            }
         } catch (Exception e) {
             logger.warn(e);
         }
