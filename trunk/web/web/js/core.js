@@ -125,7 +125,13 @@ function stopReload() {
 
 //эта функция будет вызываться как из контекстного меню, так и через "кнопки управления"
 function doAction(action, hash) {
-    $.get("/torrent/?action=" + action + "&hash=" + hash, {}, openDialog);
+    var url = "/torrent/?action=" + action + "&hash=" + hash;
+    if (action == "redirect") {
+        window.open(url);
+        return;
+    }
+
+    $.get(url, {}, openDialog);
 }
 
 function loadDialog(name) {

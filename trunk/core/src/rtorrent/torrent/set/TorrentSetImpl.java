@@ -155,7 +155,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
                 //запускаем ранее остановленые торренты
                 rtorrentService.launch(pausedList);
         } catch (RtorrentServiceException e) {
-            log.warn("Невозможно остановить rtorrent " + e.getMessage());
+            log.warn("Невозможно запустить rtorrent " + e.getMessage());
         }
         pausedList = null;
     }
@@ -181,7 +181,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
             //останавливаем все запущеные торренты
             rtorrentService.shutdown(pausedList);
         } catch (RtorrentServiceException e) {
-            log.warn("Невозможно запустить rtorrent " + e.getMessage());
+            log.warn("Невозможно остановить rtorrent " + e.getMessage());
         }
     }
 

@@ -18,6 +18,9 @@ public class RequestManager {
         }
     }
 
+    /**
+     * @return true если остановлен
+     */
     public Boolean checkTorrent() {
         RequestAction action = new RequestAction();
         action.setName("checkRtorrent");

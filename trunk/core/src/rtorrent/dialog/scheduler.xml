@@ -6,4 +6,5 @@
     <value name="updateTrackers" text="Обновление трекеров (м)" description="Проверять обновления на трекерах" default="60" position="3"/>
     <checkbox name="downAndCheckNeed" text="Останавливать рторрент перед обновлением" default="true" position="4"/>
     <value name="downAndCheck" text="Приостанавливать каждые (м)" default="180" position="5"/>
-</config>                
+    <checkbox name="restartWhenClientStop" text="Стартовать закачки при неактивности клиента" default="true" position="6"/>
+</config>

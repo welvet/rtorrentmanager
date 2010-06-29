@@ -9,12 +9,14 @@ import java.io.Serializable;
  * Time: 22:11:41
  */
 public enum Trackers implements Serializable {
-    MOCK("none"), //мок трекер
-    RUTRACKER("rutracker"), //rutracker.org
-    LOSTFILM("lostfilm"); //lostfilm
+    MOCK("none", null), //мок трекер
+    RUTRACKER("rutracker", "http://rutracker.org/forum/viewtopic.php?t="), //rutracker.org
+    LOSTFILM("lostfilm", "http://www.lostfilm.tv/browse.php?cat="); //lostfilm
 
     private String name;
-    Trackers(String name) {
+    private String url;
+    Trackers(String name, String url) {
+        this.url = url;
         this.name = name;
     }            
 
@@ -24,5 +26,9 @@ public enum Trackers implements Serializable {
 
     public Boolean compare(String name) {
         return this.name.equals(name);
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

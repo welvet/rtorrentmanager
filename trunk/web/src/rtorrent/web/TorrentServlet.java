@@ -1,6 +1,7 @@
 package rtorrent.web;
 
 import com.google.gson.Gson;
+import rtorrent.action.ActionManager;
 import rtorrent.control.RtorrentControler;
 import rtorrent.utils.ContextUtils;
 
@@ -20,6 +21,7 @@ public class TorrentServlet extends HttpServlet {
     private static final String STOP = "stop";
     private static final String REMOVE = "remove";
     private static final String PROPERTIES = "properties";
+    private static final String REDIRECT = "redirect";
 
     private class nullAnsw {
         private String needUserNotice = "false";
@@ -39,6 +41,14 @@ public class TorrentServlet extends HttpServlet {
         //определяемся с действием, создаем диалог
         String action = request.getParameter("action");
         String hash = request.getParameter("hash");
+
+        if (action.equals(REDIRECT)) {
+            ActionManager manager = (ActionManager) ContextUtils.lookup("raction");
+            String url = (String) manager.doAction("getTorrentUrl", hash);
+            response.sendRedirect(url);
+            return;
+        }
+
         if (action.equals(START))
             controler.startTorrent(hash);
         if (action.equals(STOP))

@@ -1,5 +1,9 @@
 package rtorrent;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * User: welvet
  * Date: 27.06.2010
@@ -12,6 +16,19 @@ public class ConfigSingleton {
     private static String login = "";
     private static String pass = "";
     private static Boolean needStop = true;
+    private static Saver saver = new Saver(System.getProperty("user.home") + "/" + "rmanager.cfg");
+
+    static {
+        List list = saver.load();
+        if (list != null) {
+            host = (String) list.get(0);
+            port = (String) list.get(1);
+            httpPort = (String) list.get(2);
+            login = (String) list.get(3);
+            pass = (String) list.get(4);
+            needStop = (Boolean) list.get(5);
+        }
+    }
 
     public static String getLogin() {
         return login;
@@ -46,7 +63,14 @@ public class ConfigSingleton {
     }
 
     public static void update() {
-        
+        List<Serializable> list = new ArrayList<Serializable>();
+        list.add(0, host);
+        list.add(1, port);
+        list.add(2, httpPort);
+        list.add(3, login);
+        list.add(4, pass);
+        list.add(5, needStop);
+        saver.save(list);
     }
 
     public static String getPort() {
