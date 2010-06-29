@@ -1,6 +1,7 @@
 package rtorrent.tray;
 
 import rtorrent.ConfigSingleton;
+import rtorrent.addtorrent.AddTorrent;
 import rtorrent.client.RequestManager;
 import rtorrent.settings.SettingsDialog;
 
@@ -63,6 +64,13 @@ public class Icon {
                 }
             });
 
+            MenuItem add = new MenuItem("Добавить торрент");
+            add.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    AddTorrent addTorrent = new AddTorrent();
+                }
+            });
+
             MenuItem settings = new MenuItem("Настройки");
             settings.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -79,6 +87,7 @@ public class Icon {
 
             popup.add(startBrowser);
             popup.add(stratRtrorrent);
+            popup.add(add);
             popup.add(settings);
             popup.add(exit);
 

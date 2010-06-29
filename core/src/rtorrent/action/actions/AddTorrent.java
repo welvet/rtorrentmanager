@@ -34,11 +34,12 @@ public class AddTorrent implements Action {
             out.close();
             ActionTorrent torrent = new ActionTorrent(file);
             SimpleTrackerImpl tracker = new SimpleTrackerImpl(message.getUrl(), TrackerUtils.string2trackers(message.getTracker()));
+            torrent.setWatching(message.getWatched());
             torrent.setTracker(tracker);
             TorrentSetSingleton.getInstance().addOrUpdate(torrent);
         }
         catch (Exception e) {
-
+            return e.getMessage();
         }
         return null;
     }

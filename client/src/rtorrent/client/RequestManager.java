@@ -39,4 +39,11 @@ public class RequestManager {
         return (String[]) doRequest(action);
     }
 
+
+    public String addTorrent(AddTorrentMessage message) {
+        RequestAction action = new RequestAction();
+        action.setName("addTorrent");
+        action.setParam(message);
+        return (String) doRequest(action);
+    }
 }
