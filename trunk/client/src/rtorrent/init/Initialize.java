@@ -2,8 +2,11 @@ package rtorrent.init;
 
 import rtorrent.ConfigSingleton;
 import rtorrent.ServerListener;
+import rtorrent.addtorrent.AddTorrent;
 import rtorrent.client.RequestManager;
 import rtorrent.tray.Icon;
+
+import java.io.File;
 
 /**
  * User: welvet
@@ -13,6 +16,13 @@ import rtorrent.tray.Icon;
 public class Initialize {
     public static void main(String[] args) {
         try {
+            //инициализируем добавление торрента
+            if (args != null && args.length > 0) {
+                AddTorrent addTorrent = new AddTorrent(new File(args[0]));
+                return;
+            }
+
+            //инициализируем стандартное поведение
             Icon icon = new Icon();
             icon.createIcon();
             ServerListener.setIcon(icon);
