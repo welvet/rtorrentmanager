@@ -29,6 +29,8 @@ public class SchedulerSingleton {
         addTask(UpdateTrackers.class, new Integer((String) config.getFieldValue("updateTrackers")));
         addTask(UpdateStrategyTask.class, new Integer((String) config.getFieldValue("updateSet")));
         addTask(DownAndCheckTask.class, new Integer((String) config.getFieldValue("downAndCheck")));
+        if ((Boolean) config.getFieldValue("restartWhenClientStop"))
+            addTask(RestartWhenClientStop.class, 1);
     }
 
     public static void addTask(Class<? extends TimerTask> clazz, Integer min) {

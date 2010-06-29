@@ -1,6 +1,7 @@
 package rtorrent.action.actions;
 
 import rtorrent.action.Action;
+import rtorrent.scheduler.RestartWhenClientStop;
 import rtorrent.torrent.set.TorrentSetSingleton;
 
 /**
@@ -14,6 +15,7 @@ public class CheckRtorrent implements Action{
     }
 
     public Object run(Object param) {
+        RestartWhenClientStop.restartIter();
         return TorrentSetSingleton.getInstance().isForceShutdown();
     }
 }

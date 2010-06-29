@@ -23,7 +23,6 @@ public class ServerListener extends Thread {
                 icon.changIcon(!requestManager.checkTorrent(), false);
             } catch (Exception e) {
                 icon.changIcon(null, true);
-                e.printStackTrace();  // TODO change me
             }
             try {
                 Thread.sleep(10000L);

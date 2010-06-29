@@ -1,6 +1,8 @@
 package rtorrent.init;
 
+import rtorrent.ConfigSingleton;
 import rtorrent.ServerListener;
+import rtorrent.client.RequestManager;
 import rtorrent.tray.Icon;
 
 /**
@@ -16,6 +18,19 @@ public class Initialize {
             ServerListener.setIcon(icon);
             ServerListener listener = new ServerListener();
             listener.start();
+
+            new Thread() {
+                @Override
+                public void run() {
+                    if (ConfigSingleton.getNeedStop()) {
+                        RequestManager manager = new RequestManager();
+                        if (!manager.checkTorrent()) {
+                            manager.switchTorrent();
+                        }
+                    }
+                }
+            }.start();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
