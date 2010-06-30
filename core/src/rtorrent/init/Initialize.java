@@ -30,10 +30,7 @@ public class Initialize {
     private static Logger log = LoggerSingleton.getLogger();
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        try {
-//            todo дописать автозапуск при простое клиента
-//            todo сделать переход по ссылке если торрент активный            
-//            todo написать
+        try {            
 //            todo написать хелп
 //            todo написать абоут
 //            todo написать хелп на google
