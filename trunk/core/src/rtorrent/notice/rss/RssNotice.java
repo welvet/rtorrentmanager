@@ -1,14 +1,17 @@
 package rtorrent.notice.rss;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * User: welvet
  * Date: 26.06.2010
  * Time: 18:05:25
  */
-public class RssNotice implements Serializable{
+public class RssNotice implements Serializable {
+    public static SimpleDateFormat RFC822DATEFORMAT = new SimpleDateFormat("EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z", Locale.US);
     private String title;
     private String description;
     private Date pubDate;
@@ -37,11 +40,11 @@ public class RssNotice implements Serializable{
 
     public String toString() {
         return "<item>" +
-                "<title>"+title+"</title>" +
-                "<description>"+description+"</description>" +
-                "<pubDate>"+pubDate.toString()+"</pubDate>" +
-                "<link>"+link+"</link>" +
-                "<author>"+author+"</author>" +
+                "<title>" + title + "</title>" +
+                "<description>" + description + "</description>" +
+                "<pubDate>" + RFC822DATEFORMAT.format(pubDate) + "</pubDate>" +
+                "<link>" + link + "</link>" +
+                "<author>" + author + "</author>" +
                 "</item>";
     }
 }

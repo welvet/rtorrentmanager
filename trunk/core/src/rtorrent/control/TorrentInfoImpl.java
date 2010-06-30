@@ -63,12 +63,12 @@ public class TorrentInfoImpl implements TorrentInfo {
             state = State.finish;
         if (torrent.isHashChecking())
             state = State.hashing;
-        if (torrent.isNeedDelete())
-            state = State.delete;
         if (!torrent.isStart())
             state = State.stop;
         if (TorrentSetSingleton.getInstance().isAllPaused())
             state = State.stop;
+        if (torrent.isNeedDelete())
+            state = State.delete;
     }
 
     public Object[] toArray() {
