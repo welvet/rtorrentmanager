@@ -22,6 +22,7 @@ public class TorrentServlet extends HttpServlet {
     private static final String REMOVE = "remove";
     private static final String PROPERTIES = "properties";
     private static final String REDIRECT = "redirect";
+    private static final String UPDATE_TORRENT = "updateTorrent";
 
     private class nullAnsw {
         private String needUserNotice = "false";
@@ -46,6 +47,12 @@ public class TorrentServlet extends HttpServlet {
             ActionManager manager = (ActionManager) ContextUtils.lookup("raction");
             String url = (String) manager.doAction("getTorrentUrl", hash);
             response.sendRedirect(url);
+            return;
+        }
+
+        if (action.equals(UPDATE_TORRENT)) {
+            ActionManager manager = (ActionManager) ContextUtils.lookup("raction");
+            manager.doAction("updateTorrent", hash);
             return;
         }
 

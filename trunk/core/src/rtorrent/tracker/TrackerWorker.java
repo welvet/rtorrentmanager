@@ -15,5 +15,7 @@ public interface TrackerWorker{
     //обработать торрент
     public TorrentFacade work(TorrentFacade torrent) throws TrackerException;
 
+    public TorrentFacade checkOnceTorrent(TorrentFacade torrent) throws TrackerException;
+
     public Trackers whoIs();
 }

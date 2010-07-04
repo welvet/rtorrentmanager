@@ -11,7 +11,6 @@ import rtorrent.utils.LoggerSingleton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,9 +25,7 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     private Logger log = LoggerSingleton.getLogger();
     private TorrentSetHelper torrentSetHelper;
     private TorrentSetSaver torrentSetSaver;
-    private List<Torrent> pausedList;
     private Boolean forceShutdown = false;
-    private boolean plainShutdown = false;
 
     public TorrentSetImpl(RtorrentService rtorrentService, File file) {
         this.rtorrentService = rtorrentService;
@@ -61,17 +58,17 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     public void update() {
         //если рторрент жив, то обновляемся
         if (rtorrentService.isAlive()) {
-            //если остановлен вручную, то не обновляемся
-            if (!forceShutdown)
                 ThreadQueueSingleton.add(this);
         }
     }
 
     public void run() {
         //если остановлен вручную, то не обновляемся
-        if (!forceShutdown) {
             torrentSetHelper.run();
             torrentSetSaver.save();
+        //если остановлен - то останавливаем остальные торренты
+        if (forceShutdown) {
+            doShutdown();
         }
     }
 
@@ -144,53 +141,50 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     public void launch() {
         //если не остановлен вручную
         if (!forceShutdown) {
-            plainShutdown = false;
             doLaunch();
         }
     }
 
     private synchronized void doLaunch() {
+        ArrayList<Torrent> pausedList = new ArrayList<Torrent>();
+        for (ActionTorrent torrent : torrents.values()) {
+            ActionTorrent pausedTorrent = new ActionTorrent();
+            pausedTorrent.updateAll(torrent);
+            pausedList.add(torrent);
+        }
         try {
-            if (pausedList != null)
-                //запускаем ранее остановленые торренты
-                rtorrentService.launch(pausedList);
+            //запускаем все торренты
+            rtorrentService.launch(pausedList);
         } catch (RtorrentServiceException e) {
             log.warn("Невозможно запустить rtorrent " + e.getMessage());
         }
-        pausedList = null;
     }
 
     public void shutdown() {
         //если не остановлен вручную
         if (!forceShutdown) {
-            plainShutdown = true;
             doShutdown();
         }
     }
 
     private synchronized void doShutdown() {
         try {
-            pausedList = new ArrayList<Torrent>();
+            ArrayList<Torrent> pausedList = new ArrayList<Torrent>();
             for (ActionTorrent torrent : torrents.values()) {
-                if (torrent.isStart()) {
-                    ActionTorrent pausedTorrent = new ActionTorrent();
-                    pausedTorrent.updateAll(torrent);
-                    pausedList.add(torrent);
-                }
+                ActionTorrent pausedTorrent = new ActionTorrent();
+                pausedTorrent.updateAll(torrent);
+                pausedList.add(torrent);
             }
-            //останавливаем все запущеные торренты
+            //останавливаем все торренты
             rtorrentService.shutdown(pausedList);
         } catch (RtorrentServiceException e) {
             log.warn("Невозможно остановить rtorrent " + e.getMessage());
         }
     }
 
-    //очень загадочные методы
     public void forceShutdown() {
         forceShutdown = true;
-        //если остановлен чекером, то не останавливаем повторно
-        if (!plainShutdown)
-            doShutdown();
+        doShutdown();
     }
 
     public void forceLaunch() {
@@ -203,6 +197,6 @@ public class TorrentSetImpl implements TorrentSet, Runnable {
     }
 
     public boolean isAllPaused() {
-        return forceShutdown || plainShutdown;
+        return forceShutdown;
     }
 }

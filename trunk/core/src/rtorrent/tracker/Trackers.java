@@ -1,5 +1,8 @@
 package rtorrent.tracker;
 
+import rtorrent.tracker.lostfilm.LostFilmWorker;
+import rtorrent.tracker.rutracker.RuTrackerWorker;
+
 import java.io.Serializable;
 
 /**
@@ -9,15 +12,18 @@ import java.io.Serializable;
  * Time: 22:11:41
  */
 public enum Trackers implements Serializable {
-    MOCK("none", null), //мок трекер
-    RUTRACKER("rutracker", "http://rutracker.org/forum/viewtopic.php?t="), //rutracker.org
-    LOSTFILM("lostfilm", "http://www.lostfilm.tv/browse.php?cat="); //lostfilm
+    MOCK("none", null, null), //мок трекер
+    RUTRACKER("rutracker", "http://rutracker.org/forum/viewtopic.php?t=", RuTrackerWorker.class), //rutracker.org
+    LOSTFILM("lostfilm", "http://www.lostfilm.tv/browse.php?cat=", LostFilmWorker.class); //lostfilm
 
     private String name;
     private String url;
-    Trackers(String name, String url) {
+    private Class<? extends TrackerWorker> workerClass;
+
+    Trackers(String name, String url, Class<? extends TrackerWorker> aClass) {
         this.url = url;
         this.name = name;
+        workerClass = aClass;
     }            
 
     public String toString() {
@@ -30,5 +36,9 @@ public enum Trackers implements Serializable {
 
     public String getUrl() {
         return url;
+    }
+
+    public Class<? extends TrackerWorker> getWorkerClass() {
+        return workerClass;
     }
 }

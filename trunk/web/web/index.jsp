@@ -76,6 +76,7 @@
         <li><a href="#start">Запустить</a></li>
         <li><a href="#stop">Остановить</a></li>
         <li><a href="#remove">Удалить</a></li>
+        <li><a href="#updateTorrent">Проверить</a></li>
         <li><a href="#redirect">Перейти к теме</a></li>
         <li><a href="#properties">Свойства</a></li>
     </ul>
