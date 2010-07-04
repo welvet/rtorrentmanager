@@ -173,10 +173,12 @@ function afterAction(data) {
     if (data.length > 0)
     {
         $("#simpleAction").html(data);
+        var w = $("#dialogPropertiesDiv").attr("widthA");
+        var h = $("#dialogPropertiesDiv").attr("heightA");
         if ($("#actionDialog") != null) {
             $("#actionDialog .dialog").show();
             $("#actionDialog").dialog({ modal: true, resizable: false,
-                draggable: true, width: 500, height: 400 });
+                draggable: true, width: parseInt(w), height: parseInt(h) });
         }
     } else {
         onceReloadTable();

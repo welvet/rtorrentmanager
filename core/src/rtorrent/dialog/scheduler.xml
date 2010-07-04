@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config SYSTEM "config.dtd">
 <config title="Настройка планировщика">
-    <value name="updateSet" text="Связь с rtorrent (м)" default="10" position="1"/>
+    <value name="updateSet" text="Связь с rtorrent (м)" description="Время обновления" default="10" position="1"/>
     <value name="updateNotice" text="Уведомления (м)" description="Проверять наличие новых уведомлений" default="10" position="2"/>
     <value name="updateTrackers" text="Обновление трекеров (м)" description="Проверять обновления на трекерах" default="60" position="3"/>
-    <checkbox name="downAndCheckNeed" text="Останавливать рторрент перед обновлением" default="true" position="4"/>
-    <value name="downAndCheck" text="Приостанавливать каждые (м)" default="180" position="5"/>
-    <checkbox name="restartWhenClientStop" text="Стартовать закачки при неактивности клиента" default="true" position="6"/>
+    <checkbox name="downAndCheckNeed" text="Останавливать рторрент перед обновлением" description="Приостанавливать закачки при проверке" default="true" position="4"/>
+    <value name="downAndCheck" text="Проверять каждые (м)" default="180" position="5"/>
+    <checkbox name="restartWhenClientStop" text="Стартовать закачки при неактивности клиента" description="Время неактивности клиента, через которое будут запущены все закачки" default="true" position="6"/>
 </config>

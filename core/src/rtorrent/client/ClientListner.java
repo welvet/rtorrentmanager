@@ -42,10 +42,9 @@ public class ClientListner extends Thread {
 
     @Override
     public void run() {
-        try {
-            if (use)
-                while (true) {
-
+        if (use)
+            while (true) {
+                try {
                     Socket socket = serverSocket.accept();
 
                     if (socket == null) {
@@ -64,10 +63,10 @@ public class ClientListner extends Thread {
                         outputStream.flush();
                     }
                     socket.close();
+                } catch (Exception e) {
+                    LoggerSingleton.getLogger().warn(e);
                 }
-        } catch (Exception e) {
-            LoggerSingleton.getLogger().warn(e);
-        }
+            }
     }
 
     private Serializable parseResponse(Serializable serializable) {

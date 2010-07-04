@@ -5,5 +5,5 @@
     <value name="port" text="Порт" default="8888" position="2"/>
     <value name="login" text="Логин" default="admin" position="4"/>
     <value name="pass" text="Пароль" default="admin" position="5"/>
-    <checkbox name="auth" text="Авторизация" description="Использовать авторизацию" default="true" position="3"/>
+    <checkbox name="auth" text="Авторизация" description="Использовать авторизацию" default="false" position="3"/>
 </config>

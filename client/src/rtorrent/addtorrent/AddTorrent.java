@@ -71,7 +71,6 @@ public class AddTorrent extends JDialog {
                 new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
                         dialog.dispose();
-                        System.exit(0);
                     }
                 }
         );
@@ -117,7 +116,6 @@ public class AddTorrent extends JDialog {
         ÓÚÏÂÌ‡Button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
-                System.exit(0);
             }
         });
 
