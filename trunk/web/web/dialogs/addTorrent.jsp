@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ page contentType="text/html;UTF-8" pageEncoding="UTF-8" %>
+<div id="dialogPropertiesDiv" widthA="220" heightA="150"></div>
 <div id="actionDialog" title="Добавить торрент">
     File: <input id="torrentFile" name="torrentFile" type="file"/>
 
