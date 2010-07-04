@@ -28,6 +28,10 @@ public class MockTrackerWorker implements TrackerWorker {
         }
     }
 
+    public TorrentFacade checkOnceTorrent(TorrentFacade torrent) throws TrackerException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public Trackers whoIs() {
         return Trackers.MOCK;
     }

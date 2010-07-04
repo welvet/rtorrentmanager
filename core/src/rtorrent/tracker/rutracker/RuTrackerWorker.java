@@ -61,6 +61,24 @@ public class RuTrackerWorker implements TrackerWorker {
         }
     }
 
+    public TorrentFacade checkOnceTorrent(TorrentFacade torrent) throws TrackerException {
+        try {
+            SimpleTrackerImpl tracker = (SimpleTrackerImpl) torrent.getTracker();
+            File file = helper.downloadFile(tracker.getUrl());
+            torrent.setFile(file);
+            torrent.setNeedUpdate(true);
+            torrent.setLastUpdated(new Date());
+            return torrent;
+        } catch (ClassCastException e) {
+            logger.error("У " + torrent + " нет активного трекера");
+            throw new TrackerException();
+        } catch (TrackerException e) {
+            throw new TrackerException(e);
+        } catch (TorrentValidateException e) {
+            throw new TrackerException(e);
+        }
+    }
+
     public Trackers whoIs() {
         return Trackers.RUTRACKER;
     }

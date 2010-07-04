@@ -62,6 +62,27 @@ public class LostFilmWorker implements TrackerWorker {
         }
     }
 
+    public TorrentFacade checkOnceTorrent(TorrentFacade torrent) throws TrackerException {
+        try {
+            SimpleTrackerImpl tracker = (SimpleTrackerImpl) torrent.getTracker();
+            //обновл€ем ссылку
+            helper.checkTorrent(tracker.getUrl());
+            File file = helper.downloadFile(tracker.getUrl());
+            torrent.setFile(file);
+            torrent.setNeedUpdate(true);
+            torrent.setLastUpdated(new Date());
+            return torrent;
+        } catch (ClassCastException e) {
+            logger.error("” " + torrent + " нет активного трекера");
+            throw new TrackerException();
+        } catch (TrackerException e) {
+            throw new TrackerException(e);
+        } catch (
+                TorrentValidateException e) {
+            throw new TrackerException(e);
+        }
+    }
+
     public Trackers whoIs() {
         return Trackers.LOSTFILM;
     }
