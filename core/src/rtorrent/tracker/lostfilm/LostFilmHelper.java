@@ -119,12 +119,12 @@ public class LostFilmHelper extends HttpHelper {
     }
 
     public boolean checkTorrent(String url) throws TrackerException {
+        String string = torrentsMap.get(url);
         try {
             HttpGet httpGet = new HttpGet(new URI(THEME + url));
             BasicHttpResponse response = (BasicHttpResponse) httpClient.execute(httpGet);
             XpathUtils utils = new XpathUtils(response.getEntity().getContent());
 
-            String string = torrentsMap.get(url);
             String date = utils.doXPath("//A[@class=\"a_download\"]/@href");
 
             if (date == null) {
@@ -142,11 +142,13 @@ public class LostFilmHelper extends HttpHelper {
                 return !string.equals(date);
             }
 
-            saver.save(torrentsMap);
             log.info("Торрент " + url + " не найден в списке");
             return true;
         } catch (Exception e) {
-            torrentsMap.remove(url);
+            //если произошла ошибка во время обновления - то откатываем изменения
+            if (string == null)
+                torrentsMap.remove(url);
+            else torrentsMap.put(url, string);
             saver.save(torrentsMap);
             throw new TrackerException(e);
         }
