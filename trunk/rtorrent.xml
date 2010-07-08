@@ -21,7 +21,7 @@
     </path>
     <target name="clean">
         <echo>Cleaning the ${build.dir}</echo>
-        <!--<delete dir="${build.dir}"/>-->
+        <delete dir="${build.dir}"/>
     </target>
     <target name="init" depends="clean">
         <echo>Creating the build directory</echo>

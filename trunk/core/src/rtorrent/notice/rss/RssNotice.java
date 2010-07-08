@@ -40,7 +40,7 @@ public class RssNotice implements Serializable {
 
     public String toString() {
         return "<item>" +
-                "<title>" + title + "</title>" +
+                "<title>" + title + " (" + RFC822DATEFORMAT.format(pubDate) + ")" + "</title>" +
                 "<description>" + description + "</description>" +
                 "<pubDate>" + RFC822DATEFORMAT.format(pubDate) + "</pubDate>" +
                 "<link>" + link + "</link>" +
