@@ -83,7 +83,8 @@
         </path>
         <pathconvert property="manifest.class.path" pathsep=" " dirsep="/">
             <path refid="prepareLibs"/>
-            <map from="${basedir}\${build.dir}\" to=""/>
+            <!--todo os dep!-->
+            <map from="${basedir}/${build.dir}/" to=""/>
         </pathconvert>
         <jar destfile="${build.dir}/core.jar" basedir="${build.dir}/${core.dir}" compress="true">
             <manifest>
