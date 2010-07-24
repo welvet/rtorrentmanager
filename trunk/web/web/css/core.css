@@ -98,7 +98,7 @@ input {
     text-align: center;
     width: 600px;
     background-color: white;
-    font-size: 13px;
+    font-size: 11px;
     margin: 0 auto;
 }
 
@@ -107,8 +107,8 @@ input {
     text-align: left;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 400px;
-    min-width: 400px;
+    max-width: 364px;
+    min-width: 364px;
 }
 
 /*максимальная ширина для размеров*/
@@ -140,7 +140,7 @@ input {
 
 /*логи*/
 #logArea {
-    font-size: 0.8em;
+    font-size: 12px;
     margin-left: 12px;
 }
 

@@ -223,4 +223,5 @@ $().ready(function() {
     initializeTable();
     initializeTableButtons();
     onceReloadTable();
+    $($(".titleTd")[0]).click();
 });
