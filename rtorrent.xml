@@ -1,18 +1,11 @@
 <project name="RtorrentManager" basedir=".">
 
     <property file="rtorrent.properties"/>
-    <property name="javac2.home" value="${idea.home}/lib"/>
     <path id="javac2.classpath">
-        <pathelement location="${javac2.home}/javac2.jar"/>
-        <pathelement location="${javac2.home}/jdom.jar"/>
-        <pathelement location="${javac2.home}/asm.jar"/>
-        <pathelement location="${javac2.home}/asm-commons.jar"/>
+        <fileset dir="${basedir}/build_lib"/>
     </path>
     <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
-    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions"
-             classpathref="javac2.classpath"/>
 
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
     <path id="classpath">
         <fileset dir="${lib.dir}">
             <include name="*.jar"/>
@@ -83,8 +76,7 @@
         </path>
         <pathconvert property="manifest.class.path" pathsep=" " dirsep="/">
             <path refid="prepareLibs"/>
-            <!--todo os dep!-->
-            <map from="${basedir}/${build.dir}/" to=""/>
+            <map from="${basedir}${file.separator}${build.dir}${file.separator}" to=""/>
         </pathconvert>
         <jar destfile="${build.dir}/core.jar" basedir="${build.dir}/${core.dir}" compress="true">
             <manifest>
@@ -114,11 +106,18 @@
                 <exclude name="*.iml"/>
             </fileset>
         </copy>
+        <property name="img.dir" value="${build.dir}/${web.dir}/images"/>
+        <copy file="${img.dir}/wall_${wall}.jpg" tofile="${img.dir}/wall.jpg"/>
+        <delete>
+            <fileset dir="${img.dir}">
+                <include name="wall_*"/>
+            </fileset>
+        </delete>
         <war destfile="${build.dir}/${web.dir}.war" basedir="${build.dir}/${web.dir}" compress="true"/>
         <delete dir="${build.dir}/${web.dir}"/>
     </target>
 
-    <target name="build" depends="init, compile-bridge, compile-core, compile-web, compile-client"/>
+    <target name="build" depends="init, compile-bridge, compile-core, compile-web, compile-client, copy-docs"/>
 
     <target name="prepare-test">
         <copy todir="${out.production}/${core.dir}" overwrite="true">
@@ -149,6 +148,21 @@
             </manifest>
         </jar>
         <delete dir="${build.dir}/${client.dir}"/>
+    </target>
+
+    <target name="copy-docs">
+        <copy todir="${build.dir}">
+            <fileset dir="${basedir}/docs/"/>
+        </copy>
+    </target>
+
+    <target name="make_tar">
+        <property name="tarfile" value="${build.dir}/../rtorrentmanager_${version}.tar.gz"/>
+        <delete file="${tarfile}"/>
+        <antcall target="build"/>
+        <tar compression="gzip" tarfile="${tarfile}">
+            <tarfileset dir="${build.dir}"/>
+        </tar>
     </target>
 
 </project>

@@ -32,6 +32,7 @@ public class AddTorrent extends JDialog {
     private RequestManager manager = new RequestManager();
     private AddTorrent me;
     private File f;
+    private static final int MAX_LEN = 25;
 
     public AddTorrent(final File file) {
         //настройки окна
@@ -136,7 +137,11 @@ public class AddTorrent extends JDialog {
 
     public void setFile(File file) {
         f = file;
-        fileLabel.setText(file.getName());
+        String s = file.getName();
+        if (s.length() > MAX_LEN) {
+            s = s.substring(0, MAX_LEN - 3) + "...";
+        }
+        fileLabel.setText(s);
     }
 }
 
