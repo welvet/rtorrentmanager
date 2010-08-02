@@ -28,7 +28,6 @@ import java.io.File;
  */
 public abstract class RtorrentTestCase extends TestCase {
     File dir;
-    String warPath;
     File datFile;
     File torrentFile;
     File torrent2File;
@@ -36,7 +35,6 @@ public abstract class RtorrentTestCase extends TestCase {
     TorrentSet torrentSet;
     RtorrentControlerImpl controler;
     ConfigManagerImpl configManager;
-    WebServerBuilder builder;
     private static Boolean loaded = false;
     static final int WAIT_TIME = 3000;
 
@@ -54,7 +52,6 @@ public abstract class RtorrentTestCase extends TestCase {
         LoggerSingleton.initialize(dir);
         new ActionManagerImpl();
         //сслка на собраный варник
-        warPath = "C:\\rtorrentmanager\\out\\rtorrentmanager\\web.war";
         //создаем рторрент сервис
         rtorrentService = new MockRtorrentService();
         //создаем синглтон
@@ -71,8 +68,6 @@ public abstract class RtorrentTestCase extends TestCase {
         DialogParserImpl dialogParser = new DialogParserImpl();
         dialogParser.bindContext();
         //создаем веб сервер
-        builder = new WebServerBuilder();
-        builder.setWar(warPath);
         NoticeObserverSingleton.clearService();
         NoticeObserverSingleton.registerService(MockNoticeService.class);
 

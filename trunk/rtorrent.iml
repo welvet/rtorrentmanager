@@ -5,6 +5,16 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="bridge" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="web" />
+    <orderEntry type="library" name="Html" level="project" />
+    <orderEntry type="library" name="Json" level="project" />
+    <orderEntry type="library" name="JUnit" level="project" />
+    <orderEntry type="library" name="Logger" level="project" />
+    <orderEntry type="library" name="Mail" level="project" />
+    <orderEntry type="library" name="Neko" level="project" />
+    <orderEntry type="library" name="WebServ" level="project" />
     <annotation-paths>
       <root url="file://$MODULE_DIR$/src/rtorrent/serv/resource" />
       <root url="file://$MODULE_DIR$/src/rtorrent/test/resource" />

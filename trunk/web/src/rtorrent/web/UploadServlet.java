@@ -1,6 +1,5 @@
 package rtorrent.web;
 
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -12,10 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.List;
 
 /**
@@ -34,32 +30,12 @@ public class UploadServlet extends HttpServlet {
         try {
             List /* FileItem */ items = upload.parseRequest(req);
             File file = new File(((File) ContextUtils.lookup("workdir")).getAbsolutePath() + '/' + System.currentTimeMillis() + ".torrent");
-            copyFile(((DiskFileItem) items.get(0)).getStoreLocation(), file);
+            ((DiskFileItem) items.get(0)).write(file);
             RtorrentControler controler = (RtorrentControler) ContextUtils.lookup("rcontroler");
             controler.addTorrent(file);
-        } catch (FileUploadException e) {
+        } catch (Exception e) {
             e.printStackTrace();  // TODO change me
         }
 
     }
-
-    public static void copyFile(File in, File out)
-            throws IOException {
-        FileChannel inChannel = new
-                FileInputStream(in).getChannel();
-        FileChannel outChannel = new
-                FileOutputStream(out).getChannel();
-        try {
-            inChannel.transferTo(0, inChannel.size(),
-                    outChannel);
-        }
-        catch (IOException e) {
-            throw e;
-        }
-        finally {
-            if (inChannel != null) inChannel.close();
-            if (outChannel != null) outChannel.close();
-        }
-    }
-
 }
