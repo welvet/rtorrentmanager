@@ -26,7 +26,7 @@ public class TorrentSetSingleton {
     }
 
     public static TorrentSet getInstance() {
-        if (ourInstance == null)
+        if (ourInstance == null) 
             throw new RuntimeException("TorrentSet не инициализирован");
         return ourInstance;
     }

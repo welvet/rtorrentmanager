@@ -37,6 +37,7 @@ public class ClientListner extends Thread {
             }
         } catch (IOException e) {
             LoggerSingleton.getLogger().warn(e);
+            System.exit(0);
         }
     }
 
@@ -63,6 +64,8 @@ public class ClientListner extends Thread {
                         outputStream.flush();
                     }
                     socket.close();
+                } catch (NullPointerException e) {
+                    LoggerSingleton.getLogger().error(e);
                 } catch (Exception e) {
                     LoggerSingleton.getLogger().warn(e);
                 }

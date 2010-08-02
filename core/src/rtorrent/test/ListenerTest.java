@@ -11,8 +11,5 @@ public class ListenerTest extends RtorrentTestCase{
     public void testListener() throws Exception {
         ClientListner listner = new ClientListner();
         listner.start();
-        while (true) {
-            Thread.sleep(1000L);
-        }
     }
 }

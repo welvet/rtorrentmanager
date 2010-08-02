@@ -76,7 +76,7 @@ public class Initialize {
             while (true) {
                 Thread.sleep(1000);
             }
-        } catch (Exception e) {
+        } catch (Exception e) {  
             log.error(e);
         }
 

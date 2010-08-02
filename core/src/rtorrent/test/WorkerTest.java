@@ -12,7 +12,7 @@ import rtorrent.tracker.rutracker.RuTrackerHelper;
 public class WorkerTest extends RtorrentTestCase {
     public void testRutracker() throws Exception {
 //        if (true) throw new RuntimeException("Для того чтобы этот тест работал нужно ввести логин и пароль");
-        RuTrackerHelper helper = new RuTrackerHelper("welvet", "Amb44oDA", dir);
+        RuTrackerHelper helper = new RuTrackerHelper("", "", dir);
         helper.auth();
         assertTrue(helper.checkAuth());
         assertNotNull(helper.checkTorrent("2616371"));

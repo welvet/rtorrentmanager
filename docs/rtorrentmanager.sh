@@ -1,2 +1,2 @@
 # !/bin/sh
-java -Xmx256m -Xmx512m -jar core.jar & 
+java -server -Xms128m -Xmx256m -jar core.jar & 

@@ -16,7 +16,7 @@ public class ConfigSingleton {
     private static String login = "";
     private static String pass = "";
     private static Boolean needStop = true;
-    private static Saver saver = new Saver(System.getProperty("user.home") + "/" + "rmanager.cfg");
+    private static Saver saver = new Saver(System.getProperty("user.home") + "/" + ".rmanager.cfg");
 
     static {
         List list = saver.load();
