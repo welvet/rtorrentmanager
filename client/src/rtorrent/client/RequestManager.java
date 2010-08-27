@@ -1,6 +1,9 @@
 package rtorrent.client;
 
+import rtorrent.notice.client.ClientNotice;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * User: welvet
@@ -8,7 +11,7 @@ import java.io.Serializable;
  * Time: 22:08:48
  */
 public class RequestManager {
-    private Serializable doRequest(Serializable serializable) {
+    private synchronized Serializable doRequest(Serializable serializable) {
         try {
             Connector connector = new Connector();
             return connector.request(serializable);
@@ -45,5 +48,12 @@ public class RequestManager {
         action.setName("addTorrent");
         action.setParam(message);
         return (String) doRequest(action);
+    }
+
+    public List<ClientNotice> getNotices()
+    {
+        RequestAction action = new RequestAction();
+        action.setName("receiveNotices");
+        return (List<ClientNotice>) doRequest(action);
     }
 }
