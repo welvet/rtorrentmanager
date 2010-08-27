@@ -29,6 +29,7 @@ public class ActionManagerImpl implements ActionManager, InContext {
         actionMap.put("getTorrentUrl", GetTorrentUrl.class);
         actionMap.put("addTorrent", AddTorrent.class);
         actionMap.put("updateTorrent", UpdateTorrent.class);
+        actionMap.put("receiveNotices", ReceiveNotices.class);
     }
 
     public ActionManagerImpl() {

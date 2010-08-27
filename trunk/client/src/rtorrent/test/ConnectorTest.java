@@ -1,6 +1,10 @@
 package rtorrent.test;
 
 import rtorrent.client.RequestManager;
+import rtorrent.notice.client.ClientNotice;
+
+import java.util.List;
+
 
 /**
  * User: welvet
@@ -10,9 +14,9 @@ import rtorrent.client.RequestManager;
 public class ConnectorTest {
     public static void main(String[] args) {
         RequestManager manager = new RequestManager();
-        String[] strings = manager.getTorrents();
-        for (String s : strings) {
-            System.out.println(s);
+        List<ClientNotice> strings = manager.getNotices();
+        for (ClientNotice s : strings) {
+            System.out.println(s.getNoticeType());
         }
         System.out.println(manager.checkTorrent());
         manager.switchTorrent();
