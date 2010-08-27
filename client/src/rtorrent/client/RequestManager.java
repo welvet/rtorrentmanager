@@ -11,6 +11,7 @@ import java.util.List;
  * Time: 22:08:48
  */
 public class RequestManager {
+
     private synchronized Serializable doRequest(Serializable serializable) {
         try {
             Connector connector = new Connector();

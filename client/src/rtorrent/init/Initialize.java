@@ -24,7 +24,12 @@ public class Initialize {
 
             //инициализируем стандартное поведение
             Icon icon = new Icon();
-            icon.createIcon();
+
+            Thread thread = new Thread(icon);
+            thread.start();
+
+            icon.waitIcon();
+
             ServerListener.setIcon(icon);
             ServerListener listener = new ServerListener();
             listener.start();

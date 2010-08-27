@@ -117,7 +117,9 @@
         <delete dir="${build.dir}/${web.dir}"/>
     </target>
 
-    <target name="build" depends="init, compile-bridge, compile-core, compile-web, compile-client, copy-docs"/>
+    <target name="build" depends="init, compile-bridge, compile-core, compile-web, compile-client, build-client-linux, build-client-win, copy-docs">
+        <delete file="${build.dir}/client.jar"/>
+    </target>
 
     <target name="prepare-test">
         <copy todir="${out.production}/${core.dir}" overwrite="true">
@@ -141,13 +143,36 @@
         <unzip src="idea.zip" dest="${build.dir}/${client.dir}"/>
         <javac2 srcdir="${client.dir}" destdir="${build.dir}/${client.dir}">
             <exclude name="**/${test.dir}/**"/>
+            <classpath>
+                <fileset dir="${client.dir}/libs"/>
+            </classpath>
         </javac2>
         <jar destfile="${build.dir}/client.jar" basedir="${build.dir}/${client.dir}" compress="true">
             <manifest>
                 <attribute name="Main-Class" value="rtorrent.init.Initialize"/>
+                <attribute name="Class-Path" value="swt.jar"/>
             </manifest>
         </jar>
         <delete dir="${build.dir}/${client.dir}"/>
+    </target>
+
+    <target name="build-client-win" depends="compile-client">
+        <antcall target="build-client">
+            <param name="build.to.os" value="win"/>
+        </antcall>
+    </target>
+
+    <target name="build-client-linux" depends="compile-client">
+        <antcall target="build-client">
+            <param name="build.to.os" value="linux"/>
+        </antcall>
+    </target>
+
+    <target name="build-client">
+        <mkdir dir="${build.dir}/${client.dir}/${build.to.os}"/>
+
+        <copy todir="${build.dir}/${client.dir}/${build.to.os}" file="${build.dir}/client.jar"/>
+        <copy tofile="${build.dir}/${client.dir}/${build.to.os}/swt.jar" file="${client.dir}/libs/swt_${build.to.os}.jar"/>
     </target>
 
     <target name="copy-docs">
