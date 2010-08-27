@@ -58,8 +58,6 @@ public class SettingsDialog extends JDialog {
 
         double width = getSize().getWidth() + screenWidth;
         double height = getSize().getHeight() + screenHeight;
-        setLocation(new Long(Math.round(width / 4)).intValue(),
-                new Long(Math.round(height / 4)).intValue());
 
         ImagePanel imagePanel = new ImagePanel(new BorderLayout());
         this.add(imagePanel);
@@ -96,5 +94,8 @@ public class SettingsDialog extends JDialog {
                 dialog.dispose();
             }
         });
+
+        setLocation(new Long(Math.round(width / 4)).intValue(),
+                new Long(Math.round(height / 4)).intValue());        
     }
 }

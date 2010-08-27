@@ -1,132 +1,190 @@
 package rtorrent.tray;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.*;
 import rtorrent.ConfigSingleton;
 import rtorrent.addtorrent.AddTorrent;
 import rtorrent.client.RequestManager;
 import rtorrent.settings.SettingsDialog;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.io.InputStream;
 import java.net.URI;
-import java.net.URL;
 
 /**
  * User: welvet
  * Date: 27.06.2010
  * Time: 13:33:35
  */
-public class Icon {
-    private static RequestManager manager = new RequestManager();
-    private TrayIcon trayIcon;
-    private Boolean aBoolean = false;
+public class Icon implements Runnable
+{
+    private RequestManager manager = new RequestManager();
+    private Display display;
+    private String iconState = "fail";
+    private String lastIconState = "";
+
+    private TrayItem trayIcon;
+    private Boolean state = false;
+    private Boolean runFlag = true;
+
+    public void createIcon()
+    {
+        display = new Display();
+        Shell shell = new Shell(display);
 
 
-    public void createIcon() throws Exception {
-        try {
-            if (!SystemTray.isSupported()) {
-                throw new Exception("Не удалось создать иконку");
+        final Tray tray = display.getSystemTray();
+        trayIcon = new TrayItem(tray, SWT.NONE);
+
+        trayIcon.addListener(SWT.Selection, new Listener()
+        {
+            public void handleEvent(Event event)
+            {
+                switchRtorrentAndIcon();
             }
-            final PopupMenu popup = new PopupMenu();
-            final SystemTray tray = SystemTray.getSystemTray();
+        });
 
-            trayIcon = new TrayIcon(createImage("images/fail.png", null));
+        final Menu menu = new Menu(shell, SWT.POP_UP);
 
-
-            MenuItem startBrowser = new MenuItem("Запустить RtorrentManager");
-            startBrowser.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-                    try {
-                        desktop.browse(new URI("http://" + ConfigSingleton.getHost() + ":" + ConfigSingleton.getHttpPort()));
-                    } catch (Exception e1) {
-                        throw new RuntimeException(e1);
-                    }
+        MenuItem showRT = new MenuItem(menu, SWT.PUSH);
+        showRT.setText("Show RtorrentManager");
+        showRT.addListener(SWT.Selection, new Listener()
+        {
+            public void handleEvent(Event event)
+            {
+                java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+                try
+                {
+                    desktop.browse(new URI("http://" + ConfigSingleton.getHost() + ":" + ConfigSingleton.getHttpPort()));
+                } catch (Exception e1)
+                {
+                    throw new RuntimeException(e1);
                 }
-            });
 
-            MenuItem stratRtrorrent = new MenuItem("Запустить/остановить rtorrent");
-            stratRtrorrent.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    switchIcon();
-                }
-            });
+            }
+        });
 
-            //действие при клике
-            trayIcon.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getButton() == 1)
-                        switchIcon();
-                }
-            });
+        MenuItem last = new MenuItem(menu, SWT.PUSH);
+        last.setText("Display last download");
+        last.addListener(SWT.Selection, new Listener()
+        {
+            public void handleEvent(Event event)
+            {
+                
+            }
+        });
 
-            MenuItem add = new MenuItem("Добавить торрент");
-            add.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    AddTorrent addTorrent = new AddTorrent();
-                }
-            });
+        MenuItem add = new MenuItem(menu, SWT.PUSH);
+        add.setText("AddTorrent");
+        add.addListener(SWT.Selection, new Listener()
+        {
+            public void handleEvent(Event event)
+            {
+                AddTorrent addTorrent = new AddTorrent();
+            }
+        });
 
-            MenuItem settings = new MenuItem("Настройки");
-            settings.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    SettingsDialog dialog = new SettingsDialog();
-                }
-            });
 
-            MenuItem exit = new MenuItem("Выход");
-            exit.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    System.exit(0);
-                }
-            });
+        MenuItem settings = new MenuItem(menu, SWT.PUSH);
+        settings.setText("Settings");
+        settings.addListener(SWT.Selection, new Listener()
+        {
+            public void handleEvent(Event event)
+            {
+                SettingsDialog dialog = new SettingsDialog();
+            }
+        });
 
-            popup.add(startBrowser);
-            popup.add(stratRtrorrent);
-            popup.add(add);
-            popup.add(settings);
-            popup.add(exit);
+        MenuItem exit = new MenuItem(menu, SWT.PUSH);
+        exit.setText("Exit");
+        exit.addListener(SWT.Selection, new Listener()
+        {
+            public void handleEvent(Event event)
+            {
+                System.exit(0);
+            }
+        });
 
-            trayIcon.setPopupMenu(popup);
 
-            tray.add(trayIcon);
-        } catch (AWTException e) {
-            throw new Exception(e);
-        }
+        trayIcon.addListener(SWT.MenuDetect, new Listener()
+        {
+            public void handleEvent(Event event)
+            {
+                menu.setVisible(true);
+            }
+        });
     }
 
-    private void switchIcon() {
+    private void switchRtorrentAndIcon()
+    {
         manager.switchTorrent();
-        changIcon(!aBoolean, false);
-    }
-
-    protected static Image createImage(String path, String description) {
-        URL imageURL = Icon.class.getResource(path);
-
-        if (imageURL == null) {
-            System.err.println("Resource not found: " + path);
-            return null;
-        } else {
-            return (new ImageIcon(imageURL, description)).getImage();
-        }
+        changIcon(!state, false);
     }
 
 
-    public void changIcon(Boolean aBoolean, Boolean fail) {
-        this.aBoolean = aBoolean;
+    public synchronized void changIcon(Boolean state, Boolean fail)
+    {
+        this.state = state;
+
         String s;
-        if (!fail) {
-            if (aBoolean)
+        if (!fail)
+        {
+            if (state)
                 s = "load";
             else s = "not_load";
-        } else {
+        } else
+        {
             s = "fail";
         }
-        trayIcon.setImage(createImage("images/" + s + ".png", null));
-        trayIcon.setToolTip("Rtorrent " + s.replace("_", " "));
+
+        iconState = s;
+    }
+
+    private void refreshIcon()
+    {
+        if (iconState.equals(lastIconState))
+            return;
+
+        lastIconState = iconState;
+
+        Image image = trayIcon.getImage();
+
+        String path = "images/" + iconState + ".png";
+
+        InputStream stream = Icon.class.getResourceAsStream(path);
+        Image newImage = new Image(display, stream);
+
+        trayIcon.setImage(newImage);
+        trayIcon.setToolTipText("Rtorrent " + iconState.replace("_", " "));
+
+        if (image != null)
+            image.dispose();
+    }
+
+    public void run()
+    {
+        synchronized (Icon.class)
+        {
+            createIcon();
+            Icon.class.notify();
+        }
+
+        while (runFlag)
+        {
+            if (!display.readAndDispatch())
+            {
+                refreshIcon();
+                display.sleep();
+            }
+        }
+    }
+
+    public void waitIcon() throws InterruptedException
+    {
+        synchronized (Icon.class)
+        {
+            if (trayIcon == null)
+                Icon.class.wait();
+        }
     }
 }

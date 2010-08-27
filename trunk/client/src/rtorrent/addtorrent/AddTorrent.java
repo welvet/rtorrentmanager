@@ -20,25 +20,27 @@ import java.io.FileInputStream;
  * Date: 29.06.2010
  * Time: 23:12:22
  */
-public class AddTorrent extends JDialog {
-    private JButton îòìåíàButton;
+public class AddTorrent extends JDialog
+{
+    private JButton cancelButton;
     private JPanel panel1;
     private JButton okButton;
     private JCheckBox watchCheckBox;
     private JComboBox trackerBox;
     private JTextField urlField;
     private JLabel fileLabel;
-    private JButton îáçîðButton;
+    private JButton browseButton;
     private RequestManager manager = new RequestManager();
     private AddTorrent me;
     private File f;
     private static final int MAX_LEN = 25;
 
-    public AddTorrent(final File file) {
+    public AddTorrent(final File file)
+    {
         //íàñòðîéêè îêíà
         super();
         me = this;
-        
+
         if (file != null)
             setFile(file);
 
@@ -55,8 +57,6 @@ public class AddTorrent extends JDialog {
 
         double width = getSize().getWidth() + screenWidth;
         double height = getSize().getHeight() + screenHeight;
-        setLocation(new Long(Math.round(width / 4)).intValue(),
-                new Long(Math.round(height / 4)).intValue());
 
         ImagePanel imagePanel = new ImagePanel(new BorderLayout());
         this.add(imagePanel);
@@ -69,28 +69,37 @@ public class AddTorrent extends JDialog {
         final JDialog dialog = this;
 
         addWindowListener(
-                new WindowAdapter() {
-                    public void windowClosing(WindowEvent e) {
+                new WindowAdapter()
+                {
+                    public void windowClosing(WindowEvent e)
+                    {
                         dialog.dispose();
                     }
                 }
         );
 
-        îáçîðButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        browseButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 JFileChooser fc = new JFileChooser();
                 int returnVal = fc.showOpenDialog(me);
 
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                if (returnVal == JFileChooser.APPROVE_OPTION)
+                {
                     setFile(fc.getSelectedFile());
                 }
             }
         });
 
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    if (f == null) {
+        okButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                try
+                {
+                    if (f == null)
+                    {
                         JOptionPane.showMessageDialog(me, "Âûáåðèòå ôàéë");
                         return;
                     }
@@ -103,42 +112,55 @@ public class AddTorrent extends JDialog {
                     stream.read(bytes);
                     message.setBytes(bytes);
                     String response = manager.addTorrent(message);
-                    if (response != null) {
+                    if (response != null)
+                    {
                         JOptionPane.showMessageDialog(me, response);
                         return;
                     }
                     dialog.dispose();
-                } catch (Exception e1) {
+                } catch (Exception e1)
+                {
                     JOptionPane.showMessageDialog(me, e1.getMessage());
                 }
             }
         });
 
-        îòìåíàButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        cancelButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 dialog.dispose();
             }
         });
 
         //Çàïîëíèòü ïàðàìåòðû
-        try {
-            for (String s : manager.getTorrents()) {
+        try
+        {
+            for (String s : manager.getTorrents())
+            {
                 trackerBox.addItem(s);
             }
-        } catch (RuntimeException e) {
+        } catch (RuntimeException e)
+        {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
+        setLocation(new Long(Math.round(width / 4)).intValue(),
+                new Long(Math.round(height / 4)).intValue());
+
     }
 
-    public AddTorrent() {
+    public AddTorrent()
+    {
         this(null);
     }
 
-    public void setFile(File file) {
+    public void setFile(File file)
+    {
         f = file;
         String s = file.getName();
-        if (s.length() > MAX_LEN) {
+        if (s.length() > MAX_LEN)
+        {
             s = s.substring(0, MAX_LEN - 3) + "...";
         }
         fileLabel.setText(s);
