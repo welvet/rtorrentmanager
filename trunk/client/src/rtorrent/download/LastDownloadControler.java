@@ -1,5 +1,6 @@
 package rtorrent.download;
 
+import rtorrent.ConfigSingleton;
 import rtorrent.client.RequestManager;
 import rtorrent.notice.client.ClientNotice;
 
@@ -15,7 +16,7 @@ import java.util.TimerTask;
 public class LastDownloadControler extends TimerTask
 {
     private static RequestManager manager = new RequestManager();
-    private static List<ClientNotice> clientNotices = new ArrayList<ClientNotice>();
+    private static List<ClientNotice> clientNotices = ConfigSingleton.getClientNotices();
     private static LastDownloadControler instance = new LastDownloadControler();
 
     private LastDownloadControler()
@@ -24,13 +25,22 @@ public class LastDownloadControler extends TimerTask
 
     public synchronized void run()
     {
-        clientNotices.addAll(manager.getNotices());
+        List<ClientNotice> clientNoticeList = manager.getNotices();
+
+        clientNotices.addAll(clientNoticeList);
+        ConfigSingleton.update();
+
+        if (!clientNoticeList.isEmpty())
+        {
+            NoticeForm form = new NoticeForm(clientNoticeList);
+            Thread thread = new Thread(form);
+            thread.start();
+        }
     }
 
-    public synchronized List<ClientNotice> getList()
+    private synchronized List<ClientNotice> getList()
     {
         List<ClientNotice> list = new ArrayList<ClientNotice>(clientNotices);
-        clientNotices.clear();
         return list;
     }
 

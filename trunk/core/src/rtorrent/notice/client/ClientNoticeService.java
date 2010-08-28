@@ -25,6 +25,7 @@ public class ClientNoticeService implements NoticeService
         clientNotice.setDate(new Date());
         clientNotice.setTorrentName(torrent.getName());
         clientNotice.setNoticeType(notice.toString());
+        clientNotice.setLink(torrent.getDir());
         NoticesHolder.addNotice(clientNotice);
     }
 
