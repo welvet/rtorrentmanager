@@ -1,5 +1,6 @@
 package rtorrent.download;
 
+import org.eclipse.swt.widgets.Display;
 import rtorrent.ConfigSingleton;
 import rtorrent.client.RequestManager;
 import rtorrent.init.Initialize;
@@ -19,13 +20,16 @@ public class LastDownloadControler extends TimerTask
     private static RequestManager manager = new RequestManager();
     private static List<ClientNotice> clientNotices = ConfigSingleton.getClientNotices();
     private static LastDownloadControler instance = new LastDownloadControler();
+    private static final Display display = Initialize.display;
     private NoticeForm form;
-    private Thread thread;
 
     private LastDownloadControler()
     {
     }
 
+    /**
+     * Получает нотисы с сервера, и показыает форму с новыми нотисами
+     */
     public synchronized void run()
     {
         if (!ConfigSingleton.isNeedCheck())
@@ -51,7 +55,7 @@ public class LastDownloadControler extends TimerTask
         else
         {
             form = new NoticeForm(clientNoticeList);
-            Initialize.display.syncExec(form);
+            display.syncExec(form);
         }
     }
 
