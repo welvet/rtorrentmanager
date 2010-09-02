@@ -23,6 +23,10 @@ public class ConfigSingleton
     private static Saver saver = new Saver(System.getProperty("user.home") + "/" + ".rmanager.cfg");
     private static Point location = new Point(0, 0);
     private static ArrayList<ClientNotice> clientNotices = new ArrayList<ClientNotice>();
+    private static Boolean needCheck = true;
+    private static String toReplace = "";
+    private static String replace = "";
+    private static String noticesType = "done";
 
     static
     {
@@ -39,6 +43,10 @@ public class ConfigSingleton
                 needStop = (Boolean) list.get(5);
                 location = (Point) list.get(6);
                 clientNotices = (ArrayList<ClientNotice>) list.get(7);
+                needCheck = (Boolean) list.get(8);
+                toReplace = (String) list.get(9);
+                replace = (String) list.get(10);
+                noticesType = (String) list.get(11);
             }
         } catch (Exception e)
         {
@@ -87,6 +95,9 @@ public class ConfigSingleton
         ConfigSingleton.host = host;
     }
 
+    /**
+     * Сохранить изменения в файле настроек
+     */
     public synchronized static void update()
     {
         List<Serializable> list = new ArrayList<Serializable>();
@@ -98,6 +109,10 @@ public class ConfigSingleton
         list.add(5, needStop);
         list.add(6, location);
         list.add(7, clientNotices);
+        list.add(8, needCheck);
+        list.add(9, toReplace);
+        list.add(10, replace);
+        list.add(11, noticesType);
         saver.save(list);
     }
 
@@ -134,6 +149,51 @@ public class ConfigSingleton
     public static List<ClientNotice> getClientNotices()
     {
         return clientNotices;
+    }
+
+    public static boolean isNeedCheck()
+    {
+        return needCheck;
+    }
+
+    public static Boolean getNeedCheck()
+    {
+        return needCheck;
+    }
+
+    public static String getToReplace()
+    {
+        return toReplace;
+    }
+
+    public static void setToReplace(String toReplace)
+    {
+        ConfigSingleton.toReplace = toReplace;
+    }
+
+    public static String getReplace()
+    {
+        return replace;
+    }
+
+    public static void setReplace(String replace)
+    {
+        ConfigSingleton.replace = replace;
+    }
+
+    public static String getNoticesType()
+    {
+        return noticesType;
+    }
+
+    public static void setNoticesType(String noticesType)
+    {
+        ConfigSingleton.noticesType = noticesType;
+    }
+
+    public static void setNeedCheck(Boolean needCheck)
+    {
+        ConfigSingleton.needCheck = needCheck;
     }
 }
 

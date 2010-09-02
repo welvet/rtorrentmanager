@@ -4,8 +4,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.*;
 import rtorrent.ConfigSingleton;
+import rtorrent.ServerListener;
 import rtorrent.addtorrent.AddTorrent;
 import rtorrent.client.RequestManager;
+import rtorrent.download.LastDownloadControler;
+import rtorrent.init.Initialize;
 import rtorrent.settings.SettingsDialog;
 
 import java.io.InputStream;
@@ -29,7 +32,8 @@ public class Icon implements Runnable
 
     public void createIcon()
     {
-        display = new Display();
+        display = Initialize.display;
+
         Shell shell = new Shell(display);
 
 
@@ -70,7 +74,7 @@ public class Icon implements Runnable
         {
             public void handleEvent(Event event)
             {
-                
+                LastDownloadControler.instance().showForm();
             }
         });
 
@@ -169,6 +173,27 @@ public class Icon implements Runnable
             Icon.class.notify();
         }
 
+
+        ServerListener.setIcon(this);
+        ServerListener listener = new ServerListener();
+        listener.start();
+
+        new Thread()
+        {
+            @Override
+            public void run()
+            {
+                if (ConfigSingleton.getNeedStop())
+                {
+                    RequestManager manager = new RequestManager();
+                    if (!manager.checkTorrent())
+                    {
+                        manager.switchTorrent();
+                    }
+                }
+            }
+        }.start();
+
         while (runFlag)
         {
             if (!display.readAndDispatch())
@@ -176,15 +201,6 @@ public class Icon implements Runnable
                 refreshIcon();
                 display.sleep();
             }
-        }
-    }
-
-    public void waitIcon() throws InterruptedException
-    {
-        synchronized (Icon.class)
-        {
-            if (trayIcon == null)
-                Icon.class.wait();
         }
     }
 }

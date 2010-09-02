@@ -2,6 +2,7 @@ package rtorrent.download;
 
 import rtorrent.ConfigSingleton;
 import rtorrent.client.RequestManager;
+import rtorrent.init.Initialize;
 import rtorrent.notice.client.ClientNotice;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class LastDownloadControler extends TimerTask
     private static RequestManager manager = new RequestManager();
     private static List<ClientNotice> clientNotices = ConfigSingleton.getClientNotices();
     private static LastDownloadControler instance = new LastDownloadControler();
+    private NoticeForm form;
+    private Thread thread;
 
     private LastDownloadControler()
     {
@@ -25,6 +28,9 @@ public class LastDownloadControler extends TimerTask
 
     public synchronized void run()
     {
+        if (!ConfigSingleton.isNeedCheck())
+            return;
+
         List<ClientNotice> clientNoticeList = manager.getNotices();
 
         clientNotices.addAll(clientNoticeList);
@@ -32,16 +38,36 @@ public class LastDownloadControler extends TimerTask
 
         if (!clientNoticeList.isEmpty())
         {
-            NoticeForm form = new NoticeForm(clientNoticeList);
-            Thread thread = new Thread(form);
-            thread.start();
+            createOrUpdateForm(clientNoticeList);
         }
     }
 
-    private synchronized List<ClientNotice> getList()
+    private void createOrUpdateForm(List<ClientNotice> clientNoticeList)
     {
-        List<ClientNotice> list = new ArrayList<ClientNotice>(clientNotices);
-        return list;
+        if (form != null && !form.getShell().isDisposed())
+        {
+            form.update(clientNoticeList);
+        }
+        else
+        {
+            form = new NoticeForm(clientNoticeList);
+            Initialize.display.syncExec(form);
+        }
+    }
+
+    /**
+     * Показать форму со всеми нотисами
+     */
+    public synchronized void showForm()
+    {
+        List<ClientNotice> list = new ArrayList<ClientNotice>();
+        for (ClientNotice notice : clientNotices)
+        {
+            if (notice.getNoticeType().equals(ConfigSingleton.getNoticesType()))
+                list.add(notice);
+        }
+
+        createOrUpdateForm(list);
     }
 
     public static LastDownloadControler instance()
