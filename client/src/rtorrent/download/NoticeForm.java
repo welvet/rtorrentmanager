@@ -50,6 +50,7 @@ public class NoticeForm implements Runnable
 
     private synchronized void initialize()
     {
+        //иницилизация шела
         display = Initialize.display;
         shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP | SWT.SHADOW_NONE);
         shell.setAlpha(240);
@@ -87,6 +88,7 @@ public class NoticeForm implements Runnable
         Image image = new Image(display, stream);
         shell.setBackgroundImage(image);
 
+        //кнопка Настройки
         Button ok = new Button(shell, SWT.PUSH);
         ok.setText("Настройки");
         ok.setSize(80, 25);
@@ -98,6 +100,7 @@ public class NoticeForm implements Runnable
             }
         });
 
+        //кнопка закрыть
         Button X = new Button(shell, SWT.PUSH);
         X.setText("X");
         X.setSize(MAX_LEN, 25);
@@ -110,8 +113,7 @@ public class NoticeForm implements Runnable
             }
         });
 
-        shell.setSize(200, 300);
-
+        //кнопка назад
         Button prev = new Button(shell, SWT.None);
         prev.setText("Prev");
         prev.setSize(40, MAX_LEN);
@@ -128,6 +130,7 @@ public class NoticeForm implements Runnable
             }
         });
 
+        //кнопка вперед
         Button next = new Button(shell, SWT.None);
         next.setText("Next");
         next.setSize(40, MAX_LEN);
@@ -154,6 +157,9 @@ public class NoticeForm implements Runnable
         this.notify();
     }
 
+    /**
+     * Очистить старый лист и построить новый
+     */
     private void buildList()
     {
         for (ViewForm form : forms)
@@ -227,6 +233,7 @@ public class NoticeForm implements Runnable
         while (!shell.isDisposed())
             if (!display.readAndDispatch())
             {
+                //если лист обновился, то отрисовываем его заного
                 if (rebuild)
                 {
                     rebuild = false;
@@ -260,6 +267,10 @@ public class NoticeForm implements Runnable
         return display;
     }
 
+    /**
+     * Обновить форму новым листом
+     * @param clientNoticeList - лист
+     */
     public void update(List<ClientNotice> clientNoticeList)
     {
         setList(clientNoticeList);

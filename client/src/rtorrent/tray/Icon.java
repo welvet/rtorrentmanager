@@ -32,6 +32,7 @@ public class Icon implements Runnable
 
     public void createIcon()
     {
+        //инициализация
         display = Initialize.display;
 
         Shell shell = new Shell(display);
@@ -50,6 +51,7 @@ public class Icon implements Runnable
 
         final Menu menu = new Menu(shell, SWT.POP_UP);
 
+        //меню
         MenuItem showRT = new MenuItem(menu, SWT.PUSH);
         showRT.setText("Show RtorrentManager");
         showRT.addListener(SWT.Selection, new Listener()
@@ -125,7 +127,11 @@ public class Icon implements Runnable
         changIcon(!state, false);
     }
 
-
+    /**
+     * Обновить иконку в трее
+     * @param state true - запущен / false - остановлен
+     * @param fail - запрос вернул ошибку
+     */
     public synchronized void changIcon(Boolean state, Boolean fail)
     {
         this.state = state;
@@ -167,6 +173,8 @@ public class Icon implements Runnable
 
     public void run()
     {
+        //инициализируем меню
+        //TODO: sync ненужен
         synchronized (Icon.class)
         {
             createIcon();
@@ -178,6 +186,7 @@ public class Icon implements Runnable
         ServerListener listener = new ServerListener();
         listener.start();
 
+        //останавливаем торрент при запуске
         new Thread()
         {
             @Override
