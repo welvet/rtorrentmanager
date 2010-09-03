@@ -70,12 +70,12 @@ public interface RtorrentService {
     public Boolean isAlive();
 
     /**
-     * Запустить rtorrent
+     * Запустить торренты
      */
     public void launch(List<Torrent> list) throws RtorrentServiceException;
 
     /**
-     * Оставновить rtorrent
+     * Оставновить торренты
      */
     public void shutdown(List<Torrent> list) throws RtorrentServiceException;
 }
