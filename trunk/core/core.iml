@@ -14,6 +14,7 @@
     <orderEntry type="library" name="Neko" level="project" />
     <orderEntry type="library" name="Html" level="project" />
     <orderEntry type="library" name="Mail" level="project" />
+    <orderEntry type="library" name="GsonToCore" level="project" />
     <annotation-paths>
       <root url="file://$MODULE_DIR$/src/rtorrent/test/resource" />
       <root url="file://$MODULE_DIR$/src/rtorrent/dialog" />
