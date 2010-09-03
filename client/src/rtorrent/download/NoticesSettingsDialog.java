@@ -21,13 +21,14 @@ public class NoticesSettingsDialog extends JDialog
 {
 
     private JPanel panel1;
-    private JTextField replaceFiled;
+    private JTextField toReplaceFiled;
     private JButton okButton;
     //utf8 ftw
     private JButton ÓÚÏÂÌ‡Button;
     private JCheckBox needCheck;
-    private JTextField toReplaceField;
+    private JTextField replaceField;
     private JComboBox noticesType;
+    private JTextField command;
 
 
     @Override
@@ -46,8 +47,9 @@ public class NoticesSettingsDialog extends JDialog
         setResizable(false);
         AWTUtilities.setWindowOpacity(this, 0.9f);
 
-        replaceFiled.setText(ConfigSingleton.getReplace());
-        toReplaceField.setText(ConfigSingleton.getToReplace());
+        replaceField.setText(ConfigSingleton.getReplace());
+        toReplaceFiled.setText(ConfigSingleton.getToReplace());
+        command.setText(ConfigSingleton.getCommand());
 
         //TODO: hard code state
         noticesType.addItem("done");
@@ -88,10 +90,11 @@ public class NoticesSettingsDialog extends JDialog
             public void actionPerformed(ActionEvent e)
             {
 
-                ConfigSingleton.setReplace(replaceFiled.getText());
-                ConfigSingleton.setToReplace(toReplaceField.getText());
+                ConfigSingleton.setReplace(replaceField.getText());
+                ConfigSingleton.setToReplace(toReplaceFiled.getText());
                 ConfigSingleton.setNoticesType((String) noticesType.getSelectedItem());
                 ConfigSingleton.setNeedCheck(needCheck.isSelected());
+                ConfigSingleton.setCommand(command.getText());
                 ConfigSingleton.update();
                 dialog.dispose();
             }

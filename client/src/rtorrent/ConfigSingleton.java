@@ -27,6 +27,7 @@ public class ConfigSingleton
     private static String toReplace = "";
     private static String replace = "";
     private static String noticesType = "done";
+    private static String command = "";
 
     static
     {
@@ -47,6 +48,7 @@ public class ConfigSingleton
                 toReplace = (String) list.get(9);
                 replace = (String) list.get(10);
                 noticesType = (String) list.get(11);
+                command = (String) list.get(12);
             }
         } catch (Exception e)
         {
@@ -113,6 +115,7 @@ public class ConfigSingleton
         list.add(9, toReplace);
         list.add(10, replace);
         list.add(11, noticesType);
+        list.add(12, command);
         saver.save(list);
     }
 
@@ -194,6 +197,16 @@ public class ConfigSingleton
     public static void setNeedCheck(Boolean needCheck)
     {
         ConfigSingleton.needCheck = needCheck;
+    }
+
+    public static String getCommand()
+    {
+        return command;
+    }
+
+    public static void setCommand(String command)
+    {
+        ConfigSingleton.command = command;
     }
 }
 

@@ -34,7 +34,7 @@ public class Initialize
 
             //обработчик уведомлений
             Timer timer = new Timer();
-            timer.schedule(LastDownloadControler.instance(), 60 * PER_SEC, 60 * PER_SEC);
+            timer.schedule(LastDownloadControler.instance(), 5 * PER_SEC, 5 * PER_SEC);
 
             display.syncExec(icon);
         } catch (Exception e)

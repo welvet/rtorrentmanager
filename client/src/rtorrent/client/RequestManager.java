@@ -3,6 +3,7 @@ package rtorrent.client;
 import rtorrent.notice.client.ClientNotice;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,8 +54,15 @@ public class RequestManager {
 
     public List<ClientNotice> getNotices()
     {
-        RequestAction action = new RequestAction();
-        action.setName("receiveNotices");
-        return (List<ClientNotice>) doRequest(action);
+        try
+        {
+            RequestAction action = new RequestAction();
+            action.setName("receiveNotices");
+            return (List<ClientNotice>) doRequest(action);
+        }
+        catch (Exception e)
+        {
+            return Collections.emptyList();
+        }
     }
 }

@@ -180,7 +180,10 @@ public class NoticeForm implements Runnable
 
             String execute = null;
             if (notice.getLink() != null)
-                execute = notice.getLink().replace(ConfigSingleton.getToReplace(), ConfigSingleton.getReplace());
+            {
+                String s = notice.getLink();
+                execute = s.replace(ConfigSingleton.getToReplace(), ConfigSingleton.getReplace());
+            }
 
             createNode(nodeIter++, titleText, format.format(notice.getDate()), execute);
         }
@@ -213,7 +216,7 @@ public class NoticeForm implements Runnable
                 {
                     try
                     {
-                        Runtime.getRuntime().exec(execute);
+                        Runtime.getRuntime().exec(new String[] {ConfigSingleton.getCommand(), execute});
                     } catch (IOException e)
                     {
                         e.printStackTrace(); 
