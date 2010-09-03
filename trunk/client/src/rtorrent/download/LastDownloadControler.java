@@ -40,9 +40,11 @@ public class LastDownloadControler extends TimerTask
         clientNotices.addAll(clientNoticeList);
         ConfigSingleton.update();
 
-        if (!clientNoticeList.isEmpty())
+        List<ClientNotice> noticeList = fillList(clientNoticeList);
+
+        if (!noticeList.isEmpty())
         {
-            createOrUpdateForm(clientNoticeList);
+            createOrUpdateForm(noticeList);
         }
     }
 
@@ -64,14 +66,20 @@ public class LastDownloadControler extends TimerTask
      */
     public synchronized void showForm()
     {
+        List<ClientNotice> list = fillList(clientNotices);
+
+        createOrUpdateForm(list);
+    }
+
+    private List<ClientNotice> fillList(List<ClientNotice> clientNotices)
+    {
         List<ClientNotice> list = new ArrayList<ClientNotice>();
         for (ClientNotice notice : clientNotices)
         {
             if (notice.getNoticeType().equals(ConfigSingleton.getNoticesType()))
                 list.add(notice);
         }
-
-        createOrUpdateForm(list);
+        return list;
     }
 
     public static LastDownloadControler instance()

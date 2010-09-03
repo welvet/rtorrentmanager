@@ -19,7 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * TODO наверно стоит сделать Document
  * User: welvet
  * Date: 26.06.2010
  * Time: 17:58:28
