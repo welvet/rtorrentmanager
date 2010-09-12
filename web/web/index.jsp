@@ -85,12 +85,12 @@
     </div>
     <br>
 
-    <div id="log" class="fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">
-        <span id="label">Логи <a href="#">(очистить)</a></span>
-        <textarea id="logArea" class="ui-widget" rows="7" cols="117" disabled="disabled">
-            <%@ include file="log.jsp" %>
-        </textarea>
-    </div>
+    <%--<div id="log" class="fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix">--%>
+        <%--<span id="label">Логи <a href="#">(очистить)</a></span>--%>
+        <%--<textarea id="logArea" class="ui-widget" rows="7" cols="117" disabled="disabled">--%>
+            <%--<%@ include file="log.jsp" %>--%>
+        <%--</textarea>--%>
+    <%--</div>--%>
     <div id="simpleAction" class="dialog">
     </div>
     <div id="tableButtons">

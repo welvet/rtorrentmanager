@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import rtorrent.action.ActionManager;
 import rtorrent.action.ActionManagerImpl;
 import rtorrent.client.ClientListner;
+import rtorrent.config.Config;
 import rtorrent.config.ConfigManager;
 import rtorrent.config.ConfigManagerImpl;
 import rtorrent.control.RtorrentControler;
@@ -13,8 +14,10 @@ import rtorrent.dialog.DialogParserImpl;
 import rtorrent.scheduler.SchedulerSingleton;
 import rtorrent.service.RtorrentService;
 import rtorrent.service.RtorrentServiceImpl;
+import rtorrent.service.ServiceReslover;
 import rtorrent.torrent.set.TorrentSetSingleton;
 import rtorrent.utils.BindContext;
+import rtorrent.utils.ContextUtils;
 import rtorrent.utils.LoggerSingleton;
 import rtorrent.web.WebServerBuilder;
 
@@ -57,8 +60,11 @@ public class Initialize {
             DialogParser parser = new DialogParserImpl();
             //инициализируем конфиги
             ConfigManager manager = new ConfigManagerImpl(workDir);
+
             //инициализируем рторрент сервис
-            RtorrentService service = new RtorrentServiceImpl();
+            Config config = manager.getConfig("rtorrent");
+            String serviceName = (String) config.getFieldValue("service");
+            RtorrentService service = ServiceReslover.resolve(serviceName);
             //инициализируем синглтон
             TorrentSetSingleton.initialze(service, workDir);
             //инициализируем контролер
