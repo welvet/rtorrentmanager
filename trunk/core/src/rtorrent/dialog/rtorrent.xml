@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE config SYSTEM "config.dtd">
 <config title="Настройка rtorrent">
-    <value name="host" text="Хост" default="127.0.0.1"/>
-    <value name="port" text="Scgi порт" default="5000"/>
+    <select name="service" text="Сервис" default="rtorrent" position="0">
+        <option>rtorrent</option>
+        <option>utorrent</option>
+    </select>
+    <value name="host" text="Хост" default="127.0.0.1" position="1"/>
+    <value name="port" text="Scgi/Http порт" default="5000" position="2"/>
+    <value name="login" text="Логин" default="admin" position="3" description="(Только для utorrent)"/>
+    <value name="pass" text="Pass" default="" position="4" description="(Только для utorrent)"/>
+    <value name="gui" text="Путь" default="gui" position="5" description="(Только для utorrent)"/>
 </config>

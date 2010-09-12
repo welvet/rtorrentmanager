@@ -123,8 +123,15 @@ public class Icon implements Runnable
 
     private void switchRtorrentAndIcon()
     {
-        manager.switchTorrent();
-        changIcon(!state, false);
+        try
+        {
+            manager.switchTorrent();            
+            changIcon(!state, false);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     /**
