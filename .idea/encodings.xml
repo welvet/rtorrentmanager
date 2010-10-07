@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="windows-1251">
+    <file url="file://$PROJECT_DIR$/client/src/rtorrent/download/FormTest.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/client/src/rtorrent/download/LastDownloadControler.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/client/src/rtorrent/download/NoticeForm.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/client/src/rtorrent/download/NoticesSettingsDialog.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/client/src/rtorrent/settings/SettingsDialog.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/core/src/rtorrent/torrent/set/TorrentSet.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/core/src/rtorrent/torrent/set/TorrentSetImpl.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/core/src/rtorrent/torrent/set/action/Update.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/web/src/rtorrent/web/AuthFilter.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/web/web/css/core.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/web/dialogs/about.jsp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/web/dialogs/help.jsp" charset="UTF-8" />
