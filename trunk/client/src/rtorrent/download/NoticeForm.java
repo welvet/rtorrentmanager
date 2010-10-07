@@ -185,18 +185,17 @@ public class NoticeForm implements Runnable
                 execute = s.replace(ConfigSingleton.getToReplace(), ConfigSingleton.getReplace());
             }
 
-            createNode(nodeIter++, titleText, format.format(notice.getDate()), execute);
+            createNode(nodeIter++, titleText, format.format(notice.getDate()), execute, notice);
         }
     }
 
-    private void createNode(int id, String titleText, String stateText, final String execute)
+    private void createNode(int id, String titleText, String stateText, final String execute, final ClientNotice clientNotice)
     {
-        ViewForm sash = new ViewForm(shell, SWT.NO_BACKGROUND);
+        final ViewForm sash = new ViewForm(shell, SWT.NO_BACKGROUND);
         Label title = new Label(sash, SWT.NONE);
         title.setText(titleText);
         title.setLocation(0, 0);
-        title.setSize(160, MAX_LEN);
-
+        title.setSize(135, MAX_LEN);
         Label state = new Label(sash, SWT.NONE);
         state.setText(stateText);
         state.setLocation(0, MAX_LEN);
@@ -214,7 +213,7 @@ public class NoticeForm implements Runnable
             {
                 public void handleEvent(Event event)
                 {
-                    try
+                    try                          
                     {
                         Runtime.getRuntime().exec(new String[] {ConfigSingleton.getCommand(), execute});
                     } catch (IOException e)
@@ -224,6 +223,25 @@ public class NoticeForm implements Runnable
                 }
             });
         }
+
+        Label remove = new Label(sash, SWT.NONE);
+        remove.setText("(X)");
+        remove.setLocation(145, 0);
+        remove.setSize(15, MAX_LEN);
+        Color color = new Color(display, 0, 0, 255);
+        remove.setForeground(color);
+        remove.addListener(SWT.MouseDown, new Listener()
+        {
+            public void handleEvent(Event event)
+            {
+                noticeList.remove(clientNotice);
+                ConfigSingleton.removeFromList(clientNotice);
+
+                sash.setVisible(false);
+
+                iterMax = ((noticeList.size() - 1) / PER_PAGE) * PER_PAGE;
+            }
+        });
 
         sash.setSize(160, 40);
         sash.setLocation(18, 40 + (id * RANGE));

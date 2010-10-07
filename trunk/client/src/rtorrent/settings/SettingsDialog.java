@@ -22,7 +22,7 @@ public class SettingsDialog extends JDialog {
     private JTextField hostFiled;
     private JTextField loginField;
     private JButton okButton;
-    //utf8 ftw
+    //utf8 ftw                  
     private JButton ÓÚÏÂÌ‡Button;
     private JCheckBox stopTorrent;
     private JPasswordField passField;

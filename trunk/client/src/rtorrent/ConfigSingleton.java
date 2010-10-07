@@ -208,6 +208,12 @@ public class ConfigSingleton
     {
         ConfigSingleton.command = command;
     }
+
+    public synchronized static void removeFromList(ClientNotice noticeToRemove)
+    {
+        clientNotices.remove(noticeToRemove);
+        update();
+    }
 }
 
 
